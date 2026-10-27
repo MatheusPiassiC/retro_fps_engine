@@ -1,0 +1,7 @@
+# Missão — RetroFPS Engine
+
+Desenvolver uma engine de jogos 2.5D em Python, inspirada nas técnicas de renderização dos jogos clássicos de tiro em primeira pessoa, com o objetivo de compreender e demonstrar os fundamentos da construção de ambientes interativos por meio de uma implementação própria de renderização pseudo-3D.
+
+A engine deverá permitir a criação e a exploração de cenários definidos externamente, oferecendo os mecanismos essenciais para movimentação do jogador, detecção de colisões e representação visual do ambiente em perspectiva. Seu desenvolvimento deverá priorizar a modularidade, a reutilização dos componentes e a separação entre os mecanismos da engine e as regras específicas de um jogo.
+
+Como resultado, o projeto deverá apresentar uma engine funcional e uma demonstração jogável que evidencie sua capacidade de carregar e renderizar um cenário, permitir a navegação pelo ambiente e implementar objetivos e interações simples. A solução deverá servir como instrumento de estudo de computação gráfica e engenharia de software, com ênfase na compreensão dos algoritmos e das decisões arquiteturais envolvidos, sem depender de uma engine de jogos pronta para realizar a renderização central do ambiente.
