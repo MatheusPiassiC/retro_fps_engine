@@ -192,9 +192,9 @@ Se for escolhido um jogo com chave e saída, a representação dos objetos, o bl
 
 ## 12. Como trabalhar com IA e acompanhar progresso
 
-O desenvolvimento seguirá [GitHub Flow](fluxo_desenvolvimento.md), com branches por feature e pull requests para a branch principal. Cada tarefa será vinculada ao marco do roadmap e a uma issue do GitHub. Exemplo ilustrativo: **Marco 0 (M0), issue #3: criar janela Pygame**.
+O desenvolvimento seguirá [GitHub Flow](fluxo_desenvolvimento.md), com branches por feature e pull requests para a branch principal. Cada tarefa usa um identificador local formado pelo marco e sua posição na lista: **M0-1** corresponde à instalação editável; **M0-2**, ao registro de versões; **M0-3**, à criação da janela.
 
-Cada marco será decomposto em issues pequenas, com escopo, dependências, aprendizado e critérios de aceitação. A numeração das issues é global no repositório, atribuída pelo GitHub. Os milestones, quando configurados, agruparão as issues de cada marco. Uma branch resolve uma mudança coesa, sem concentrar todo o marco.
+As issues são descrições locais de tarefas, sem cadastro obrigatório no GitHub. A numeração reinicia em cada marco e não corresponde a números de issues remotas. Cada tarefa terá escopo, dependências, aprendizado e critérios de aceitação. Uma branch resolve uma mudança coesa, sem concentrar todo o marco. Manter os identificadores já usados estáveis nas revisões do planejamento.
 
 Para cada tarefa, registrar objetivo, comportamento esperado, exemplo verificável, alteração feita e resultado. Usar [uso_ia.md](uso_ia.md) para contribuições relevantes e [validacao.md](validacao.md) para evidências.
 

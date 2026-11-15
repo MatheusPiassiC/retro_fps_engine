@@ -23,11 +23,11 @@ Este é um projeto universitário de aprendizagem. Não presumir conhecimento pr
 ## Fluxo de desenvolvimento
 
 - Seguir GitHub Flow conforme `docs/fluxo_desenvolvimento.md`, com branches curtas por feature ou mudança coesa e integração por PR.
-- Identificar tarefas e atualizações por marco e issue: `Marco 0 (M0), issue #3: criar janela Pygame` é apenas um exemplo.
-- Usar números reais atribuídos pelo GitHub; não inventar issues. Se ainda não houver issue, preparar seu escopo antes de referenciá-la como existente.
-- Usar branches como `feat/m0-3-create-pygame-window` e referências de marco e issue em commits e PRs.
-- Nos nomes de branch, usar `<tipo>/m<marco>-<issue>-<descricao-em-ingles>`, com `m` minúsculo e descrição específica em inglês, com palavras minúsculas separadas por hífens, sem espaços, sublinhados, parênteses ou colchetes.
-- Antes da integração, conferir critérios da issue, verificações pertinentes e documentação. Registrar referências no histórico de aprendizado e validação.
+- Identificar tarefas e atualizações pelo código local do roadmap: `M0-1` é a primeira tarefa do Marco 0; `M0-2` é a segunda.
+- As issues são apenas descrições locais de tarefas; não exigir criação de issues ou milestones no GitHub. Os códigos locais não representam números do GitHub.
+- Usar branches como `feat/m0-3-create-pygame-window` e referências como `[M0-3]` em commits e PRs.
+- Nos nomes de branch, usar `<tipo>/m<marco>-<tarefa>-<descricao-em-ingles>`, com `m` minúsculo e descrição específica em inglês, com palavras minúsculas separadas por hífens, sem espaços, sublinhados, parênteses ou colchetes.
+- Antes da integração, conferir critérios da tarefa, verificações pertinentes e documentação. Registrar referências no histórico de aprendizado e validação.
 
 ## Verificação
 

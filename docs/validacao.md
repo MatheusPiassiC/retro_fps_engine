@@ -48,7 +48,7 @@ Testes matemáticos e inspeção visual se complementam. Testes gráficos automa
 
 Ao concluir um marco, acrescentar uma entrada com:
 
-- Marco, issue, branch ou PR quando disponíveis, e comando ou procedimento executado.
+- Código local da tarefa (por exemplo, M0-2), branch ou PR quando disponíveis, e comando ou procedimento executado.
 - Ambiente e configuração relevantes.
 - Resultado esperado e observado.
 - Explicação do resultado e limitações encontradas.

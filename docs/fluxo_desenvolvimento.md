@@ -4,59 +4,57 @@
 
 O projeto seguirá GitHub Flow: uma branch principal integrável e branches curtas para mudanças específicas, incorporadas por pull request (PR). A branch principal será chamada `main` nesta documentação; se o repositório usar outro nome, aplicar o fluxo à sua branch padrão.
 
-Cada trabalho será identificado pelo marco do roadmap e por uma issue do GitHub. O roadmap descreve os resultados maiores; as issues dividem cada marco em tarefas pequenas e verificáveis.
+Cada trabalho será identificado pelo marco e pelo número da tarefa na lista do roadmap. As “issues” citadas no planejamento são descrições locais de trabalho; não há exigência de criar issues ou milestones no GitHub.
 
-Exemplo de referência: **Marco 0 (M0), issue #3: criar janela Pygame**. Esse número é ilustrativo; não indica uma issue já criada.
-
-Os números de issues são atribuídos pelo GitHub no repositório e não reiniciam a cada marco. Um marco pode conter várias issues. O número do marco corresponde ao identificador do roadmap: M0 é Marco 0, M1 é Marco 1, e assim por diante.
+Por exemplo, **M0-1** é a primeira tarefa do Marco 0 (instalar o pacote), **M0-2** é a segunda (registrar versões) e **M0-3** é a terceira (criar a janela). A numeração das tarefas reinicia em cada marco. Esses identificadores não correspondem a números de issues do GitHub e devem ser mantidos estáveis ao revisar o planejamento.
 
 ## 2. Ciclo de uma tarefa
 
-1. Escolher uma tarefa do marco atual e criar ou localizar a issue correspondente.
-2. Registrar na issue o objetivo, as dependências, os limites e os critérios de aceitação. Associá-la ao milestone do GitHub correspondente ao marco, quando configurado.
+1. Escolher uma tarefa do marco atual e identificar seu código local, como `M0-2`.
+2. Descrever o objetivo, as dependências, os limites e os critérios de aceitação na documentação da tarefa ou no PR, usando o roadmap como referência.
 3. Partir da branch principal atualizada e criar uma branch para a feature. Correções e documentação também usam branches próprias.
-4. Implementar em alterações pequenas, acrescentando testes e documentação conforme a necessidade. Referenciar marco e issue nas atualizações de progresso.
-5. Abrir um PR para a branch principal, vinculando a issue e explicando comportamento, validação e limitações. Um PR em rascunho pode apoiar a revisão enquanto o trabalho está incompleto.
-6. Revisar o diff e conferir os critérios da issue. Mesmo em trabalho individual, registrar a revisão e compreender os algoritmos antes da integração.
-7. Integrar o PR quando estiver pronto, encerrar a issue resolvida e remover a branch da feature após a integração.
-8. Atualizar as evidências do marco. Concluir todas as issues previstas não substitui verificar os critérios globais de conclusão do marco.
+4. Implementar em alterações pequenas, acrescentando testes e documentação conforme a necessidade. Referenciar marco e tarefa nas atualizações de progresso.
+5. Abrir um PR para a branch principal, referenciando o código local da tarefa e explicando comportamento, validação e limitações. Um PR em rascunho pode apoiar a revisão enquanto o trabalho está incompleto.
+6. Revisar o diff e conferir os critérios da tarefa. Mesmo em trabalho individual, registrar a revisão e compreender os algoritmos antes da integração.
+7. Integrar o PR quando estiver pronto, registrar a conclusão da tarefa e remover a branch da feature após a integração.
+8. Atualizar as evidências do marco. Concluir todas as tarefas previstas não substitui verificar os critérios globais de conclusão do marco.
 
-O foco de cada branch é uma feature ou mudança coesa, preferencialmente vinculada a uma issue principal. Um marco inteiro não deve se tornar uma única branch longa. Caso uma feature cresça demais, dividi-la em issues e entregas menores.
+O foco de cada branch é uma feature ou mudança coesa, preferencialmente associada a uma tarefa principal. Um marco inteiro não deve se tornar uma única branch longa. Caso uma feature cresça demais, dividi-la em tarefas e entregas menores.
 
 Este projeto local não exige uma implantação em produção a cada PR. A branch principal deve preservar o estado de funcionamento alcançado até então, sem exigir recursos de marcos futuros.
 
 ## 3. Convenções de identificação
 
-Os exemplos abaixo usam a issue fictícia #3.
+Os exemplos abaixo usam a tarefa local M0-3 do roadmap.
 
 | Item | Convenção | Exemplo |
 |---|---|---|
-| Milestone no GitHub | `M<n> — <resultado do marco>` | `M0 — Ambiente e ciclo da aplicação` |
-| Título da issue | `[M<n>] <ação e resultado>` | `[M0] Criar janela Pygame responsiva` |
-| Branch | `<tipo>/m<marco>-<issue>-<descricao-em-ingles>` | `feat/m0-3-create-pygame-window` |
-| Commit | `<tipo>: [M<n> #<numero>] <alteração>` | `feat: [M0 #3] cria janela e trata encerramento` |
-| Título do PR | `[M<n> #<numero>] <resultado>` | `[M0 #3] Criar janela Pygame responsiva` |
-| Comunicação e registros | `Marco <n> (M<n>), issue #<numero>: <tarefa>` | `Marco 0 (M0), issue #3: criar janela Pygame` |
+| Marco do roadmap | `M<n> — <resultado do marco>` | `M0 — Ambiente e ciclo da aplicação` |
+| Tarefa local | `M<marco>-<tarefa>: <ação e resultado>` | `M0-3: Criar janela Pygame responsiva` |
+| Branch | `<tipo>/m<marco>-<tarefa>-<descricao-em-ingles>` | `feat/m0-3-create-pygame-window` |
+| Commit | `<tipo>: [M<marco>-<tarefa>] <alteração>` | `feat: [M0-3] cria janela e trata encerramento` |
+| Título do PR | `[M<marco>-<tarefa>] <resultado>` | `[M0-3] Criar janela Pygame responsiva` |
+| Comunicação e registros | `M<marco>-<tarefa>: <descrição>` | `M0-3: criar janela Pygame` |
 
 Tipos iniciais: `feat` para funcionalidade, `fix` para correção, `docs` para documentação, `test` para testes, `refactor` para reorganização sem mudança intencional de comportamento e `chore` para manutenção do ambiente. Esses nomes são uma convenção do projeto, não uma exigência do GitHub Flow.
 
-O identificador `m0-3` significa Marco 0, issue #3. Nos nomes de branch, usar `m` minúsculo e um hífen entre o número da issue e a descrição, sem parênteses ou colchetes. As demais referências a marcos continuam usando `M0`, `M1` e assim por diante.
+O identificador `m0-3` significa Marco 0, tarefa 3. Nos nomes de branch, usar `m` minúsculo e um hífen entre o número da tarefa e a descrição, sem parênteses ou colchetes. As demais referências a marcos continuam usando `M0`, `M1` e assim por diante.
 
 Para nomes de branch:
 
 - Escrever a descrição em inglês, em letras minúsculas, com palavras separadas por hífens: `create-pygame-window`.
 - Trocar espaços por hífens; não usar sublinhados ou acentos na descrição.
 - Usar uma ação e um objeto específicos. Evitar nomes genéricos como `fix/bug`, `feat/novas-coisas` ou `branch-joao`.
-- Preservar o prefixo do tipo e a referência de marco e issue. Por exemplo, `feat/m0-3-create-pygame-window` informa a entrega e sua rastreabilidade.
+- Preservar o prefixo do tipo e a referência de marco e tarefa. Por exemplo, `feat/m0-3-create-pygame-window` informa a entrega e sua rastreabilidade.
 
-Exemplos de aplicação da convenção (números ilustrativos):
+Exemplos de aplicação da convenção:
 
 | Preferir | Evitar | Motivo |
 |---|---|---|
 | `feat/m0-3-create-pygame-window` | `feat/m0-3-create_pygame_window` | Separar palavras com hífens, sem sublinhados |
 | `feat/m0-3-create-pygame-window` | `feat/m0-3-create pygame window` | Não usar espaços |
-| `fix/m0-4-handle-window-close` | `fix/m0-4-bug` | Descrever o comportamento corrigido |
-| `docs/m0-5-explain-window-controls` | `branch-joao` | Identificar tipo, marco, issue e finalidade |
+| `fix/m0-3-handle-window-close` | `fix/m0-3-bug` | Descrever o comportamento corrigido |
+| `docs/m0-3-explain-window-controls` | `branch-joao` | Identificar tipo, marco, tarefa e finalidade |
 
 Exemplo de criação de branch com a convenção atual:
 
@@ -64,13 +62,13 @@ Exemplo de criação de branch com a convenção atual:
 git switch -c 'feat/m0-3-create-pygame-window'
 ```
 
-O comando é ilustrativo e só deve ser usado com o número real da issue correspondente. Os textos de issues e PRs permanecem em português. Um commit deve representar uma alteração compreensível; não é obrigatório ter apenas um commit por issue.
+Use o código da tarefa correspondente no roadmap. Os textos das descrições e dos PRs permanecem em português. Um commit deve representar uma alteração compreensível; não é obrigatório ter apenas um commit por tarefa.
 
-## 4. Conteúdo mínimo da issue
+## 4. Conteúdo mínimo da descrição da tarefa
 
 ```markdown
 ## Referência
-Marco 0 (M0) — Ambiente e ciclo da aplicação
+M0-3 — Criar janela Pygame responsiva
 
 ## Objetivo
 Abrir uma janela Pygame responsiva e permitir encerramento normal.
@@ -82,7 +80,7 @@ Entender inicialização, eventos, quadros e liberação de recursos.
 Criar janela e processar eventos de encerramento. Sem renderizar mapas.
 
 ## Dependências
-Indicar as issues necessárias ou informar que não há dependências.
+Indicar as tarefas necessárias ou informar que não há dependências.
 
 ## Critérios de aceitação
 - A janela abre no ambiente documentado.
@@ -93,23 +91,22 @@ Indicar as issues necessárias ou informar que não há dependências.
 Registrar os comandos e a conferência manual executados, com resultados.
 ```
 
-Criar a issue antes de usar seu número nas referências definitivas. Não inventar identificadores nem assumir que uma lista local determina a numeração do GitHub.
+Esta descrição pode ficar no PR ou em um registro local pertinente; não é necessário cadastrá-la como issue no GitHub.
 
 ## 5. Conteúdo mínimo do PR
 
-Descrever o problema e o comportamento resultante, indicar marco e issue, resumir a validação realizada e registrar limitações relevantes. Informar verificações não executadas sem apresentá-las como aprovadas.
+Descrever o problema e o comportamento resultante, indicar marco e tarefa, resumir a validação realizada e registrar limitações relevantes. Informar verificações não executadas sem apresentá-las como aprovadas.
 
-Usar `Closes #3` na descrição quando o PR resolver integralmente a issue #3. Ao integrar na branch padrão, o GitHub pode encerrar a issue automaticamente. Para uma contribuição parcial, usar `Refs #3`, manter a issue aberta e explicar o que falta.
+Referenciar a tarefa com seu código, por exemplo `M0-3`, e explicar se a entrega é completa ou parcial. Não usar `Closes #3` ou `Refs #3` para identificadores locais, pois essa sintaxe aponta para itens reais do GitHub.
 
-Um PR pode mencionar outras issues relacionadas; só deve encerrar aquelas cujos critérios tenham sido atendidos. O marco não é concluído automaticamente pelo encerramento de uma única issue.
+Concluir uma tarefa não conclui automaticamente o marco.
 
 ## 6. Assistência por IA
 
-Ao iniciar uma tarefa de implementação, identificar marco, issue e branch. Se o número ainda não existir, preparar o escopo para cadastro sem atribuir um número fictício. Os registros de aprendizado e validação também devem incluir essas referências quando disponíveis.
+Ao iniciar uma tarefa de implementação, identificar seu código local e a branch. Não solicitar criação ou número de issue no GitHub como pré-requisito. Os registros de aprendizado e validação também devem incluir o código da tarefa e branch ou PR quando disponíveis.
 
-Documentar o fluxo não cria branches, milestones, issues ou PRs no GitHub. Esses itens serão preparados quando o trabalho correspondente for iniciado.
+Documentar o fluxo não cria branches ou PRs. Caso issues do GitHub sejam adotadas futuramente, registrar a associação com as tarefas locais explicitamente, sem presumir que seus números coincidam.
 
 ## 7. Referências
 
 - [GitHub Flow — documentação oficial](https://docs.github.com/en/get-started/using-github/github-flow).
-- [Vincular pull request a issue e encerramento automático](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue).
