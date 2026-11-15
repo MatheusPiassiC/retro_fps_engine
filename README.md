@@ -12,6 +12,7 @@ Planejamento revisado para avaliação e estrutura inicial preparada. Os módulo
 
 - [Missão](docs/missao.md)
 - [Roadmap para revisão](docs/roadmap.md)
+- [GitHub Flow, branches, marcos e issues](docs/fluxo_desenvolvimento.md)
 - [Pilha tecnológica](docs/pilha_tecnologica.md)
 - [Arquitetura e responsabilidades](docs/arquitetura.md)
 - [Formato de mapa e coordenadas](docs/formato_mapa.md)

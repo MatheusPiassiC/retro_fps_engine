@@ -38,7 +38,7 @@ Texturas futuras ficam em `assets/textures/`. O projeto deverá usar recursos pr
 
 ## 6. Controle de versão
 
-Git registrará mudanças pequenas e coerentes. A hospedagem remota e sua visibilidade seguirão os requisitos efetivamente informados pela disciplina; esta documentação não presume que o repositório precise ser privado.
+Git registrará mudanças pequenas e coerentes. O trabalho seguirá [GitHub Flow](fluxo_desenvolvimento.md), com branches por feature, issues associadas aos marcos e integração por pull request. A hospedagem remota e sua visibilidade seguirão os requisitos efetivamente informados pela disciplina; esta documentação não presume que o repositório precise ser privado.
 
 A documentação, os testes e os exemplos evoluirão junto com o código. Novas dependências e alterações relevantes no formato de mapa exigirão justificativa e atualização dos documentos correspondentes.
 

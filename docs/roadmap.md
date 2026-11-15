@@ -192,6 +192,10 @@ Se for escolhido um jogo com chave e saída, a representação dos objetos, o bl
 
 ## 12. Como trabalhar com IA e acompanhar progresso
 
+O desenvolvimento seguirá [GitHub Flow](fluxo_desenvolvimento.md), com branches por feature e pull requests para a branch principal. Cada tarefa será vinculada ao marco do roadmap e a uma issue do GitHub. Exemplo ilustrativo: **Marco 0 (M0), issue #3: criar janela Pygame**.
+
+Cada marco será decomposto em issues pequenas, com escopo, dependências, aprendizado e critérios de aceitação. A numeração das issues é global no repositório, atribuída pelo GitHub. Os milestones, quando configurados, agruparão as issues de cada marco. Uma branch resolve uma mudança coesa, sem concentrar todo o marco.
+
 Para cada tarefa, registrar objetivo, comportamento esperado, exemplo verificável, alteração feita e resultado. Usar [uso_ia.md](uso_ia.md) para contribuições relevantes e [validacao.md](validacao.md) para evidências.
 
 A IA deve explicar os conceitos necessários antes de propor mudanças extensas. Quando o desenvolvedor ainda não souber avaliar um teste, apresentar o desenho, as contas e a razão do resultado esperado. A falta de conhecimento prévio é um ponto de partida de estudo, não um motivo para aceitar automaticamente o resultado gerado.

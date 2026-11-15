@@ -8,7 +8,8 @@ Antes de incorporar um algoritmo central, solicitar um exemplo pequeno, o signif
 
 ## 2. Modelo de registro
 
-- **Tarefa ou marco:**
+- **Marco e issue (número real, quando disponível):**
+- **Tarefa, branch e PR (quando disponíveis):**
 - **Ferramenta/modelo, quando conhecido:**
 - **Pedido e contribuição relevante:**
 - **Decisão adotada e justificativa:**
@@ -35,3 +36,15 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Decisão proposta:** arquitetura modular em um processo, com núcleo computacional independente da infraestrutura; uso planejado de Game Loop, composição e dependências fornecidas por parâmetros.
 - **Precisão de escopo:** a proposta tem afinidade com a separação defendida pela arquitetura hexagonal, mas ainda não implementa suas portas e adaptadores formalmente.
 - **Verificação:** revisão documental e conferência de links locais; nenhuma funcionalidade da engine foi acrescentada ou testada nesta alteração.
+
+## 5. Registro — fluxo de desenvolvimento
+
+- **Pedido:** adotar GitHub Flow e identificar o trabalho por marco e issue.
+- **Contribuição:** documentação do ciclo issue → branch → implementação e validação → PR → integração, com convenções e exemplos.
+- **Estado:** documentação preparada; nenhum item remoto ou branch foi criado nesta alteração. Os números apresentados são ilustrativos.
+
+## 6. Registro — nomenclatura de branches
+
+- **Pedido:** adotar nomes como `feat/(M0-3)create-pygame-window`, com hífens entre palavras e descrições específicas.
+- **Contribuição:** atualização da convenção e das orientações para IA, incluindo exemplo de comando com o nome entre aspas.
+- **Estado:** alteração documental; nenhum nome de branch existente foi alterado.
