@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "retro-fps-engine"
+version = "0.1.0"
+description = "Engine 2.5D educacional em Python, inspirada em Wolfenstein 3D"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["pygame>=2.6,<3"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "ruff>=0.8,<1"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"

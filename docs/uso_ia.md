@@ -1,0 +1,37 @@
+# Uso de IA e registro de aprendizagem
+
+## 1. Diretriz
+
+A IA apoia explicações, planejamento, implementação, testes e documentação. O objetivo é construir compreensão ao longo do projeto. A aprovação de uma alteração não exige conhecimento prévio de todos os conceitos, mas exige oportunidade de entendê-los e verificar suas consequências.
+
+Antes de incorporar um algoritmo central, solicitar um exemplo pequeno, o significado das variáveis e uma explicação de seus limites. Se a explicação não estiver clara, reduzir a tarefa antes de continuar.
+
+## 2. Modelo de registro
+
+- **Tarefa ou marco:**
+- **Ferramenta/modelo, quando conhecido:**
+- **Pedido e contribuição relevante:**
+- **Decisão adotada e justificativa:**
+- **Verificação independente e resultado:**
+- **Erro encontrado ou dúvida pendente:**
+- **Aprendizado explicado com palavras próprias:**
+
+Registrar contribuições relevantes e correções; não é necessário copiar integralmente todas as conversas. Requisitos adicionais da disciplina deverão ser incorporados quando forem informados.
+
+## 3. Registro inicial — revisão do planejamento
+
+- **Contribuição:** avaliação dos documentos e proposta de roadmap incremental, arquitetura reutilizável, convenções geométricas e estrutura de repositório.
+- **Direção solicitada pelo desenvolvedor:** projeto de estudo, referência em Wolfenstein 3D, ausência de calendário e demonstração mínima de exploração.
+- **Propostas:** núcleo independente de objetivos de jogo, raio físico do jogador de 0.2 unidade e mapas de grade com bordas fechadas. Esses parâmetros poderão ser revistos com experimentos.
+- **Correção identificada:** o exemplo anterior posicionava o jogador em uma célula sólida; os mapas atuais usam início em área livre.
+- **Verificação realizada:** sintaxe dos módulos Python e do TOML, existência dos destinos dos links locais, retangularidade e bordas dos dois mapas e espaço livre para o círculo inicial. A entrada provisória foi executada usando o código em `src/` e exibiu a mensagem esperada. Essas conferências foram feitas por um script pontual, sem criar testes artificiais para os módulos vazios.
+- **Limites da verificação:** dependências não foram instaladas e a instalação editável ainda não foi validada. Não há implementação ou validação dos algoritmos da engine nesta etapa.
+- **Pendente:** avaliação do planejamento pelo desenvolvedor e estudo dos conceitos nos primeiros marcos.
+
+## 4. Registro — justificativas da stack e da arquitetura
+
+- **Pedido:** explicar as ferramentas escolhidas, suas alternativas e o estilo arquitetural para apoiar o aprendizado.
+- **Contribuição:** tabela de decisões da stack, limites aceitos, diagrama de dependências e distinção entre estilo arquitetural, padrões e princípios.
+- **Decisão proposta:** arquitetura modular em um processo, com núcleo computacional independente da infraestrutura; uso planejado de Game Loop, composição e dependências fornecidas por parâmetros.
+- **Precisão de escopo:** a proposta tem afinidade com a separação defendida pela arquitetura hexagonal, mas ainda não implementa suas portas e adaptadores formalmente.
+- **Verificação:** revisão documental e conferência de links locais; nenhuma funcionalidade da engine foi acrescentada ou testada nesta alteração.
