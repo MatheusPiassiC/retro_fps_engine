@@ -2,7 +2,7 @@
 
 ## 1. Estado e princípio
 
-Este documento propõe verificações futuras; ainda não há testes da engine implementados nem resultados de desempenho medidos. Cada teste deve dizer qual comportamento protege e por que o resultado esperado faz sentido.
+Este documento reúne verificações propostas e evidências do ambiente registradas em M0-2; ainda não há testes da engine implementados nem resultados de desempenho medidos. Cada teste deve dizer qual comportamento protege e por que o resultado esperado faz sentido.
 
 Não se espera que o desenvolvedor já conheça computação gráfica. Antes de aceitar um teste, a implementação deverá vir acompanhada de uma explicação acessível e de um exemplo que possa ser conferido com desenho e contas simples.
 
@@ -66,3 +66,26 @@ python -m ruff format --check .
 ```
 
 A pasta `tests/` está reservada. Enquanto não houver testes, o pytest poderá terminar com o código de ausência de testes; isso não deve ser registrado como validação da engine. Os primeiros testes comportamentais serão criados junto com M1.
+
+## 7. M0-2 — Versões do ambiente
+
+- **Tarefa:** M0-2 — registrar versões efetivamente verificadas e instruções de reprodução.
+- **Branch:** `chore/m0-2-document-verified-environment`.
+- **Ambiente observado:** Pop!_OS 24.04 LTS, x86_64, kernel Linux `7.2.6-76070206-generic`, glibc 2.39, Python 3.12.3 e pip 24.0, no ambiente virtual `.venv`.
+- **Procedimento:** leitura de `/etc/os-release`, consulta a `sys.version` e `platform.platform()`, execução de `python -m pip --version` e `python -m pip freeze --exclude-editable` usando o Python da `.venv`.
+- **Resultado esperado:** o arquivo de versões corresponde às dependências instaladas, sem incluir o caminho do projeto editável.
+- **Resultado observado:** o conteúdo de `requirements-dev.txt`, criado pelo desenvolvedor, coincide com a saída de `pip freeze --exclude-editable`.
+
+| Pacote | Versão instalada |
+|---|---|
+| iniconfig | 2.3.1 |
+| packaging | 26.3 |
+| pluggy | 1.7.0 |
+| pygame | 2.6.1 |
+| Pygments | 2.21.0 |
+| pytest | 9.2.0 |
+| ruff | 0.17.5 |
+
+As instruções de instalação com essas versões estão no README. O arquivo de versões é uma fotografia do ambiente existente; não fixa o interpretador, o sistema operacional ou todas as ferramentas de construção do pacote.
+
+**Limitações:** por decisão do desenvolvedor, não foi criada outra `.venv` nem repetida a instalação em ambiente novo nesta tarefa. A conferência de versões não comprova compatibilidade com outras máquinas ou funcionamento da engine. Não foram executados pytest, Ruff ou `pip check` nesta atualização documental, e não são atribuídos resultados a esses comandos neste registro. A repetição da instalação em ambiente limpo continua prevista em M6.

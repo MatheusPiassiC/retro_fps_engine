@@ -21,7 +21,7 @@ Planejamento revisado para avaliação e estrutura inicial preparada. Os módulo
 
 ## Preparação do ambiente
 
-Python 3.12 é a versão de referência proposta. A compatibilidade e as versões instaladas serão verificadas em M0.
+Python 3.12 é a versão de referência. Em M0-2 foram conferidas as versões instaladas no ambiente existente com Python 3.12.3 e Pop!_OS 24.04 LTS. Consulte o [registro do ambiente](docs/validacao.md#7-m0-2--versões-do-ambiente) para as evidências e limitações.
 
 ```sh
 python3 -m venv .venv
@@ -32,6 +32,18 @@ python -m retro_fps
 
 No Windows, a ativação do ambiente usa `.venv\Scripts\Activate.ps1` no PowerShell. A instalação exige acesso ao índice de pacotes. O último comando atualmente exibe apenas uma mensagem informando o estado do projeto.
 
+### Instalação com as versões registradas
+
+O arquivo [requirements-dev.txt](requirements-dev.txt) registra as versões das dependências instaladas em M0-2. Para usar essas versões, após criar e ativar o ambiente virtual conforme acima, substitua o comando de instalação por:
+
+```sh
+python -m pip install -c requirements-dev.txt -e '.[dev]'
+```
+
+O `pyproject.toml` define as dependências e os intervalos de compatibilidade; `-c` restringe a instalação às versões registradas. O pacote local continua editável. Python, pip e ferramentas usadas na construção do pacote não são fixados por esse arquivo.
+
+Estas são instruções de reprodução; a instalação em um ambiente novo não foi executada em M0-2, por decisão do desenvolvedor.
+
 ## Verificação
 
 ```sh
@@ -40,8 +52,8 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-Ainda não existem testes da engine. A ausência de testes não representa aprovação do funcionamento. O registro reproduzível de versões será criado após a validação do ambiente em M0.
+Ainda não existem testes da engine. A ausência de testes não representa aprovação do funcionamento. As versões instaladas estão registradas em `requirements-dev.txt`; isso não comprova o funcionamento da engine.
 
 ## Próximo passo
 
-Revisar o roadmap e, em seguida, implementar M0: ambiente verificado, janela responsiva e encerramento normal. A demonstração de exploração será desenvolvida em `examples/exploration/`.
+Continuar M0 pela tarefa M0-3: criar janela responsiva e encerramento normal. A demonstração de exploração será desenvolvida em `examples/exploration/`.

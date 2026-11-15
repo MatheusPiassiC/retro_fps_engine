@@ -69,3 +69,13 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Decisão adotada:** usar os códigos locais do roadmap, como `M0-1` e `M0-2`, em branches, commits, PRs e evidências. A numeração reinicia em cada marco.
 - **Contribuição:** alinhamento do fluxo, roadmap, orientações para IA e modelos de registro; preservação das decisões anteriores como histórico.
 - **Verificação:** revisão do diff e busca de exigências antigas de numeração remota. Alteração apenas documental, sem criação de branches ou itens remotos.
+
+## 10. Registro — M0-2: versões e instruções de reprodução
+
+- **Marco e tarefa:** M0-2.
+- **Branch:** `chore/m0-2-document-verified-environment`.
+- **Pedido:** documentar as versões coletadas, sem realizar validação em outro ambiente virtual.
+- **Decisão adotada:** manter `requirements-dev.txt` como registro das versões e documentar no README a instalação usando restrições (`-c`). A reprodução em ambiente novo não foi verificada nesta tarefa, conforme escolha do desenvolvedor.
+- **Contribuição da IA:** conferência do arquivo com o ambiente existente e atualização do README, das evidências de validação e do progresso no roadmap.
+- **Verificação e resultado:** versões de Python, pip, sistema e dependências consultadas; arquivo de versões coincide com `pip freeze --exclude-editable`. Conferir versões é distinto de validar comportamentos da engine.
+- **Aprendizado com palavras próprias:** a preencher pelo desenvolvedor.
