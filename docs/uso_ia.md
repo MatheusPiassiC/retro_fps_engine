@@ -91,3 +91,11 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Aprendizado com palavras próprias:** a preencher pelo desenvolvedor após a explicação do código e a conferência da janela.
 
 - **Conclusão de M0-3:** após a explicação do código, o desenvolvedor confirmou a validação visual e solicitou o encerramento da tarefa. A IA atualizou o status e os registros, sem alterar a implementação.
+
+## 12. Registro — branches com várias tarefas do mesmo marco
+
+- **Pedido:** documentar o padrão para realizar M0-4 e M0-5 em uma entrega conjunta.
+- **Decisão adotada:** listar os números locais das tarefas em ordem crescente na branch, como `feat/m0-4-5-add-frame-timing-and-window-config`; a lista não representa um intervalo. Commits e PRs usam referências explícitas, como `[M0-4, M0-5]`, conforme as tarefas abrangidas.
+- **Contribuição:** inclusão das regras e exemplos no fluxo de desenvolvimento e alinhamento de `AGENTS.md`.
+- **Verificação:** revisão documental, `git diff --check` e conferência dos nomes de exemplo com `git check-ref-format --branch`.
+- **Estado:** convenção documentada; nenhuma branch criada e nenhuma implementação de M0-4 ou M0-5 realizada nesta alteração.

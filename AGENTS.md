@@ -27,6 +27,7 @@ Este é um projeto universitário de aprendizagem. Não presumir conhecimento pr
 - As issues são apenas descrições locais de tarefas; não exigir criação de issues ou milestones no GitHub. Os códigos locais não representam números do GitHub.
 - Usar branches como `feat/m0-3-create-pygame-window` e referências como `[M0-3]` em commits e PRs.
 - Nos nomes de branch, usar `<tipo>/m<marco>-<tarefa>-<descricao-em-ingles>`, com `m` minúsculo e descrição específica em inglês, com palavras minúsculas separadas por hífens, sem espaços, sublinhados, parênteses ou colchetes.
+- Para reunir tarefas do mesmo marco em uma mudança coesa, listar seus números em ordem crescente: `feat/m0-4-5-add-frame-timing-and-window-config`. Os números indicam tarefas incluídas, não um intervalo. Usar referências explícitas como `[M0-4, M0-5]` em commits que abranjam ambas e no PR, conforme `docs/fluxo_desenvolvimento.md`.
 - Antes da integração, conferir critérios da tarefa, verificações pertinentes e documentação. Registrar referências no histórico de aprendizado e validação.
 
 ## Verificação

@@ -64,6 +64,27 @@ git switch -c 'feat/m0-3-create-pygame-window'
 
 Use o código da tarefa correspondente no roadmap. Os textos das descrições e dos PRs permanecem em português. Um commit deve representar uma alteração compreensível; não é obrigatório ter apenas um commit por tarefa.
 
+### Entrega com várias tarefas do mesmo marco
+
+Uma branch pode reunir tarefas do mesmo marco quando elas formarem uma mudança coesa e pequena para revisão. Listar os números das tarefas em ordem crescente, separados por hífens:
+
+```text
+<tipo>/m<marco>-<tarefa>-<tarefa>-<descricao-em-ingles>
+```
+
+A lista pode conter mais de duas tarefas. Cada número identifica uma tarefa incluída, sem representar um intervalo: `m0-4-6` inclui apenas M0-4 e M0-6. Não repetir números nem agrupar um marco inteiro apenas por conveniência.
+
+Para a entrega conjunta de M0-4 e M0-5:
+
+| Item | Exemplo |
+|---|---|
+| Branch | `feat/m0-4-5-add-frame-timing-and-window-config` |
+| Commit abrangendo ambas as tarefas | `feat: [M0-4, M0-5] adiciona tempo entre quadros e configuração inicial` |
+| Título do PR | `[M0-4, M0-5] Adicionar tempo entre quadros e configuração inicial` |
+| Comunicação e evidências | `M0-4 e M0-5: tempo entre quadros, superfície de cor sólida e configuração inicial` |
+
+Nos commits, referenciar as tarefas efetivamente abordadas por cada alteração; o PR lista todas as tarefas da entrega. Conferir e registrar os critérios de cada tarefa antes de declará-la concluída, mesmo quando a integração for conjunta.
+
 ## 4. Conteúdo mínimo da descrição da tarefa
 
 ```markdown
