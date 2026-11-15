@@ -33,35 +33,35 @@ Os exemplos abaixo usam a issue fictícia #3.
 |---|---|---|
 | Milestone no GitHub | `M<n> — <resultado do marco>` | `M0 — Ambiente e ciclo da aplicação` |
 | Título da issue | `[M<n>] <ação e resultado>` | `[M0] Criar janela Pygame responsiva` |
-| Branch | `<tipo>/(M<marco>-<issue>)<descricao-em-ingles>` | `feat/(M0-3)create-pygame-window` |
+| Branch | `<tipo>/m<marco>-<issue>-<descricao-em-ingles>` | `feat/m0-3-create-pygame-window` |
 | Commit | `<tipo>: [M<n> #<numero>] <alteração>` | `feat: [M0 #3] cria janela e trata encerramento` |
 | Título do PR | `[M<n> #<numero>] <resultado>` | `[M0 #3] Criar janela Pygame responsiva` |
 | Comunicação e registros | `Marco <n> (M<n>), issue #<numero>: <tarefa>` | `Marco 0 (M0), issue #3: criar janela Pygame` |
 
 Tipos iniciais: `feat` para funcionalidade, `fix` para correção, `docs` para documentação, `test` para testes, `refactor` para reorganização sem mudança intencional de comportamento e `chore` para manutenção do ambiente. Esses nomes são uma convenção do projeto, não uma exigência do GitHub Flow.
 
-O identificador `(M0-3)` significa Marco 0, issue #3. Manter o `M` maiúsculo e não inserir separador entre o fechamento do parêntese e a descrição.
+O identificador `m0-3` significa Marco 0, issue #3. Nos nomes de branch, usar `m` minúsculo e um hífen entre o número da issue e a descrição, sem parênteses ou colchetes. As demais referências a marcos continuam usando `M0`, `M1` e assim por diante.
 
 Para nomes de branch:
 
 - Escrever a descrição em inglês, em letras minúsculas, com palavras separadas por hífens: `create-pygame-window`.
 - Trocar espaços por hífens; não usar sublinhados ou acentos na descrição.
 - Usar uma ação e um objeto específicos. Evitar nomes genéricos como `fix/bug`, `feat/novas-coisas` ou `branch-joao`.
-- Preservar o prefixo do tipo e a referência de marco e issue. Por exemplo, `feat/(M0-3)create-pygame-window` informa a entrega e sua rastreabilidade.
+- Preservar o prefixo do tipo e a referência de marco e issue. Por exemplo, `feat/m0-3-create-pygame-window` informa a entrega e sua rastreabilidade.
 
 Exemplos de aplicação da convenção (números ilustrativos):
 
 | Preferir | Evitar | Motivo |
 |---|---|---|
-| `feat/(M0-3)create-pygame-window` | `feat/(M0-3)create_pygame_window` | Separar palavras com hífens, sem sublinhados |
-| `feat/(M0-3)create-pygame-window` | `feat/(M0-3)create pygame window` | Não usar espaços |
-| `fix/(M0-4)handle-window-close` | `fix/(M0-4)bug` | Descrever o comportamento corrigido |
-| `docs/(M0-5)explain-window-controls` | `branch-joao` | Identificar tipo, marco, issue e finalidade |
+| `feat/m0-3-create-pygame-window` | `feat/m0-3-create_pygame_window` | Separar palavras com hífens, sem sublinhados |
+| `feat/m0-3-create-pygame-window` | `feat/m0-3-create pygame window` | Não usar espaços |
+| `fix/m0-4-handle-window-close` | `fix/m0-4-bug` | Descrever o comportamento corrigido |
+| `docs/m0-5-explain-window-controls` | `branch-joao` | Identificar tipo, marco, issue e finalidade |
 
-Ao passar um nome de branch com parênteses ao shell, colocá-lo entre aspas:
+Exemplo de criação de branch com a convenção atual:
 
 ```sh
-git switch -c 'feat/(M0-3)create-pygame-window'
+git switch -c 'feat/m0-3-create-pygame-window'
 ```
 
 O comando é ilustrativo e só deve ser usado com o número real da issue correspondente. Os textos de issues e PRs permanecem em português. Um commit deve representar uma alteração compreensível; não é obrigatório ter apenas um commit por issue.

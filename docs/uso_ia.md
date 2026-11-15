@@ -43,15 +43,22 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Contribuição:** documentação do ciclo issue → branch → implementação e validação → PR → integração, com convenções e exemplos.
 - **Estado:** documentação preparada; nenhum item remoto ou branch foi criado nesta alteração. Os números apresentados são ilustrativos.
 
-## 6. Registro — nomenclatura de branches
+## 6. Registro — nomenclatura inicial de branches (substituída)
 
 - **Pedido:** adotar nomes como `feat/(M0-3)create-pygame-window`, com hífens entre palavras e descrições específicas.
 - **Contribuição:** atualização da convenção e das orientações para IA, incluindo exemplo de comando com o nome entre aspas.
-- **Estado:** alteração documental; nenhum nome de branch existente foi alterado.
+- **Estado:** alteração documental; nenhum nome de branch existente foi alterado. Esta convenção foi substituída pela decisão registrada na seção 7; a regra atual está em [fluxo de desenvolvimento](fluxo_desenvolvimento.md).
 
 ## 7. Registro - preparação do ambiente
 
 - **Marco e issue:** M0-1
 - **Tarefa, branch e PR:** A tarefa envolcie preparar o ambiente, criação do .ven, e instalação de pactotes.
-- **Decisão adotada e justificativa:** O padrão de nomenclatura de branchs será alterado para [chore/mX-Y-install-editable-dev-environment], pois o zsh não lida bem com o uso de parenteses.
+- **Decisão adotada e justificativa:** O padrão de nomenclatura de branches passa a ser `<tipo>/m<marco>-<issue>-<descricao-em-ingles>`, como `chore/mX-Y-install-editable-dev-environment`, substituindo X pelo marco e Y pelo número real da issue. O nome não inclui colchetes nem parênteses, simplificando o uso no zsh. A convenção anterior funcionava com o nome entre aspas.
 - **Verificação independente e resultado:** O ambiente foi preparado com sucesso e as alterações foram feitas conforme o codex instruiu.
+
+## 8. Registro — atualização da convenção de branches
+
+- **Pedido:** aplicar à documentação a decisão de nomenclatura registrada na seção 7.
+- **Contribuição:** atualização das regras e exemplos em `docs/fluxo_desenvolvimento.md` e `AGENTS.md`, preservando o registro histórico da convenção anterior.
+- **Verificação:** revisão do diff, conferência dos nomes de exemplo com `git check-ref-format --branch` e busca de referências à convenção anterior.
+- **Estado:** convenção documental atualizada; nenhuma branch foi criada ou renomeada nesta alteração.

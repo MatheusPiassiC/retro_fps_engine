@@ -25,8 +25,8 @@ Este é um projeto universitário de aprendizagem. Não presumir conhecimento pr
 - Seguir GitHub Flow conforme `docs/fluxo_desenvolvimento.md`, com branches curtas por feature ou mudança coesa e integração por PR.
 - Identificar tarefas e atualizações por marco e issue: `Marco 0 (M0), issue #3: criar janela Pygame` é apenas um exemplo.
 - Usar números reais atribuídos pelo GitHub; não inventar issues. Se ainda não houver issue, preparar seu escopo antes de referenciá-la como existente.
-- Usar branches como `feat/(M0-3)create-pygame-window` e referências de marco e issue em commits e PRs.
-- Nos nomes de branch, manter `(M<marco>-<issue>)` e descrição específica em inglês, com palavras minúsculas separadas por hífens, sem espaços ou sublinhados. Colocar o nome entre aspas nos comandos de shell por conter parênteses.
+- Usar branches como `feat/m0-3-create-pygame-window` e referências de marco e issue em commits e PRs.
+- Nos nomes de branch, usar `<tipo>/m<marco>-<issue>-<descricao-em-ingles>`, com `m` minúsculo e descrição específica em inglês, com palavras minúsculas separadas por hífens, sem espaços, sublinhados, parênteses ou colchetes.
 - Antes da integração, conferir critérios da issue, verificações pertinentes e documentação. Registrar referências no histórico de aprendizado e validação.
 
 ## Verificação
