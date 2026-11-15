@@ -2,7 +2,7 @@
 
 ## 1. Intenção e estado
 
-A engine oferecerá mecanismos reutilizáveis para jogos baseados em ambientes de grade, inspirados visualmente em Wolfenstein 3D. Os módulos criados neste repositório contêm apenas descrições de responsabilidade. As interfaces abaixo são propostas para orientar os primeiros marcos, e não APIs já implementadas.
+A engine oferecerá mecanismos reutilizáveis para jogos baseados em ambientes de grade, inspirados visualmente em Wolfenstein 3D. Em M0-3, `engine.run()` passou a abrir a janela, processar eventos de encerramento e liberar recursos; `__main__` chama esse executor. Os demais módulos permanecem esqueleto. As interfaces de mundo e sessão abaixo continuam propostas, e não APIs implementadas.
 
 Reutilização significa que outro programa pode importar a engine, fornecer um mundo e controlar uma sessão sem copiar o renderizador ou editar suas regras internas. Não significa oferecer antecipadamente um editor, um sistema universal de plugins ou suporte a qualquer tipo de jogo.
 
@@ -84,7 +84,7 @@ A comprovação mínima de reutilização será o exemplo externo importar o pac
 
 A proposta adota uma **arquitetura modular em um único processo, com separação entre núcleo computacional e infraestrutura de entrada e apresentação**. O pacote é uma biblioteca; a demonstração é uma aplicação cliente dessa biblioteca. Os limites são mantidos por módulos e contratos, sem serviços separados ou comunicação de rede.
 
-Uma arquitetura descreve as partes principais, suas responsabilidades e as dependências permitidas. Um padrão de projeto resolve um problema mais localizado. Ter um arquivo por responsabilidade ajuda, mas os limites só existirão de fato se as dependências e o comportamento os respeitarem. Atualmente temos uma proposta arquitetural e um esqueleto, ainda sem implementação que a comprove.
+Uma arquitetura descreve as partes principais, suas responsabilidades e as dependências permitidas. Um padrão de projeto resolve um problema mais localizado. Ter um arquivo por responsabilidade ajuda, mas os limites só existirão de fato se as dependências e o comportamento os respeitarem. Atualmente temos uma proposta arquitetural e um ciclo inicial de janela; os limites entre os componentes geométricos ainda não foram comprovados por implementação.
 
 ### Organização lógica e dependências
 
@@ -141,3 +141,9 @@ A regra de vitória pode mudar sem alterar DDA ou colisões. O teclado pode muda
 - **Microsserviços:** o projeto é uma simulação gráfica local. Distribuir seus componentes exigiria protocolos e coordenação sem benefício identificado.
 
 Essas escolhas não impedem aprender os estilos ao longo do projeto. A implementação só deve introduzi-los quando houver um problema específico, um benefício demonstrável e critérios para verificar que a solução ficou mais compreensível.
+
+## 10. Comportamento implementado em M0-3
+
+`engine.run()` inicializa apenas o subsistema de exibição, pois esta etapa não usa áudio ou outros recursos. Abre uma janela de 640 × 480 pixels e consulta os eventos até receber `QUIT` ou `KEYDOWN` com Escape. Um bloco `finally` executa `pygame.quit()` também se a criação da janela falhar; o erro continua sendo propagado.
+
+O loop usa `Clock.tick(60)` para limitar sua frequência e evitar espera contínua ocupando CPU. Isso não garante 60 FPS nem implementa medição em segundos: o intervalo entre quadros e a apresentação de cor sólida pertencem a M0-4. Dimensões, título e limite de frequência são provisórios; a configuração inicial será tratada em M0-5.

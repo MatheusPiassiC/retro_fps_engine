@@ -89,3 +89,26 @@ A pasta `tests/` está reservada. Enquanto não houver testes, o pytest poderá 
 As instruções de instalação com essas versões estão no README. O arquivo de versões é uma fotografia do ambiente existente; não fixa o interpretador, o sistema operacional ou todas as ferramentas de construção do pacote.
 
 **Limitações:** por decisão do desenvolvedor, não foi criada outra `.venv` nem repetida a instalação em ambiente novo nesta tarefa. A conferência de versões não comprova compatibilidade com outras máquinas ou funcionamento da engine. Não foram executados pytest, Ruff ou `pip check` nesta atualização documental, e não são atribuídos resultados a esses comandos neste registro. A repetição da instalação em ambiente limpo continua prevista em M6.
+
+## 8. M0-3 — Ciclo inicial da janela
+
+- **Branch:** `feat/m0-3-create-pygame-window`.
+- **Implementação:** `engine.run()` abre a janela e encerra com Escape ou `QUIT`; `finally` libera os recursos mesmo após erro na abertura.
+- **Ambiente:** Python 3.12.3, Pygame 2.6.1, SDL 2.28.4, com `SDL_VIDEODRIVER=dummy` na verificação automatizada pontual.
+- **Procedimento automatizado:** script pontual executando o loop real, publicando na fila do Pygame, separadamente, um evento `QUIT` e um `KEYDOWN` com Escape logo após criar o display. Após cada retorno, verificou-se `pygame.display.get_init() == False`. Uma terceira execução simulou erro em `set_mode` e verificou propagação do erro e desinicialização do display.
+- **Resultado esperado e observado:** as duas solicitações encerram o loop e liberam o display; a falha simulada também libera o display. Esses casos conferem comportamento de encerramento sem depender de imports ou sintaxe apenas.
+- **Suíte:** `python -m pytest` não coletou testes e retornou código 5; o script pontual não integra a suíte.
+- **Verificações estáticas:** `python -m ruff check .`, `python -m ruff format --check .` e `git diff --check` passaram, usando o Python da `.venv` para o Ruff.
+- **Limitação:** o driver dummy não apresenta uma janela real. A conferência visual foi realizada separadamente pelo desenvolvedor, que confirmou sua conclusão. Esse relato complementa a verificação automatizada; não foi observado diretamente pela IA.
+
+### Procedimento de conferência manual
+
+1. Ativar a `.venv` e executar `python -m retro_fps` em uma sessão gráfica.
+2. Conferir título e janela de 640 × 480 pixels; mover a janela e verificar que responde ao sistema.
+3. Pressionar Escape: esperar fechamento e retorno ao terminal sem traceback.
+4. Executar novamente e clicar no botão de fechar: esperar o mesmo resultado.
+5. Registrar os resultados observados.
+
+**Resultado informado pelo desenvolvedor:** a janela abriu preta e pôde ser fechada; após a explicação do código e do procedimento acima, o desenvolvedor confirmou que realizou a validação visual e solicitou a conclusão da tarefa. M0-3 concluído com base nessa confirmação e nas verificações automatizadas registradas acima.
+
+Ainda não há desenho explícito de cor sólida ou mapa nesta etapa. Esses elementos não são critérios desta conferência.
