@@ -50,7 +50,7 @@ Testes e documentação acompanham cada marco. M6 consolida essas verificações
 **Tarefas:**
 
 1. Instalar o pacote em modo editável com as ferramentas de desenvolvimento.
-2. Registrar versões efetivamente verificadas e instruções de reprodução.
+2. Registrar versões efetivamente verificadas e instruções de reprodução. **Concluída (M0-2):** versões do ambiente existente registradas e instruções documentadas; instalação em ambiente novo não verificada nesta tarefa. Ver [evidências](validacao.md#7-m0-2--versões-do-ambiente).
 3. Criar janela Pygame, loop, captura de eventos e encerramento com liberação de recursos.
 4. Medir o intervalo entre quadros em segundos e apresentar uma superfície de cor sólida.
 5. Definir uma configuração inicial pequena, evitando números espalhados pelo código.
