@@ -112,3 +112,29 @@ As instruções de instalação com essas versões estão no README. O arquivo d
 **Resultado informado pelo desenvolvedor:** a janela abriu preta e pôde ser fechada; após a explicação do código e do procedimento acima, o desenvolvedor confirmou que realizou a validação visual e solicitou a conclusão da tarefa. M0-3 concluído com base nessa confirmação e nas verificações automatizadas registradas acima.
 
 Ainda não há desenho explícito de cor sólida ou mapa nesta etapa. Esses elementos não são critérios desta conferência.
+
+## 9. M0-4 e M0-5 — Tempo, desenho e configuração
+
+- **Branch:** `feat/m0-4-5-add-frame-timing-and-window-config`.
+- **M0-4 implementado:** conversão de milissegundos para segundos, exibição do intervalo no título e apresentação da superfície preenchida com cor sólida.
+- **M0-5 implementado:** `WindowConfig` concentra dimensões, título, limite de frequência e cor, com validação antes de abrir a janela.
+- **Verificação pontual:** script com `SDL_VIDEODRIVER=dummy` executou o loop com configuração padrão (640 × 480, azul, limite 60) e alternativa (320 × 240, vermelho, limite 30). Foram conferidos tamanho e pixels no canto superior esquerdo, centro e canto inferior direito da superfície no momento da apresentação.
+- **Tempo esperado e observado:** relógio controlado retornando 20 ms produziu `dt: 0.020 s` no título, pois um segundo tem 1000 ms. Esse caso confere a conversão; não mede a precisão do relógio real nem o desempenho.
+- **Encerramento:** após um quadro, eventos reais de `QUIT` e Escape foram publicados na fila nas duas execuções, respectivamente; ambas retornaram e desinicializaram o display, sem apresentar um segundo quadro.
+- **Configuração inválida:** largura zero, altura negativa, limite zero, canal de cor 256 e cor com dois canais foram rejeitados com `ValueError`, sem inicializar o display.
+- **Suíte:** pytest continua sem testes coletados (código 5); as verificações acima são scripts pontuais, não testes incorporados à suíte.
+- **Limitação:** driver dummy não comprova aparência ou comportamento do gerenciador de janelas. A conferência visual foi realizada separadamente pelo desenvolvedor, que confirmou sua conclusão; não foi observada diretamente pela IA.
+
+### Procedimento de conferência manual
+
+1. Executar `python -m retro_fps` com a `.venv` ativa: esperar fundo azul uniforme e título com `dt` em segundos.
+2. Observar o intervalo por alguns segundos: perto do limite 60, valores na ordem de 0.016 s são plausíveis, mas não exigir valor constante ou exato.
+3. Repetir fechamento com Escape e pelo botão da janela.
+4. Executar o exemplo de configuração alternativa do README: esperar janela de 800 × 600, fundo avermelhado e limite 30, sem exigir taxa exata.
+5. Registrar os resultados por tarefa antes de concluir M0-4, M0-5 e o marco M0.
+
+- **Conferências finais desta entrega:** `run()` sem argumentos também foi executado com relógio real e driver dummy, conferindo tamanho, cor padrão, título em segundos e liberação do display. `python -m ruff check .`, `python -m ruff format --check .` e `git diff --check` passaram.
+
+**Conclusão informada pelo desenvolvedor:** após a explicação do loop, da configuração, das anotações e da dataclass, o desenvolvedor confirmou ter realizado a validação visual da entrega conjunta. M0-4 e M0-5 concluídos com base nessa confirmação e nas verificações pontuais acima. Não foram fornecidas novas medições de desempenho.
+
+**Conclusão de M0:** pacote instalado no ambiente atual, versões registradas, janela com eventos de encerramento, intervalo em segundos, cor sólida e configuração inicial implementados. As verificações estáticas passaram; pytest executa, mas ainda não coleta testes (código 5). A instalação em ambiente limpo não foi repetida, conforme decisão registrada em M0-2. O encerramento do marco não representa validação dos algoritmos futuros da engine nem integração automática da branch.

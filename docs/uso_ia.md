@@ -99,3 +99,15 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Contribuição:** inclusão das regras e exemplos no fluxo de desenvolvimento e alinhamento de `AGENTS.md`.
 - **Verificação:** revisão documental, `git diff --check` e conferência dos nomes de exemplo com `git check-ref-format --branch`.
 - **Estado:** convenção documentada; nenhuma branch criada e nenhuma implementação de M0-4 ou M0-5 realizada nesta alteração.
+
+## 13. Registro — M0-4 e M0-5: tempo, desenho e configuração
+
+- **Tarefas e branch:** M0-4 e M0-5; `feat/m0-4-5-add-frame-timing-and-window-config`.
+- **Pedido:** implementar as duas tarefas em uma entrega coesa.
+- **Contribuição:** explicação de milissegundos e segundos, implementação de `WindowConfig`, preenchimento e apresentação da superfície e exibição do intervalo no título.
+- **Decisão adotada:** configuração pequena e imutável em módulo sem dependência gráfica; sem API de simulação, movimento ou abstrações de renderização nesta etapa.
+- **Verificação:** script pontual com duas configurações, amostras de pixels da superfície real, relógio controlado de 20 ms, eventos de saída e entradas inválidas; conferência visual posteriormente confirmada pelo desenvolvedor. Pytest ainda não coleta testes.
+- **Aprendizado com palavras próprias:** a preencher pelo desenvolvedor após revisar e executar a entrega.
+
+- **Explicação complementar:** funcionamento de `WindowConfig`, anotações, `__init__` gerado pela dataclass, `__post_init__`, atributos de classe e instância e comparação com uma classe comum.
+- **Conclusão:** o desenvolvedor confirmou a validação visual. A IA atualizou os registros para concluir M0-4, M0-5 e M0 no ambiente atual, mantendo explícitas as limitações e a integração por PR como etapa separada. Nenhuma alteração de código foi necessária para este registro.

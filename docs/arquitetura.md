@@ -2,7 +2,7 @@
 
 ## 1. Intenção e estado
 
-A engine oferecerá mecanismos reutilizáveis para jogos baseados em ambientes de grade, inspirados visualmente em Wolfenstein 3D. Em M0-3, `engine.run()` passou a abrir a janela, processar eventos de encerramento e liberar recursos; `__main__` chama esse executor. Os demais módulos permanecem esqueleto. As interfaces de mundo e sessão abaixo continuam propostas, e não APIs implementadas.
+A engine oferecerá mecanismos reutilizáveis para jogos baseados em ambientes de grade, inspirados visualmente em Wolfenstein 3D. Em M0-3, `engine.run()` passou a abrir a janela, processar eventos de encerramento e liberar recursos; `__main__` chama esse executor. M0-4 e M0-5 acrescentaram configuração da janela, medição em segundos e desenho de cor sólida. Os demais módulos permanecem esqueleto. As interfaces de mundo e sessão abaixo continuam propostas, e não APIs implementadas.
 
 Reutilização significa que outro programa pode importar a engine, fornecer um mundo e controlar uma sessão sem copiar o renderizador ou editar suas regras internas. Não significa oferecer antecipadamente um editor, um sistema universal de plugins ou suporte a qualquer tipo de jogo.
 
@@ -24,6 +24,7 @@ retro_fps_engine/
 ├── src/retro_fps/
 │   ├── __init__.py
 │   ├── __main__.py
+│   ├── config.py
 │   ├── engine.py
 │   ├── world.py
 │   ├── player.py
@@ -142,8 +143,12 @@ A regra de vitória pode mudar sem alterar DDA ou colisões. O teclado pode muda
 
 Essas escolhas não impedem aprender os estilos ao longo do projeto. A implementação só deve introduzi-los quando houver um problema específico, um benefício demonstrável e critérios para verificar que a solução ficou mais compreensível.
 
-## 10. Comportamento implementado em M0-3
+## 10. Comportamento implementado em M0
 
 `engine.run()` inicializa apenas o subsistema de exibição, pois esta etapa não usa áudio ou outros recursos. Abre uma janela de 640 × 480 pixels e consulta os eventos até receber `QUIT` ou `KEYDOWN` com Escape. Um bloco `finally` executa `pygame.quit()` também se a criação da janela falhar; o erro continua sendo propagado.
 
-O loop usa `Clock.tick(60)` para limitar sua frequência e evitar espera contínua ocupando CPU. Isso não garante 60 FPS nem implementa medição em segundos: o intervalo entre quadros e a apresentação de cor sólida pertencem a M0-4. Dimensões, título e limite de frequência são provisórios; a configuração inicial será tratada em M0-5.
+Em M0-4 e M0-5, `WindowConfig` passou a reunir as opções de janela (padrões e exemplo no README). É uma dataclass imutável, sem dependência gráfica; rejeita dimensões e limite de frequência que não sejam inteiros positivos e cores que não tenham três canais inteiros entre 0 e 255. `run(config=None)` cria uma configuração padrão quando nenhuma é fornecida.
+
+A cada iteração, `Clock.tick(config.frame_limit)` limita a frequência e retorna o intervalo em milissegundos, convertido para segundos por divisão por 1000. Por exemplo, 20 ms correspondem a 0.020 s. O valor é mostrado no título, arredondado a três casas; ainda não há simulação que o consuma. O primeiro intervalo inclui o tempo desde a criação do relógio, não um quadro anterior completo. O limite não garante taxa exata nem precisão de temporização.
+
+Após processar os eventos, se não houver pedido de saída, `screen.fill()` preenche a superfície e `pygame.display.flip()` apresenta o quadro. Não se desenha outro quadro após detectar o encerramento. Esta etapa não implementa projeção, movimento ou uma configuração completa de sessão.
