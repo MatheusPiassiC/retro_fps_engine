@@ -48,3 +48,10 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Pedido:** adotar nomes como `feat/(M0-3)create-pygame-window`, com hífens entre palavras e descrições específicas.
 - **Contribuição:** atualização da convenção e das orientações para IA, incluindo exemplo de comando com o nome entre aspas.
 - **Estado:** alteração documental; nenhum nome de branch existente foi alterado.
+
+## 7. Registro - preparação do ambiente
+
+- **Marco e issue:** M0-1
+- **Tarefa, branch e PR:** A tarefa envolcie preparar o ambiente, criação do .ven, e instalação de pactotes.
+- **Decisão adotada e justificativa:** O padrão de nomenclatura de branchs será alterado para [chore/mX-Y-install-editable-dev-environment], pois o zsh não lida bem com o uso de parenteses.
+- **Verificação independente e resultado:** O ambiente foi preparado com sucesso e as alterações foram feitas conforme o codex instruiu.
