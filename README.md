@@ -6,7 +6,7 @@ A entrega mínima planejada é carregar um mapa externo e explorá-lo em primeir
 
 ## Estado atual
 
-Planejamento revisado para avaliação e estrutura inicial preparada. Os módulos contêm apenas descrições de responsabilidade. Ainda não há janela, renderização, movimento, carregador ou testes comportamentais implementados. Os mapas são exemplos da sintaxe proposta.
+M0 em andamento: a entrada do pacote abre uma janela inicial de 640 × 480 pixels, processa eventos e encerra com Escape ou pelo botão de fechar. A conferência visual foi confirmada pelo desenvolvedor em M0-3. Ainda não há renderização de mapas, movimento, carregador ou testes comportamentais na suíte. Os mapas são exemplos da sintaxe proposta.
 
 ## Documentação
 
@@ -30,7 +30,7 @@ python -m pip install -e '.[dev]'
 python -m retro_fps
 ```
 
-No Windows, a ativação do ambiente usa `.venv\Scripts\Activate.ps1` no PowerShell. A instalação exige acesso ao índice de pacotes. O último comando atualmente exibe apenas uma mensagem informando o estado do projeto.
+No Windows, a ativação do ambiente usa `.venv\Scripts\Activate.ps1` no PowerShell. A instalação exige acesso ao índice de pacotes. O último comando abre a janela inicial e exige uma sessão gráfica disponível. Escape ou o botão de fechar encerram a aplicação.
 
 ### Instalação com as versões registradas
 
@@ -56,4 +56,4 @@ Ainda não existem testes da engine. A ausência de testes não representa aprov
 
 ## Próximo passo
 
-Continuar M0 pela tarefa M0-3: criar janela responsiva e encerramento normal. A demonstração de exploração será desenvolvida em `examples/exploration/`.
+Continuar M0-4: intervalo entre quadros em segundos e superfície de cor sólida. A demonstração de exploração será desenvolvida em `examples/exploration/`.

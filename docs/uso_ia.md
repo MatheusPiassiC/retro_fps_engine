@@ -79,3 +79,15 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Contribuição da IA:** conferência do arquivo com o ambiente existente e atualização do README, das evidências de validação e do progresso no roadmap.
 - **Verificação e resultado:** versões de Python, pip, sistema e dependências consultadas; arquivo de versões coincide com `pip freeze --exclude-editable`. Conferir versões é distinto de validar comportamentos da engine.
 - **Aprendizado com palavras próprias:** a preencher pelo desenvolvedor.
+
+## 11. Registro — M0-3: ciclo inicial da janela
+
+- **Marco e tarefa:** M0-3.
+- **Branch:** `feat/m0-3-create-pygame-window`.
+- **Pedido:** continuar a implementação conforme o roadmap.
+- **Contribuição:** explicação do ciclo abrir → consultar eventos → encerrar; implementação pequena em `engine.py` e chamada por `__main__.py`, com documentação dos limites.
+- **Decisão adotada:** inicializar apenas o display, usar `finally` para liberar recursos e limitar a frequência do loop; configuração e medição de tempo continuam nas tarefas seguintes.
+- **Verificação:** script pontual com eventos reais na fila do Pygame usando display dummy, incluindo falha simulada na abertura; conferência visual posteriormente confirmada pelo desenvolvedor. Pytest ainda sem testes coletados.
+- **Aprendizado com palavras próprias:** a preencher pelo desenvolvedor após a explicação do código e a conferência da janela.
+
+- **Conclusão de M0-3:** após a explicação do código, o desenvolvedor confirmou a validação visual e solicitou o encerramento da tarefa. A IA atualizou o status e os registros, sem alterar a implementação.
