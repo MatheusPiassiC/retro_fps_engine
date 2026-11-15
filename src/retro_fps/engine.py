@@ -2,24 +2,35 @@
 
 import pygame
 
+from retro_fps.config import WindowConfig
 
-def run() -> None:
-    """Abra a janela e processe eventos até receber um pedido de encerramento."""
+
+def run(config: WindowConfig | None = None) -> None:
+    """Apresente uma cor sólida e o intervalo em segundos no título da janela."""
+    if config is None:
+        config = WindowConfig()
+
     try:
         pygame.display.init()
-        pygame.display.set_mode((640, 480))
-        pygame.display.set_caption("RetroFPS Engine")
+        screen = pygame.display.set_mode((config.width, config.height))
+        pygame.display.set_caption(config.title)
         clock = pygame.time.Clock()
         running = True
 
         while running:
+            # tick retorna milissegundos: 16 ms correspondem a 0.016 segundo.
+            delta_time = clock.tick(config.frame_limit) / 1000.0
             for event in pygame.event.get():
                 if event.type == pygame.QUIT or (
                     event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE
                 ):
                     running = False
 
-            # Evite que a espera por eventos ocupe continuamente um núcleo da CPU.
-            clock.tick(60)
+            if not running:
+                break
+
+            screen.fill(config.background_color)
+            pygame.display.flip()
+            pygame.display.set_caption(f"{config.title} | dt: {delta_time:.3f} s")
     finally:
         pygame.quit()

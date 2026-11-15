@@ -6,7 +6,7 @@ A entrega mínima planejada é carregar um mapa externo e explorá-lo em primeir
 
 ## Estado atual
 
-M0 em andamento: a entrada do pacote abre uma janela inicial de 640 × 480 pixels, processa eventos e encerra com Escape ou pelo botão de fechar. A conferência visual foi confirmada pelo desenvolvedor em M0-3. Ainda não há renderização de mapas, movimento, carregador ou testes comportamentais na suíte. Os mapas são exemplos da sintaxe proposta.
+M0 concluído no ambiente atual: a entrada do pacote abre uma janela de 640 × 480 pixels com fundo azul e intervalo entre quadros em segundos no título. Escape ou o botão de fechar encerram a aplicação. O desenvolvedor confirmou a conferência visual de M0-3 e da entrega conjunta M0-4 e M0-5. Ainda não há renderização de mapas, movimento, carregador ou testes comportamentais na suíte. Os mapas são exemplos da sintaxe proposta.
 
 ## Documentação
 
@@ -44,6 +44,21 @@ O `pyproject.toml` define as dependências e os intervalos de compatibilidade; `
 
 Estas são instruções de reprodução; a instalação em um ambiente novo não foi executada em M0-2, por decisão do desenvolvedor.
 
+### Configuração inicial
+
+`WindowConfig`, em `retro_fps.config`, reúne dimensões em pixels, título, limite de quadros por segundo e cor RGB (três canais de 0 a 255). Os padrões são 640 × 480, título `RetroFPS Engine`, limite de 60 quadros por segundo e fundo azul `(40, 80, 120)`.
+
+É possível fornecer outra configuração sem editar a coordenação:
+
+```python
+from retro_fps.config import WindowConfig
+from retro_fps.engine import run
+
+run(WindowConfig(width=800, height=600, frame_limit=30, background_color=(80, 40, 40)))
+```
+
+O título exibe `dt`, o intervalo medido em segundos, arredondado a três casas. O limite de frequência não garante uma taxa exata de quadros.
+
 ## Verificação
 
 ```sh
@@ -56,4 +71,4 @@ Ainda não existem testes da engine. A ausência de testes não representa aprov
 
 ## Próximo passo
 
-Continuar M0-4: intervalo entre quadros em segundos e superfície de cor sólida. A demonstração de exploração será desenvolvida em `examples/exploration/`.
+Após integrar a entrega conjunta de M0-4 e M0-5 por PR, iniciar M1: representação do mundo e primeiro raio em um mapa pequeno. A demonstração de exploração será desenvolvida em `examples/exploration/`.

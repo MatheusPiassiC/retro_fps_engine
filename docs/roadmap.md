@@ -6,7 +6,7 @@ Este planejamento organiza um projeto universitário de aprendizagem. Não press
 
 A referência conceitual é Wolfenstein 3D: mundo em grade, paredes verticais e exploração em primeira pessoa. A entrega mínima é uma engine reutilizável com uma demonstração de navegação. Objetivos, combate e reprodução completa do jogo de referência não são obrigatórios.
 
-Não há datas ou estimativas de horas neste planejamento. O avanço depende das evidências de conclusão. M0 está em andamento e os demais marcos estão pendentes; a preparação de documentos e arquivos não significa que seus comportamentos já foram implementados.
+Não há datas ou estimativas de horas neste planejamento. O avanço depende das evidências de conclusão. M0 está concluído no ambiente atual e os demais marcos estão pendentes; a preparação de documentos e arquivos não significa que seus comportamentos já foram implementados.
 
 O ciclo de trabalho será: entender uma ideia, especificar uma pequena mudança, implementar, verificar, explicar o resultado e atualizar a documentação. Esse uso de especificações será leve e incremental.
 
@@ -49,11 +49,13 @@ Testes e documentação acompanham cada marco. M6 consolida essas verificações
 
 **Tarefas:**
 
-1. Instalar o pacote em modo editável com as ferramentas de desenvolvimento.
+1. Instalar o pacote em modo editável com as ferramentas de desenvolvimento. **Concluída (M0-1):** instalação confirmada pelo desenvolvedor e versões conferidas em M0-2.
 2. Registrar versões efetivamente verificadas e instruções de reprodução. **Concluída (M0-2):** versões do ambiente existente registradas e instruções documentadas; instalação em ambiente novo não verificada nesta tarefa. Ver [evidências](validacao.md#7-m0-2--versões-do-ambiente).
 3. Criar janela Pygame, loop, captura de eventos e encerramento com liberação de recursos. **Concluída (M0-3), com conferência visual confirmada pelo desenvolvedor:** ver [evidências e procedimento manual](validacao.md#8-m0-3--ciclo-inicial-da-janela).
-4. Medir o intervalo entre quadros em segundos e apresentar uma superfície de cor sólida.
-5. Definir uma configuração inicial pequena, evitando números espalhados pelo código.
+4. Medir o intervalo entre quadros em segundos e apresentar uma superfície de cor sólida. **Concluída (M0-4), com conferência visual confirmada pelo desenvolvedor:** ver [evidências](validacao.md#9-m0-4-e-m0-5--tempo-desenho-e-configuração).
+5. Definir uma configuração inicial pequena, evitando números espalhados pelo código. **Concluída (M0-5), na mesma entrega de M0-4:** configuração de janela em `WindowConfig`; conferência visual confirmada pelo desenvolvedor.
+
+**Estado:** M0 concluído no ambiente atual, com instalação relatada pelo desenvolvedor, versões registradas, verificações pontuais e estáticas e validação visual confirmada. Pytest ainda sem testes coletados; reprodução em ambiente limpo não verificada nesta etapa, conforme registro de M0-2. Integração da entrega por PR é uma etapa separada.
 
 **Entrega:** janela executável e instruções conferidas.
 
