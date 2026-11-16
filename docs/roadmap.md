@@ -94,7 +94,7 @@ Testes e documentação acompanham cada marco. M6 consolida essas verificações
 2. Calcular um raio para o centro de cada coluna da resolução interna. **Concluída (M2-2):** `Camera.ray_direction()` implementado e validado pelo desenvolvedor; ver [evidências](validacao.md#16-m2-2-e-m2-3--raios-pelos-centros-das-colunas).
 3. Usar direções não normalizadas, coerentes com a profundidade perpendicular do DDA. **Concluída (M2-3):** comprimento dos raios e profundidade frontal constante conferidos por testes integrados com o DDA; etapa validada pelo desenvolvedor.
 4. Converter profundidade em altura projetada; limitar o desenho à tela e proteger distâncias próximas de zero. **Concluída (M2-4):** projeção independente de Pygame, recorte e proteção implementados, com 29 testes novos e aprovação do desenvolvedor. Ver [evidências](validacao.md#17-m2-4--projeção-e-recorte).
-5. Desenhar paredes coloridas, piso e teto; distinguir lados de parede por tonalidade para facilitar a inspeção.
+5. Desenhar paredes coloridas, piso e teto; distinguir lados de parede por tonalidade para facilitar a inspeção. **Concluída (M2-5):** sala estática apresentada pelo comando principal, com ampliação proporcional, testes de pixels e loop e conferência visual confirmada pelo desenvolvedor. Ver [evidências](validacao.md#18-m2-5--primeira-imagem-em-perspectiva).
 6. Comparar uma sala e um corredor controlados com a geometria esperada.
 
 **Entrega:** imagem estática em perspectiva, apresentada pelo Pygame.

@@ -200,7 +200,7 @@ A câmera não guarda posição nem executa o percurso dos raios. A origem é fo
 
 Coluna e largura devem ser inteiros, sem booleanos (`TypeError`); largura deve ser positiva (`ValueError`); coluna deve estar entre zero e largura menos um (`IndexError`). A direção não é normalizada. Como a direção frontal é unitária e o plano é perpendicular, a componente frontal de cada raio é 1: o parâmetro retornado pelo DDA representa profundidade frontal. Não aplicar correção adicional por cosseno.
 
-A aplicação fornece a direção resultante a `cast_ray(world, origin, direction)`. Não há novo executor, resolução fixa ou alteração no loop. Projeção, desenho e recorte continuam pendentes.
+A aplicação fornece a direção resultante a `cast_ray(world, origin, direction)`. Não há novo executor, resolução fixa ou alteração no loop. Projeção e apresentação foram implementadas em M2-4/M2-5, conforme as seções seguintes.
 
 
 ## 15. Projeção implementada em M2-4
@@ -210,3 +210,18 @@ O módulo `retro_fps.projection` não importa Pygame. `projected_wall_height(dep
 `wall_span(projected_height, height)` centraliza a parede para uma câmera a meia altura e retorna `[top, bottom)`, com topo por piso e base por teto matemático. Paredes maiores que a imagem são recortadas antes da conversão para inteiros. Altura projetada zero produz intervalo vazio, inclusive para altura de imagem ímpar.
 
 Dimensões exigem inteiros positivos, sem booleanos (`TypeError` para tipos e `ValueError` para valores). Profundidade e altura projetada devem ser finitas e não negativas; campo de visão finito entre 0 e pi. Esses valores inválidos causam `ValueError`. Não há desenho nesta etapa.
+
+
+## 16. Desenho e apresentação implementados em M2-5
+
+`render_scene(surface, world, origin, camera)`, em `retro_fps.renderer`, usa o tamanho da superfície como resolução interna. Preenche teto e piso, gera uma direção por coluna, consulta o DDA e desenha a faixa de parede projetada. Colunas sem impacto preservam o fundo. A faixa tem largura 1 e altura `bottom-top`. Mundo e câmera não são alterados.
+
+As constantes RGB do módulo são: teto `(40, 80, 120)`, piso `(70, 60, 50)`, parede x `(190, 150, 90)` e parede y `(133, 105, 63)`. A tonalidade distingue faces, sem simular iluminação física.
+
+`RenderConfig` é imutável e reúne `internal_width=320` e `internal_height=200`, exigindo inteiros positivos sem booleanos (`ValueError` para violações). É independente de Pygame.
+
+`run(config=None, *, world=None, origin=None, camera=None, render_config=None)` aceita uma cena estática. Mundo, origem e câmera devem vir juntos; configuração de renderização sem cena e cenas incompletas causam `ValueError` antes de abrir a janela. A validade geométrica da origem continua sendo verificada pelo DDA. Sem cena, `run()` preserva o fundo sólido de M0.
+
+Com cena, o loop redesenha uma superfície interna e usa `pygame.transform.scale` sem suavização para ampliá-la ao maior retângulo que cabe na janela, preservando a proporção até o arredondamento para pixels inteiros. A imagem é centralizada sobre fundo preto. No padrão, ocupa 640 × 400 numa janela 640 × 480. Eventos de saída, intervalo no título e liberação em `finally` são preservados; não há apresentação após detectar saída.
+
+O comando `python -m retro_fps` fornece a sala de estudo, origem `(2.5, 2.5)` e `Camera(0)` com visão de 60 graus. Não há movimento, leitura de mapas ou nova exportação por `__init__.py`. M2-6 permanece responsável pela comparação controlada entre sala e corredor.
