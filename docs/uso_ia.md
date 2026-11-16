@@ -111,3 +111,15 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 
 - **Explicação complementar:** funcionamento de `WindowConfig`, anotações, `__init__` gerado pela dataclass, `__post_init__`, atributos de classe e instância e comparação com uma classe comum.
 - **Conclusão:** o desenvolvedor confirmou a validação visual. A IA atualizou os registros para concluir M0-4, M0-5 e M0 no ambiente atual, mantendo explícitas as limitações e a integração por PR como etapa separada. Nenhuma alteração de código foi necessária para este registro.
+
+
+## 14. Registro — M1-1: mundo e consulta de células
+
+- **Tarefa e branch:** M1-1; `feat/m1-1-add-world-cell-queries`.
+- **Pedido:** iniciar M1 apenas pela representação do mundo e consultas, com explicação anterior à implementação, verificações, conferência do desenvolvedor e documentação ao final.
+- **Contribuição da IA:** leitura das especificações e registros; atualização das referências remotas para partir de M0 concluído e da tag `M0`; explicação de linhas, colunas, índices e imutabilidade; implementação de `World` e 20 casos de teste; execução das verificações e preparação de procedimento manual; atualização documental após a aprovação.
+- **Decisões implementadas:** copiar a grade para tuplas e impedir sua substituição; validar estrutura e células; exigir índices inteiros; distinguir consulta direta fora da grade de consulta de solidez externa. Contrato e limites registrados na [arquitetura](arquitetura.md#11-mundo-implementado-em-m1-1), sem acrescentar dependências ou antecipar as tarefas seguintes.
+- **Verificação automatizada pela IA:** 20 casos aprovados no pytest; Ruff, formatação e `git diff --check` aprovados após ajustar uma linha longa. Exemplos independentes e resultados na [validação](validacao.md#10-m1-1--representação-do-mundo-e-consulta-de-células).
+- **Conferência do desenvolvedor:** aprovou explicitamente o código, confirmou o procedimento manual sugerido e relatou execução dos testes no pytest.
+- **Estado:** M1-1 concluída; M1 continua em andamento; integração por PR é separada.
+- **Aprendizado com palavras próprias:** ainda não registrado pelo desenvolvedor; aprovação e execução de testes não substituem esse relato.
