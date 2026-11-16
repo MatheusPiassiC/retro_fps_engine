@@ -6,7 +6,7 @@ Este planejamento organiza um projeto universitário de aprendizagem. Não press
 
 A referência conceitual é Wolfenstein 3D: mundo em grade, paredes verticais e exploração em primeira pessoa. A entrega mínima é uma engine reutilizável com uma demonstração de navegação. Objetivos, combate e reprodução completa do jogo de referência não são obrigatórios.
 
-Não há datas ou estimativas de horas neste planejamento. O avanço depende das evidências de conclusão. M0, M1 e M2 estão concluídos no ambiente atual, M3 está em andamento e os demais marcos estão pendentes; a preparação de documentos e arquivos não significa que seus comportamentos já foram implementados.
+Não há datas ou estimativas de horas neste planejamento. O avanço depende das evidências de conclusão. M0, M1, M2 e M3 estão concluídos no ambiente atual e os demais marcos estão pendentes; a preparação de documentos e arquivos não significa que seus comportamentos já foram implementados.
 
 O ciclo de trabalho será: entender uma ideia, especificar uma pequena mudança, implementar, verificar, explicar o resultado e atualizar a documentação. Esse uso de especificações será leve e incremental.
 
@@ -35,7 +35,7 @@ Inimigos, armas, combate e editor visual ficam adiados. Desníveis, mapas origin
 | M0 | Ambiente validado e janela responsiva | Revisão deste planejamento | Obrigatória | Concluído (tag `M0`) |
 | M1 | Interseções de raios conferidas em mapa pequeno | M0 | Obrigatória | Concluído |
 | M2 | Sala em perspectiva com câmera fixa | M1 | Obrigatória | Concluído |
-| M3 | Navegação com colisões no mapa em memória | M2 | Obrigatória | Em andamento |
+| M3 | Navegação com colisões no mapa em memória | M2 | Obrigatória | Concluído |
 | M4 | Dois mapas externos carregados e exploráveis | M3 | Obrigatória | Pendente |
 | M5 | Aplicação externa usando a engine | M4 | Obrigatória | Pendente |
 | M6 | Entrega validada, documentada e explicável | M5 | Obrigatória | Pendente |
@@ -114,10 +114,12 @@ Testes e documentação acompanham cada marco. M6 consolida essas verificações
 1. Separar comando lógico de movimento das teclas que o produzem. **Concluída (M3-1):** estado imutável e comandos independentes do teclado aprovados pelo desenvolvedor; ver seção 20 da [validação](validacao.md).
 2. Implementar avanço, recuo e giro; configurar controles iniciais W/S e setas esquerda/direita. Extensão autorizada: A/D para deslocamento lateral e diagonais com velocidade total preservada; implementada e testada, com conferência manual confirmada pelo desenvolvedor. **Concluída (M3-2):** cálculo e integração de W/S e setas aprovados, com conferência visual confirmada; ver seção 22 da [validação](validacao.md).
 3. Usar velocidades por segundo e ângulos internos em radianos. **Concluída (M3-3):** configuração e atualização independente da janela aprovadas; ver seção 21 da [validação](validacao.md).
-4. Representar o jogador por um círculo de raio inicial 0.2 unidade. **Concluída (M3-4):** raio configurável e consulta de ocupação aprovados; resolução e integração seguem nas próximas entregas.
+4. Representar o jogador por um círculo de raio inicial 0.2 unidade. **Concluída (M3-4):** raio configurável e consulta de ocupação aprovados; resolução e integração concluídas em M3-5/M3-6.
 5. Verificar colisão círculo-retângulo e resolver deslocamento por eixos para permitir deslizar. **Concluída (M3-5):** resolução x antes de y implementada e aprovada; integração com conferência visual confirmada em M3-6.
 6. Limitar o intervalo aceito a 0.1 segundo por atualização e subdividir o deslocamento em passos de até 0.1 unidade, conforme a proposta arquitetural. **Concluída (M3-6):** integração com colisões, descarte do excesso e passos de até min(0.1, raio), com automação e conferência visual confirmadas; ver seção 26 da [validação](validacao.md).
-7. Verificar cantos, aproximações oblíquas e movimentos grandes; manter as funções testáveis sem janela.
+7. Verificar cantos, aproximações oblíquas e movimentos grandes; manter as funções testáveis sem janela. **Concluída (M3-7):** 21 casos adicionais de navegação e conferência visual de sala, corredor e obstáculo confirmada; ver seção 27 da [validação](validacao.md).
+
+**Estado:** M3 concluído no ambiente atual, com critérios cobertos por testes e conferência manual confirmada. Integração de M3-7 por PR e eventual tag são etapas separadas.
 
 **Entrega:** cenário em memória explorável com paredes sólidas.
 

@@ -451,3 +451,28 @@ Os critérios do roadmap foram conferidos: face frontal plana alinhada, parede d
 - **Conferência do desenvolvedor:** respondeu “Ficou muito legal! Pode concluir” após receber o procedimento. Confirmação registrada sem atribuir resultados individuais não relatados; a IA não observou diretamente a janela.
 - **Estado:** M3-4/M3-5/M3-6 concluídas neste grupo; integração por PR separada. M3-7 permanece pendente para consolidação de cantos, aproximações oblíquas, movimentos grandes e navegação.
 - **Limites:** ordem x/y e rejeição integral do passo bloqueado podem deixar folga; movimento com giro simultâneo depende da subdivisão temporal; excesso de tempo é descartado. Não há detecção contínua ou carregador de mapas.
+
+
+## 27. M3-7 — Validação consolidada de navegação e colisões
+
+- **Branch:** `test/m3-7-validate-navigation-and-collision`, criada da main `5b09554`, sincronizada com origin e contendo M3-4/M3-5/M3-6 pelo PR #13.
+- **Escopo:** 21 casos adicionais em `tests/test_navigation.py`, sem alteração dos algoritmos. Quatro aproximações oblíquas, quatro aproximações repetidas aos cantos, oito movimentos grandes contra paredes/limites, quatro comparações temporais e um percurso ao redor de obstáculo.
+
+### Contas independentes e ajuste do exemplo
+
+Direção (0.8,0.6) tem comprimento 1 pelo triângulo 3-4-5. Em 0.05 s a 1 unidade/s, solicita (0.04,0.03). Começar em x=3.79, raio 0.2, faz x=3.83 sobrepor a parede que começa em x=4; x permanece 3.79 e y avança 0.03. Sinais e posição são espelhados para cobrir quatro quadrantes.
+
+O primeiro exemplo usava 0.1 s e x=3.75, esperando rejeição integral de x. A execução revelou uma expectativa incompleta: arredondamento colocou o comprimento ligeiramente acima de 0.1, gerando dois subpassos; o primeiro avanço de 0.04 em x ainda cabia. O exemplo foi movido para longe dessa fronteira numérica, sem alterar o algoritmo ou ocultar a dependência do resultado da subdivisão junto à parede.
+
+Nos cantos do obstáculo [3,4] × [3,4], conferir a distância ao canto conhecido maior que 0.2 e coordenadas ainda no quadrante externo dispensa usar `can_occupy` como oráculo. Movimentos grandes devem parar antes das faces menos o raio: centros entre 1.2 e 3.8 na sala fechada ou entre 0.2 e 4.8 na grade aberta. A folga final é limitada ao tamanho de um passo, com tolerância numérica.
+
+Em espaço livre, 10 atualizações de 0.1 s, 20 de 0.05 s e 40 de 0.025 s totalizam 1 s: avanço de uma unidade, lateral de uma unidade, diagonal com componentes 1/sqrt(2), ou giro isolado de pi/2. Não se exige equivalência com giro e translação simultâneos ou após descarte de tempo.
+
+O percurso contorna por cima o obstáculo: de (2.5,3.5), norte 1 até (2.5,2.5), leste 2 até (4.5,2.5), sul 1 até (4.5,3.5), retornando pelo mesmo caminho. Coordenadas esperadas em cada trecho e distâncias ao retângulo são verificadas sem duplicar raycasting ou o resolvedor.
+
+### Automação, conferência manual e conclusão
+
+- **Automação:** 418 testes aprovados; Ruff, formatação e `git diff --check` aprovados. Testes de navegação executam sem abrir janela.
+- **Procedimento fornecido:** abrir sequencialmente sala, corredor e mundo 7 × 7 com borda sólida e obstáculo na célula (3,3), usando o mesmo executor. Tentar diagonais contra paredes/cantos, percorrer corredor nos dois sentidos, contornar obstáculo, soltar teclas e conferir encerramento.
+- **Confirmação do desenvolvedor:** respondeu “Tudo funcional, pode prosseguir” após receber as três cenas. A IA não observou diretamente a janela; não são atribuídos resultados individuais adicionais.
+- **Conclusão:** M3-7 e M3 concluídos no ambiente atual. Critérios revisados: comandos e giro, equivalência temporal em espaço livre dentro do limite, volume fora de paredes, deslizamento, obstáculos e limites bloqueados nos casos testados. Limitações da aproximação discreta permanecem documentadas; não se afirma detecção contínua. Integração por PR e eventual tag são separadas. M4 não iniciado.
