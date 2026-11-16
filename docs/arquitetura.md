@@ -177,10 +177,10 @@ O mundo em memória permite dimensões pequenas e bordas abertas para estudo. Ta
 O módulo não depende de Pygame nem lê arquivos. A função não define jogador, não lança raios e não altera a janela; será usada no estudo das tarefas seguintes. A substituição por mapas externos permanece prevista para M4. Ver [evidências de M1-2](validacao.md#11-m1-2--sala-temporária-em-memória).
 
 
-## 13. Raios implementados em M1-3 e M1-4
+## 13. Raios implementados em M1-3, M1-4 e M1-5
 
 `cast_ray(world, origin, direction) -> RayHit | None`, em `retro_fps.raycasting`, recebe dois pares de coordenadas e percorre a grade com DDA, sem Pygame. `RayHit` é imutável e contém `cell_x`, `cell_y`, `side` e `parameter`. O lado `"x"` significa fronteira vertical e `"y"`, horizontal. O ponto de impacto é `origin + parameter × direction`; a direção não é normalizada, portanto o parâmetro não é necessariamente distância euclidiana.
 
 A origem precisa estar numa célula livre; direção nula e coordenadas não finitas são rejeitadas com `ValueError`. A célula inicial é obtida pelo piso matemático. Na fronteira de uma célula, apontar para o sentido negativo pode produzir impacto com parâmetro zero. A saída da grade retorna `None`, sem inventar uma parede externa.
 
-O DDA mantém o parâmetro da próxima fronteira e o incremento entre fronteiras para cada eixo; componentes nulas usam infinito e não dividem por zero. A prioridade de x em empate já está expressa na comparação; testes específicos de cantos e limite explícito de avanços serão consolidados em M1-5. Os símbolos ficam neste módulo, sem exportação em `__init__.py`.
+O DDA mantém o parâmetro da próxima fronteira e o incremento entre fronteiras para cada eixo; componentes nulas usam infinito e não dividem por zero. Em M1-5, a prioridade de x em empate exato foi consolidada por testes. Não se usa tolerância para agrupar cruzamentos próximos. Após um avanço em x livre, y pode avançar no mesmo parâmetro; a outra lateral apenas tocada pelo canto não é consultada. Essa política é assimétrica e não bloqueia toda parede apenas tocada pelo raio. O percurso tem orçamento de `world.width + world.height` avanços: cada avanço desloca uma coluna ou linha em sentido fixo, permitindo sair de uma grade finita. Esgotamento inesperado causa `RuntimeError`, distinguindo falha interna de saída sem impacto. Os símbolos ficam neste módulo, sem exportação em `__init__.py`.

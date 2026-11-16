@@ -83,3 +83,72 @@ def test_origin_on_cell_boundary(origin, direction, cell, side, parameter):
 def test_invalid_ray_is_rejected(origin, direction):
     with pytest.raises(ValueError):
         cast_ray(create_study_world(), origin, direction)
+
+
+@pytest.mark.parametrize(
+    "direction, cell",
+    [((1, 1), (4, 3)), ((-1, 1), (0, 3)), ((1, -1), (4, 1)), ((-1, -1), (0, 1))],
+)
+def test_exact_corner_prioritizes_x_in_each_quadrant(direction, cell):
+    # Em t=0.5 atravessa um canto interno; em t=1.5 entra na borda.
+    hit = cast_ray(create_study_world(), (2.5, 2.5), direction)
+    assert hit is not None
+    assert (hit.cell_x, hit.cell_y) == cell
+    assert hit.side == "x"
+    assert hit.parameter == pytest.approx(1.5, abs=1e-12)
+
+
+def test_corner_hits_first_lateral_wall():
+    # 010   O raio toca (1, 1) em t=0.5. Consulta (1, 0) primeiro.
+    # 000
+    # 000
+    world = World([[0, 1, 0], [0, 0, 0], [0, 0, 0]])
+    hit = cast_ray(world, (0.5, 0.5), (1, 1))
+    assert hit is not None
+    assert (hit.cell_x, hit.cell_y, hit.side) == (1, 0, "x")
+    assert hit.parameter == pytest.approx(0.5, abs=1e-12)
+
+
+def test_corner_hits_diagonal_wall_after_free_x_step():
+    # 000   Após consultar (1, 0), entra em (1, 1) por y no mesmo t.
+    # 010
+    # 000
+    world = World([[0, 0, 0], [0, 1, 0], [0, 0, 0]])
+    hit = cast_ray(world, (0.5, 0.5), (1, 1))
+    assert hit is not None
+    assert (hit.cell_x, hit.cell_y, hit.side) == (1, 1, "y")
+    assert hit.parameter == pytest.approx(0.5, abs=1e-12)
+
+
+def test_corner_does_not_visit_other_lateral_cell():
+    # 000   (0, 1) é apenas tocada: a política visita (1, 0) e (1, 1).
+    # 100   Sem outra parede, o raio sai da grade.
+    # 000
+    world = World([[0, 0, 0], [1, 0, 0], [0, 0, 0]])
+    assert cast_ray(world, (0.5, 0.5), (1, 1)) is None
+
+
+@pytest.mark.parametrize(
+    "direction, cell, side, parameter",
+    [
+        ((1, 1 + 1e-10), (3, 4), "y", 1.5 / (1 + 1e-10)),
+        ((1, 1 - 1e-10), (4, 3), "x", 1.5),
+    ],
+)
+def test_near_corner_is_not_treated_as_exact_tie(direction, cell, side, parameter):
+    # y ligeiramente mais rápido alcança a borda inferior antes da direita.
+    hit = cast_ray(create_study_world(), (2.5, 2.5), direction)
+    assert hit is not None
+    assert (hit.cell_x, hit.cell_y) == cell
+    assert hit.side == side
+    assert hit.parameter == pytest.approx(parameter, rel=1e-12, abs=1e-12)
+
+
+@pytest.mark.parametrize("width, height", [(1, 1), (1, 40), (40, 1), (2, 40), (40, 2)])
+@pytest.mark.parametrize(
+    "direction", [(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, -1)]
+)
+def test_open_rectangles_exit_within_iteration_budget(width, height, direction):
+    world = World([[0] * width for _ in range(height)])
+    # Origem próxima a uma ponta permite percursos longos nos mapas estreitos.
+    assert cast_ray(world, (0.5, 0.5), direction) is None

@@ -144,3 +144,13 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Decisões:** direção sem normalização, saída retorna `None`, origem livre e coordenadas finitas obrigatórias; prioridade de x em empate escolhida pelo desenvolvedor para consolidação em M1-5.
 - **Validação:** 55 casos totais aprovados; Ruff, formatação e diff sem erros. O desenvolvedor aprovou explicitamente a etapa e autorizou continuar, sem relatar resultados manuais específicos.
 - **Estado:** M1-3/M1-4 concluídas; M1-5 será revisada separadamente; M1 continua em andamento. Aprendizado com palavras próprias ainda não registrado.
+
+
+## 17. Registro — M1-5: cantos e limite de avanços
+
+- **Branch:** `feat/m1-3-4-5-add-grid-raycasting`; segunda etapa da entrega conjunta.
+- **Contribuição:** explicação do desempate em cantos e sua assimetria, justificativa do orçamento de largura + altura, implementação do limite e 39 novos casos de teste. Atualização documental após aprovação.
+- **Decisão implementada:** manter a prioridade de x escolhida pelo desenvolvedor, sem tolerância de empate; não consultar a outra lateral apenas tocada. Esgotamento do orçamento causa `RuntimeError`.
+- **Verificação:** 94 casos totais aprovados; Ruff, formatação e diff aprovados após ajuste de uma linha de teste. Resultados e limitações na [validação](validacao.md#13-m1-5--cantos-e-limite-de-avanços).
+- **Aprovação:** o desenvolvedor respondeu “Aprovado!” após receber exemplos e procedimento manual; não relatou resultados específicos da execução manual.
+- **Estado:** M1-5 concluída; M1-6 e encerramento de M1 pendentes. Aprendizado com palavras próprias ainda não registrado. Commit desta etapa: `feat: [M1-5] consolida desempate e limite do percurso`.

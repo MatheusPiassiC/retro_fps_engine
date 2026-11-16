@@ -196,3 +196,16 @@ O procedimento sugerido foi criar `World([[0, 1, 0], [0, 0, 1]])` no interpretad
 - **Conferência sugerida:** executar no interpretador os raios para leste, oeste, direção `(2, 0)`, saída de mapa aberto e direção nula, comparando `RayHit`, `None` e `ValueError` com os exemplos explicados.
 - **Aprovação:** o desenvolvedor respondeu “Eu aprovo, podemos ir para a próxima etapa”. Não houve relato detalhado da execução manual nesta etapa; a aprovação não é registrada como observação direta de testes manuais pela IA.
 - **Limites:** M1-5 ainda será consolidada e revisada separadamente. Não há renderização ou colisões; M1-6 e o marco M1 não estão concluídos.
+
+
+## 13. M1-5 — Cantos e limite de avanços
+
+- **Branch:** `feat/m1-3-4-5-add-grid-raycasting`; segunda etapa, após aprovação e commit `b7c20aa` de M1-3/M1-4.
+- **Implementação:** prioridade de x em empate exato consolidada por testes; percurso limitado a largura + altura avanços, com `RuntimeError` para esgotamento inesperado. Não há tolerância para transformar quase empates em empates.
+- **Exemplo explicado antes da implementação:** origem `(2.5, 2.5)`, direção `(1, 1)`, sala 5 × 5. Em `t=0.5`, consulta `(3, 2)` e depois `(3, 3)` no mesmo parâmetro. Em `t=1.5`, retorna parede `(4, 3)`, lado `"x"`, ponto geométrico `(4, 4)`.
+- **Consequência da política:** partindo de `(0.5, 0.5)` em direção `(1, 1)`, uma parede em `(1, 0)` é atingida por x em `t=0.5`; se apenas `(1, 1)` for parede, é atingida por y no mesmo parâmetro. Uma parede apenas em `(0, 1)` não é consultada; numa grade 3 × 3 sem outras paredes, o retorno é `None`.
+- **Automação pela IA:** 39 novos casos cobrem quatro quadrantes em cantos, as três disposições de parede acima, dois quase empates e 30 combinações de direções e grades abertas (1 × 1, 1 × 40, 40 × 1, 2 × 40 e 40 × 2). Essas saídas ocorrem dentro do orçamento, sem `RuntimeError`. O ramo de falha interna não foi forçado por simulação.
+- **Resultado:** `.venv/bin/python -m pytest` aprovou os 94 casos totais com Python 3.12.3 e pytest 9.2.0. Ruff passou; a primeira conferência de formatação pediu uma quebra de linha em teste, aplicada antes de repetir Ruff, formatação e `git diff --check`, todos aprovados.
+- **Conferência manual sugerida:** executar os dois exemplos apresentados ao desenvolvedor: diagonal da sala, esperando `RayHit(4, 3, 'x', 1.5)`, e grade aberta com parede apenas na lateral não visitada, esperando `None`.
+- **Aprovação:** após receber explicação, exemplos e resultados, o desenvolvedor respondeu “Aprovado!”. Não houve relato detalhado da execução manual; aprovação explícita e resultados automatizados permanecem evidências distintas.
+- **Conclusão:** M1-5 concluída. M1-6 e o encerramento de M1 permanecem pendentes; integração por PR é separada. Esta entrega não valida renderização ou colisões.

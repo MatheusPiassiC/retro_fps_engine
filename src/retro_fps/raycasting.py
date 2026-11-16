@@ -33,6 +33,9 @@ def cast_ray(
     livre e a direção não pode ser nula. Violações causam ValueError.
     Em fronteiras, a célula inicial é definida pelo piso matemático.
     Em empate exato de cruzamentos, o eixo x é consultado primeiro.
+    A outra célula lateral apenas tocada no canto não é consultada.
+    O percurso admite no máximo width + height avanços; esgotar esse
+    orçamento indica falha interna e causa RuntimeError.
     """
     origin_x, origin_y = origin
     direction_x, direction_y = direction
@@ -66,7 +69,10 @@ def cast_ray(
     else:
         next_y = inf
 
-    while True:
+    # Cada avanço move uma coluna ou linha em sentido fixo. O orçamento
+    # cobre os cruzamentos possíveis até sair de uma grade retangular.
+    for _ in range(world.width + world.height):
+        # Sem tolerância: parâmetros próximos não são um empate exato.
         if next_x <= next_y:
             parameter = next_x
             cell_x += step_x
@@ -84,3 +90,5 @@ def cast_ray(
             return None
         if world.is_solid(cell_x, cell_y):
             return RayHit(cell_x, cell_y, side, parameter)
+
+    raise RuntimeError("O percurso do raio excedeu o limite de avanços da grade.")
