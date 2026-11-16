@@ -71,8 +71,8 @@ Testes e documentação acompanham cada marco. M6 consolida essas verificações
 
 1. Implementar a representação do mundo e consulta de células. **Concluída (M1-1):** `World` imutável, dimensões, consultas e limites implementados; 20 casos automatizados aprovados, código aprovado e conferência manual confirmada pelo desenvolvedor. Ver [evidências](validacao.md#10-m1-1--representação-do-mundo-e-consulta-de-células).
 2. Usar temporariamente uma sala 5 × 5 em memória, com borda sólida e interior livre. **Concluída (M1-2):** `create_study_world()` implementada, três novos testes aprovados e entrega aprovada pelo desenvolvedor. Ver [evidências](validacao.md#11-m1-2--sala-temporária-em-memória).
-3. Implementar um raio sem dependência gráfica, retornando célula, lado e parâmetro de impacto.
-4. Tratar componentes nulas da direção, direções negativas e saída dos limites.
+3. Implementar um raio sem dependência gráfica, retornando célula, lado e parâmetro de impacto. **Concluída (M1-3):** DDA implementado e aprovado pelo desenvolvedor; ver [evidências](validacao.md#12-m1-3-e-m1-4--percurso-de-raios).
+4. Tratar componentes nulas da direção, direções negativas e saída dos limites. **Concluída (M1-4):** direções cardinais, saída da grade e entradas inválidas testadas; entrega aprovada pelo desenvolvedor.
 5. Definir desempate em cruzamentos exatos de cantos e um limite de iterações adequado às dimensões do mundo.
 6. Escrever testes com desenhos e resultados calculados antes da implementação.
 

@@ -135,3 +135,12 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Aprovação:** o desenvolvedor aprovou a entrega e autorizou a atualização documental; não relatou resultados manuais específicos nesta tarefa.
 - **Estado:** M1-2 concluída; integração por PR separada. Commit previsto: `feat: [M1-2] adiciona sala temporária em memória`.
 - **Aprendizado com palavras próprias:** ainda não registrado pelo desenvolvedor.
+
+
+## 16. Registro — M1-3 e M1-4: percurso de raios
+
+- **Branch:** `feat/m1-3-4-5-add-grid-raycasting`.
+- **Contribuição:** planejamento em duas etapas, explicação de fronteiras e parâmetro, implementação de DDA e impacto imutável, 32 novos casos de teste e procedimento de conferência no interpretador.
+- **Decisões:** direção sem normalização, saída retorna `None`, origem livre e coordenadas finitas obrigatórias; prioridade de x em empate escolhida pelo desenvolvedor para consolidação em M1-5.
+- **Validação:** 55 casos totais aprovados; Ruff, formatação e diff sem erros. O desenvolvedor aprovou explicitamente a etapa e autorizou continuar, sem relatar resultados manuais específicos.
+- **Estado:** M1-3/M1-4 concluídas; M1-5 será revisada separadamente; M1 continua em andamento. Aprendizado com palavras próprias ainda não registrado.
