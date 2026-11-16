@@ -6,7 +6,7 @@ Este é um projeto universitário de aprendizagem. Não presumir conhecimento pr
 
 ## Escopo e arquitetura
 
-- Seguir `docs/roadmap.md`; M0 foi concluído no ambiente atual; M1 está em andamento, com M1-1 a M1-5 implementadas, testadas e aprovadas pelo desenvolvedor; M1-6 permanece pendente.
+- Seguir `docs/roadmap.md`; M0 e M1 foram concluídos no ambiente atual, com testes e validação confirmada pelo desenvolvedor; M2 permanece pendente.
 - Usar Wolfenstein 3D como referência conceitual, dentro dos limites de `docs/missao.md`.
 - Manter regras de jogo fora de `src/retro_fps/`. O núcleo não importa exemplos.
 - Manter mundo, carregamento, raycasting e colisões independentes da inicialização gráfica.

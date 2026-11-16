@@ -154,3 +154,12 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Verificação:** 94 casos totais aprovados; Ruff, formatação e diff aprovados após ajuste de uma linha de teste. Resultados e limitações na [validação](validacao.md#13-m1-5--cantos-e-limite-de-avanços).
 - **Aprovação:** o desenvolvedor respondeu “Aprovado!” após receber exemplos e procedimento manual; não relatou resultados específicos da execução manual.
 - **Estado:** M1-5 concluída; M1-6 e encerramento de M1 pendentes. Aprendizado com palavras próprias ainda não registrado. Commit desta etapa: `feat: [M1-5] consolida desempate e limite do percurso`.
+
+## 18. Registro — M1-6: revisão dos testes explicados
+
+- **Branch:** `test/m1-6-review-raycasting-cases`.
+- **Contribuição:** revisão dos critérios de M1 e cobertura existente; explicação prévia de impactos oblíquos em sala retangular e percurso longo; dez casos adicionais, sem alteração no algoritmo; tabela passo a passo e contas independentes na seção 14 da validação.
+- **Automação:** 104 casos aprovados; Ruff, formatação e diff aprovados.
+- **Validação do desenvolvedor:** confirmou “Está validado, pode prosseguir” após receber testes, explicação e procedimento de conferência.
+- **Estado:** M1-6 e M1 concluídos no ambiente atual, após revisão dos critérios de aceitação. Integração por PR e eventual tag permanecem separadas.
+- **Aprendizado com palavras próprias:** pendente; sugerido explicar por que dobrar a direção reduz t à metade sem mudar o ponto de impacto.

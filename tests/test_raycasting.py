@@ -144,7 +144,9 @@ def test_near_corner_is_not_treated_as_exact_tie(direction, cell, side, paramete
     assert hit.parameter == pytest.approx(parameter, rel=1e-12, abs=1e-12)
 
 
-@pytest.mark.parametrize("width, height", [(1, 1), (1, 40), (40, 1), (2, 40), (40, 2)])
+@pytest.mark.parametrize(
+    "width, height", [(1, 1), (1, 40), (40, 1), (2, 40), (40, 2), (40, 40)]
+)
 @pytest.mark.parametrize(
     "direction", [(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, -1)]
 )
@@ -152,3 +154,34 @@ def test_open_rectangles_exit_within_iteration_budget(width, height, direction):
     world = World([[0] * width for _ in range(height)])
     # Origem próxima a uma ponta permite percursos longos nos mapas estreitos.
     assert cast_ray(world, (0.5, 0.5), direction) is None
+
+
+@pytest.mark.parametrize(
+    "direction, cell",
+    [
+        ((0.5, 1), (4, 4)),
+        ((-0.5, 1), (2, 4)),
+        ((0.5, -1), (4, 0)),
+        ((-0.5, -1), (2, 0)),
+    ],
+)
+def test_oblique_ray_hits_horizontal_wall_in_rectangular_room(direction, cell):
+    # 1111111  Origem (3.5, 2.5); faces horizontais em y=1 e y=4.
+    # 1000001  Para ambos os sentidos de y, t=1.5.
+    # 1000001  x=3.5 +/- 0.5*1.5: 4.25 (coluna 4) ou 2.75 (coluna 2).
+    # 1000001
+    # 1111111
+    world = World(
+        [
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+        ]
+    )
+    hit = cast_ray(world, (3.5, 2.5), direction)
+    assert hit is not None
+    assert (hit.cell_x, hit.cell_y) == cell
+    assert hit.side == "y"
+    assert hit.parameter == pytest.approx(1.5, rel=1e-12, abs=1e-12)
