@@ -419,3 +419,13 @@ Os critérios do roadmap foram conferidos: face frontal plana alinhada, parede d
 - **Estado:** extensão concluída com implementação, automação e conferência manual confirmada. Sem colisões, limitação temporal ou subdivisão espacial.
 
 - **Verificação final após aprovação:** `study_world.py` já não apresenta diferença local; a suíte foi executada diretamente na árvore de trabalho e os 339 casos passaram. Ruff, formatação e `git diff --check` também passaram. O registro anterior das sete falhas descreve a execução com a sala então editada.
+
+
+## 24. M3-4 — Volume e consulta de ocupação
+
+- **Branch:** `feat/m3-4-5-6-add-player-collision`, criada da main `3aeefb5`, sincronizada com origin e contendo o grupo anterior integrado pelo PR #12.
+- **Exemplos prévios:** parede começa em x=4, raio 0.2. Centros x=3.7/3.8/3.9 deixam folga/tocam/sobrepõem: resultados True/False/False. No canto (2,2), centro (1.7,1.6) tem distância 0.5 pelo triângulo 3-4-5; raio 0.5 toca e bloqueia. Centro (1.6,1.6) está a sqrt(0.32)>0.5 e cabe.
+- **Automação:** 28 novos casos, incluindo faces em ambos os sentidos, cantos, limites abertos, círculo grande, configuração e entradas inválidas; 367 testes totais aprovados. Ruff, formatação e diff aprovados.
+- **Conferência sugerida:** consultar na sala posições (3.7,2.5), (3.8,2.5), (3.9,2.5), raio 0.2, sem janela.
+- **Validação do desenvolvedor:** confirmou “Validado, pode seguir”; não relatou saídas individuais.
+- **Limites:** a consulta não percorre deslocamento nem protege o loop. Resolução por eixos e passos grandes seguem em entregas separadas.

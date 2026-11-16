@@ -226,3 +226,16 @@ def test_diagonal_and_strafe_use_new_angle_after_turn():
     )
     assert result.position == pytest.approx((-1 / sqrt(2), 1 / sqrt(2)), abs=1e-12)
     assert result.angle == pytest.approx(pi / 2)
+
+
+@pytest.mark.parametrize("radius", [0, -0.2, float("nan"), float("inf")])
+def test_invalid_player_radius_is_rejected(radius):
+    with pytest.raises(ValueError):
+        MovementConfig(radius=radius)
+
+
+def test_player_radius_default_and_immutability():
+    config = MovementConfig()
+    assert config.radius == 0.2
+    with pytest.raises(FrozenInstanceError):
+        config.radius = 0.3

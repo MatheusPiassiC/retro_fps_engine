@@ -264,3 +264,10 @@ O comando principal usa o modo móvel experimental. Não há colisões; entrar e
 Por solicitação do desenvolvedor, o deslocamento lateral foi antecipado na mesma branch. `MovementCommand(forward=0, turn=0, strafe=0)` acrescenta `strafe` ao final, preservando os argumentos posicionais anteriores; o novo campo aceita os mesmos inteiros -1/0/1 e rejeita booleanos. Positivo solicita movimento à direita do olhar. A/D geram lateral negativo/positivo, com cancelamento entre opostos. Setas continuam girando.
 
 Após o giro, frente é `(cos(angle), sin(angle))` e direita é `(-sin(angle), cos(angle))`. A combinação das intenções frontal e lateral é dividida por `max(1, hypot(forward, strafe))`, antes de multiplicar por velocidade e tempo. Assim, a diagonal não aumenta a velocidade e o repouso não divide por zero. Campo de visão não influencia movimento. Não há colisões. Testes automatizados concluídos; conferência manual confirmada pelo desenvolvedor. A afirmação anterior de deslocamento lateral opcional descreve o escopo anterior a esta decisão.
+
+
+## 22. Volume e ocupação implementados em M3-4
+
+`MovementConfig.radius` tem padrão 0.2 e exige valor finito e positivo. O raio pertence à configuração, sem duplicação no estado. `can_occupy(world, position, radius)`, em `retro_fps.collision`, consulta se o círculo cabe sem tocar paredes ou limites, independentemente de janela. Valores não finitos e raio não positivo causam `ValueError`.
+
+A consulta rejeita círculos que alcançam o exterior e percorre células próximas à caixa do círculo, incluindo a célula anterior à borda mínima para não omitir tangência. Para cada célula sólida, calcula o ponto mais próximo no retângulo e compara sua distância ao raio. Contato bloqueia; tolerância relativa de 1e-12 considera conservadoramente os arredondamentos próximos da tangência. Essa consulta avalia apenas uma posição, sem conferir o caminho ou modificar movimento.

@@ -47,11 +47,14 @@ class MovementConfig:
 
     move_speed: float = 1.0
     turn_speed: float = pi / 2
+    radius: float = 0.2
 
     def __post_init__(self) -> None:
         for speed in (self.move_speed, self.turn_speed):
             if not isfinite(speed) or speed <= 0:
                 raise ValueError("As velocidades devem ser finitas e positivas.")
+        if not isfinite(self.radius) or self.radius <= 0:
+            raise ValueError("O raio deve ser finito e positivo.")
 
 
 def update_player(
