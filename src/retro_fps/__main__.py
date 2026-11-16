@@ -1,13 +1,31 @@
-"""Ponto de entrada para movimento com colisões na sala de estudo."""
+"""Demonstração de navegação em um mapa externo indicado na linha de comando."""
 
-from retro_fps.engine import run
-from retro_fps.player import PlayerState
-from retro_fps.study_world import create_study_world
+import argparse
+from pathlib import Path
+
+from retro_fps.map_loader import MapLoadError, load_map
+from retro_fps.player import MovementConfig
 
 
-def main() -> None:
-    """Apresente a sala com WASD, setas e colisões para o círculo do jogador."""
-    run(world=create_study_world(), player=PlayerState((2.5, 2.5), 0))
+def main(argv: list[str] | None = None) -> None:
+    """Carregue antes de abrir a janela; informe falhas sem traceback de mapa."""
+    parser = argparse.ArgumentParser(
+        description="Explore um mapa com WASD e setas esquerda/direita. Escape encerra.",
+    )
+    parser.add_argument(
+        "map_path", type=Path, metavar="MAPA", help="caminho do arquivo .map UTF-8"
+    )
+    args = parser.parse_args(argv)
+    movement_config = MovementConfig()
+    try:
+        data = load_map(args.map_path, movement_config=movement_config)
+    except MapLoadError as error:
+        parser.error(str(error))
+
+    # O carregamento e --help funcionam sem importar/inicializar Pygame.
+    from retro_fps.engine import run
+
+    run(world=data.world, player=data.player, movement_config=movement_config)
 
 
 if __name__ == "__main__":

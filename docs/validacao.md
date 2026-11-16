@@ -497,3 +497,14 @@ O percurso contorna por cima o obstáculo: de (2.5,3.5), norte 1 até (2.5,2.5),
 - **Limites:** permissão negada é simulada para resultado independente do usuário do sistema; o teste de leitura não substitui a conferência visual. M4 segue aguardando integração de execução e conferência manual posterior.
 
 - **Verificações estáticas:** Ruff, formatação e `git diff --check` aprovados nesta entrega.
+
+
+## 30. M4-5/M4-6 — Mapas externos na linha de comando
+
+- **Branch:** `feat/m4-5-6-load-maps-from-command-line`, criada sobre o carregador em `28714a0`, sem merge ou modificação da main. A branch anterior é `feat/m4-1-2-3-4-add-map-loader`; ambas são locais e formam uma sequência para revisão.
+- **Decisões:** caminho obrigatório, sem busca implícita de arquivos do repositório no pacote; `--help` não abre janela. Mesma configuração usada para carregar e mover. `MapLoadError` mostra caminho/linha e sai com código 2; problemas inesperados não são ocultados.
+- **Geometria independente:** sala 5 × 5, início (2.5,2.5), face leste x=4, profundidade 1.5. Corredor externo 8 × 5, início (1.5,1.5), face leste x=7, profundidade 5.5. Não confundir com o corredor de estudo de M2.
+- **Percurso automatizado do corredor:** topo (1.5,1.5) até (6.5,1.5), sul até (6.5,3.5), oeste até (5.5,3.5), volta pelo topo e explora (1.5,3.5) até (3.5,3.5). A 1 unidade/s, dez atualizações de 0.1 s percorrem uma unidade; todos os pontos ficam no centro das passagens.
+- **Edição do mapa:** cópia temporária da sala recebe parede na célula (3,2). A face passa de x=4 para x=3 e a profundidade do raio leste muda de 1.5 para 0.5 após nova carga, sem alterar o mundo anterior.
+- **Automação:** 15 casos novos entre seleção/diagnóstico, integração de cada mapa ao desenho real com display dummy, fechamento por evento real, origem e raio compartilhados, funcionamento fora do diretório do projeto, profundidades e percurso. 490 testes totais aprovados. Ruff, formatação e `git diff --check` aprovados.
+- **Limites:** display dummy e percursos programados não substituem a conferência visual/teclado. Roteiro em [conferencia_m4.md](conferencia_m4.md), sem exigir edição dos mapas originais. M4 não declarado concluído; aprovação do código, execução manual e aprendizado permanecem pendentes.

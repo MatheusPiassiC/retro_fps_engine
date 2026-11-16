@@ -137,8 +137,10 @@ Testes e documentação acompanham cada marco. M6 consolida essas verificações
 2. Separar análise de conteúdo da abertura do arquivo, facilitando os testes. **Implementada e testada; revisão manual pendente.**
 3. Validar grade, bordas, valores numéricos e espaço para o círculo do jogador. **Implementada e testada; revisão manual pendente.**
 4. Produzir mensagens localizáveis de erro sem iniciar uma sessão inválida. **Implementada e testada; revisão manual pendente.**
-5. Substituir o mapa temporário pelos arquivos em `maps/`.
-6. Permitir indicar o caminho do mapa ao executar a demonstração, sem editar código.
+5. Substituir o mapa temporário pelos arquivos em `maps/`. **Implementada e testada; conferência visual pendente.**
+6. Permitir indicar o caminho do mapa ao executar a demonstração, sem editar código. **Implementada e testada; conferência visual pendente.**
+
+**Estado:** implementação e testes automatizados de M4-1 a M4-6 preparados; revisão e conferência manual pendentes. Commits locais antecipados autorizados nesta sessão, sem integração ou alteração do remoto. Ver [roteiro de conferência](conferencia_m4.md).
 
 **Entrega:** navegação em `room.map` e `corridor.map`.
 
