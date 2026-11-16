@@ -6,9 +6,9 @@ A entrega mínima planejada é carregar um mapa externo e explorá-lo em primeir
 
 ## Estado atual
 
-M0 e M1 concluídos no ambiente atual. M2 está em andamento, com M2-1 a M2-5 implementadas e aprovadas: o comando `python -m retro_fps` apresenta uma sala estática em perspectiva, com paredes em tons diferentes por orientação, teto e piso de cor sólida. O desenvolvedor confirmou a conferência visual de M2-5. A janela padrão mede 640 × 480; a imagem interna de 320 × 200 é ampliada para 640 × 400, centralizada com faixas pretas acima e abaixo. Escape ou o botão de fechar encerram a aplicação.
+M0, M1 e M2 concluídos no ambiente atual: o comando `python -m retro_fps` apresenta uma sala estática em perspectiva, com paredes em tons diferentes por orientação, teto e piso de cor sólida. O desenvolvedor confirmou as conferências visuais da sala e do corredor em M2-5/M2-6. A janela padrão mede 640 × 480; a imagem interna de 320 × 200 é ampliada para 640 × 400, centralizada com faixas pretas acima e abaixo. Escape ou o botão de fechar encerram a aplicação.
 
-Ainda não há movimento, colisões ou carregador de mapas. Os arquivos em `maps/` são exemplos da sintaxe proposta; a sala atual é construída em memória. M2-6 fará a comparação controlada entre sala e corredor.
+Ainda não há movimento, colisões ou carregador de mapas. Os arquivos em `maps/` são exemplos da sintaxe proposta; a sala atual é construída em memória. A comparação controlada entre sala e corredor foi concluída em M2-6.
 
 ## Documentação
 
@@ -90,8 +90,8 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-A suíte contém 201 casos: 17 de loop/configuração em `tests/test_engine.py`, cinco de desenho em `tests/test_renderer.py`, 29 de projeção em `tests/test_projection.py`, 46 de câmera em `tests/test_camera.py`, 81 de raios em `tests/test_raycasting.py`, 20 de mundo em `tests/test_world.py` e três da sala temporária em `tests/test_study_world.py`. Eles verificam dimensões, consultas, limites, imutabilidade, entradas inválidas, geometria da sala, cantos e saída dentro do orçamento de avanços. Esses resultados não validam os componentes ainda não implementados. As versões instaladas estão registradas em `requirements-dev.txt`; isso não comprova o funcionamento da engine.
+A suíte contém 209 casos: oito de comparação de cenários em `tests/test_perspective_scenarios.py`, 17 de loop/configuração em `tests/test_engine.py`, cinco de desenho em `tests/test_renderer.py`, 29 de projeção em `tests/test_projection.py`, 46 de câmera em `tests/test_camera.py`, 81 de raios em `tests/test_raycasting.py`, 20 de mundo em `tests/test_world.py` e três da sala temporária em `tests/test_study_world.py`. Eles verificam dimensões, consultas, limites, imutabilidade, entradas inválidas, geometria da sala, cantos e saída dentro do orçamento de avanços. Esses resultados não validam os componentes ainda não implementados. As versões instaladas estão registradas em `requirements-dev.txt`; isso não comprova o funcionamento da engine.
 
 ## Próximo passo
 
-Após integrar M2-4/M2-5 por PR, continuar M2-6: comparar sala e corredor com a geometria esperada. O contrato implementado de `World` está na [arquitetura](docs/arquitetura.md#11-mundo-implementado-em-m1-1). A demonstração de exploração será desenvolvida em `examples/exploration/`.
+Após integrar M2-6 por PR, iniciar M3: comandos de movimento e navegação com colisões. O contrato implementado de `World` está na [arquitetura](docs/arquitetura.md#11-mundo-implementado-em-m1-1). A demonstração de exploração será desenvolvida em `examples/exploration/`.

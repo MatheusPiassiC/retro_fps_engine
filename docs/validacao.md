@@ -306,3 +306,70 @@ Com a validação final do desenvolvedor, M1 está concluído no ambiente atual.
 - **Procedimento visual fornecido:** executar `python -m retro_fps`; conferir parede frontal alinhada, teto/piso, faixas pretas e encerramento. Repetir com `Camera(pi/4)` para observar o canto e as tonalidades diferentes das faces.
 - **Conferência pelo desenvolvedor:** após receber o procedimento, confirmou “Funcionou. Pode seguir”. Essa confirmação da execução real é separada dos testes com driver dummy; não foi observada diretamente pela IA nem constitui medição de desempenho.
 - **Conclusão:** M2-5 concluída com conferência visual confirmada. M2 permanece em andamento até M2-6; integração por PR é separada. Ainda não há movimento, colisões ou carregamento de mapas.
+
+## 19. M2-6 — Comparação controlada de sala e corredor
+
+**Branch:** `test/m2-6-validate-room-and-corridor`, criada a partir da main com M2-4/M2-5 integradas.
+
+**Estado:** M2-6 concluída com testes automatizados e comparação visual das quatro cenas confirmada pelo desenvolvedor.
+
+### Geometria e contas anteriores aos testes
+
+A sala permanece 5 × 5. O novo `create_study_corridor()` retorna um mundo 9 × 5, temporário e em memória:
+
+```text
+111111111
+100000001
+100000001
+100000001
+111111111
+```
+
+Todas as cenas usam `Camera(0)`, olhando para leste com visão de 60 graus. Na sala, origem `(2.5, 2.5)`, a face frontal fica em x=4, profundidade 1.5. No corredor, a face fica em x=8: origem `(2.5, 2.5)` dá profundidade 5.5; origem `(5.25, 2.5)` dá 2.75. A profundidade cai pela metade e a altura não arredondada dobra. A relação se aplica à face frontal; raios laterais podem atingir outras paredes.
+
+Para largura interna 32, a escala é `16*sqrt(3)`. Numa imagem 32 × 24:
+
+| Cena | Profundidade frontal | Altura aproximada | Intervalo após arredondamento |
+|---|---|---|---|
+| Sala | 1.5 | 18.475 | [2,22) |
+| Corredor distante | 5.5 | 5.039 | [9,15) |
+| Corredor próximo | 2.75 | 10.077 | [6,18) |
+
+Na sala, todos os raios atingem a face frontal. No corredor, as colunas centrais atingem o fundo e as extremas atingem faces y. Na coluna extrema da imagem 32 × 24, a altura da parede lateral é `31/3`, cerca de 10.333: intervalo [6,18), mais alto e mais escuro que o fundo distante.
+
+### Evidências automatizadas
+
+Oito novos casos em `tests/test_perspective_scenarios.py` conferem geometria do corredor, pixels da sala inteira, dois raios centrais com profundidades conhecidas, alturas antes do arredondamento, pixels do fundo nas duas posições, laterais e recorte muito próximo da parede. Os testes reutilizam os componentes implementados; os resultados esperados vêm das contas acima, sem executar um segundo DDA para produzi-los.
+
+`.venv/bin/python -m pytest`: 209 casos aprovados, com Python 3.12.3 e pytest 9.2.0. Ruff, formatação e `git diff --check` passaram. Nenhum algoritmo de câmera, DDA ou projeção foi alterado. Testes de pixels não comprovam por si só aparência na janela real ou desempenho.
+
+### Procedimento de conferência visual
+
+Com a `.venv` ativa, abrir `python` e executar:
+
+```python
+from retro_fps.camera import Camera
+from retro_fps.engine import run
+from retro_fps.study_world import create_study_world, create_study_corridor
+
+run(world=create_study_world(), origin=(2.5, 2.5), camera=Camera(0))
+run(world=create_study_corridor(), origin=(2.5, 2.5), camera=Camera(0))
+run(world=create_study_corridor(), origin=(5.25, 2.5), camera=Camera(0))
+run(world=create_study_corridor(), origin=(7.9999999, 2.5), camera=Camera(0))
+```
+
+Cada chamada bloqueia até fechar sua janela; depois apresenta a próxima. Comparar:
+
+1. Sala: parede frontal com topo/base horizontais, piso e teto visíveis.
+2. Corredor distante: fundo menor que na sala; laterais escuras crescendo em direção às bordas, sem curvar a face frontal plana.
+3. Corredor próximo: fundo aproximadamente duas vezes mais alto que no corredor distante, considerando arredondamento de pixels.
+4. Muito próximo: parede ocupa toda a área da imagem, mantendo as faixas pretas de apresentação, e a janela continua encerrando normalmente.
+
+Informar se as quatro cenas correspondem ao esperado. Não há movimento nesta etapa; a comparação muda a origem entre execuções. M2-6 não acrescenta carregador de arquivos nem seleção de cenário ao comando principal.
+
+
+### Confirmação e encerramento de M2
+
+Após receber o procedimento, o desenvolvedor confirmou que todos os testes funcionaram e relatou ter visto o resultado funcionando. Essa confirmação da conferência das quatro cenas é distinta dos 209 casos automatizados executados pela IA; a janela real não foi observada diretamente pela IA.
+
+Os critérios do roadmap foram conferidos: face frontal plana alinhada, parede distante menor, metade da altura não arredondada ao dobrar a profundidade e recorte seguro perto da parede. A sala e o corredor foram comparados com contas e imagens, sem correção adicional de fish-eye. M2 está concluído no ambiente atual. Integração por PR e eventual tag são etapas separadas; nenhuma tag foi criada nesta tarefa. Movimento, colisões e carregamento permanecem fora desta entrega.

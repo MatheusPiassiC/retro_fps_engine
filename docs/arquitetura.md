@@ -224,4 +224,11 @@ As constantes RGB do módulo são: teto `(40, 80, 120)`, piso `(70, 60, 50)`, pa
 
 Com cena, o loop redesenha uma superfície interna e usa `pygame.transform.scale` sem suavização para ampliá-la ao maior retângulo que cabe na janela, preservando a proporção até o arredondamento para pixels inteiros. A imagem é centralizada sobre fundo preto. No padrão, ocupa 640 × 400 numa janela 640 × 480. Eventos de saída, intervalo no título e liberação em `finally` são preservados; não há apresentação após detectar saída.
 
-O comando `python -m retro_fps` fornece a sala de estudo, origem `(2.5, 2.5)` e `Camera(0)` com visão de 60 graus. Não há movimento, leitura de mapas ou nova exportação por `__init__.py`. M2-6 permanece responsável pela comparação controlada entre sala e corredor.
+O comando `python -m retro_fps` fornece a sala de estudo, origem `(2.5, 2.5)` e `Camera(0)` com visão de 60 graus. Não há movimento, leitura de mapas ou nova exportação por `__init__.py`. A comparação controlada entre sala e corredor foi concluída em M2-6.
+
+
+## 17. Cenários de validação de M2-6
+
+`create_study_corridor()`, em `retro_fps.study_world`, constrói um mundo 9 × 5 com borda sólida e interior livre, separado da sala 5 × 5 preservada por `create_study_world()`. Ambos são cenários temporários em memória, sem leitura de arquivos. O corredor é usado por testes e chamadas explícitas a `run`; o comando principal continua apresentando a sala.
+
+A comparação com origens fixas verifica face frontal alinhada, redução da altura com profundidade, crescimento das paredes laterais e recorte perto da parede. As [evidências de M2-6](validacao.md#19-m2-6--comparação-controlada-de-sala-e-corredor) separam testes automatizados da conferência visual confirmada pelo desenvolvedor. Nenhum algoritmo foi alterado nesta revisão.
