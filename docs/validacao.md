@@ -259,3 +259,26 @@ Seis novos casos ampliam as saídas em mapas abertos para uma grade 40 × 40. Na
 Os critérios do roadmap foram conferidos: raio para leste com impacto em `x=4` e parâmetro `1.5`, quatro direções cardinais, rejeição do raio nulo e término dos casos de canto segundo a política documentada. A sala em memória, consultas de mundo, saída da grade e orçamento de avanços também têm cobertura. Os resultados foram acompanhados de desenhos, contas independentes e explicação passo a passo.
 
 Com a validação final do desenvolvedor, M1 está concluído no ambiente atual. Integração de M1-6 por PR e eventual tag são etapas separadas. Renderização, movimento, colisões e carregamento de arquivos permanecem para os marcos seguintes.
+
+
+## 15. M2-1 — Geometria da câmera
+
+- **Branch:** `feat/m2-1-2-3-add-camera-column-rays`, criada após atualizar a main com M1-6 integrada e tag `M1`.
+- **Exemplos explicados antes do código:** para leste, direção `(1, 0)` e plano para sul; para sul, direção `(0, 1)` e plano para oeste. Em campo de visão de 90 graus, o comprimento do plano é 1; no padrão 60 graus, é `1/sqrt(3)`.
+- **Automação:** 24 novos casos verificam quatro direções cardinais, orientação do plano, direção unitária, perpendicularidade, comprimento do plano, normalização, valores inválidos e imutabilidade. Tolerâncias de `1e-12` para resultados trigonométricos. Negativo próximo de zero também verifica que o resto arredondado a `2*pi` é representado como zero.
+- **Resultados:** 128 casos totais aprovados com `.venv/bin/python -m pytest`; Ruff, formatação e `git diff --check` aprovados. Ambiente: Python 3.12.3, pytest 9.2.0.
+- **Conferência sugerida:** construir câmeras para leste e sul, comparar os vetores, normalizar -90 graus e verificar rejeição de campo de visão igual a pi. Não exige janela.
+- **Aprovação:** após receber resultados e procedimento, o desenvolvedor pediu explicação de `@property`, implementação e interação com o projeto. A explicação foi fornecida; respondeu “Entendido” e autorizou continuar. Não relatou saídas manuais detalhadas.
+- **Limites:** esta etapa não gera raios por coluna, não desenha nem move jogador. M2 permanece em andamento.
+
+
+## 16. M2-2 e M2-3 — Raios pelos centros das colunas
+
+- **Branch:** `feat/m2-1-2-3-add-camera-column-rays`; segunda etapa, após aprovação e commit `7f47d05` de M2-1.
+- **Exemplos explicados antes do código:** olhando para leste com campo de visão de 90 graus, três colunas usam posições laterais `-2/3`, `0`, `2/3`, produzindo direções `(1, u)`. Quatro colunas usam `-0.75`, `-0.25`, `0.25`, `0.75`; nenhuma aponta exatamente para o centro.
+- **Resultados independentes:** na sala 5 × 5, origem `(2.5, 2.5)`, os três raios atingem `x=4` com parâmetro `1.5`. As coordenadas y são `1.5`, `2.5` e `3.5`, portanto células `(4, 1)`, `(4, 2)` e `(4, 3)`, lado x. O raio lateral mede `sqrt(13)/3`, maior que 1, mas sua componente frontal continua sendo 1. Isso verifica que a direção não foi normalizada e que o DDA fornece profundidade frontal constante.
+- **Automação:** 22 casos novos cobrem coluna única, centros e simetria com larguras par e ímpar, rotação, comprimento e componente frontal, integração com DDA e entradas inválidas. Tolerâncias de `1e-12` para resultados reais.
+- **Resultados:** `.venv/bin/python -m pytest` aprovou os 150 casos totais (46 de câmera, 81 de raios, 20 de mundo e três de sala). Ruff passou; após ajuste de formatação de um teste, Ruff, formatação e `git diff --check` passaram. Ambiente: Python 3.12.3 e pytest 9.2.0.
+- **Conferência sugerida:** gerar as três direções no interpretador, lançá-las com `cast_ray` na sala e comparar direções, células, lado e parâmetro com a tabela apresentada ao desenvolvedor. Não exige janela.
+- **Validação do desenvolvedor:** após receber os resultados e o procedimento, confirmou “Considere validado, pode prosseguir”. A confirmação é registrada separadamente da execução automatizada pela IA; não foram relatadas saídas manuais detalhadas.
+- **Conclusão:** M2-2/M2-3 concluídas; M2 continua em andamento, com projeção, desenho e conferência visual pendentes. Integração por PR é uma etapa separada.

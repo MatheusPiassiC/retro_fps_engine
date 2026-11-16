@@ -184,3 +184,20 @@ O módulo não depende de Pygame nem lê arquivos. A função não define jogado
 A origem precisa estar numa célula livre; direção nula e coordenadas não finitas são rejeitadas com `ValueError`. A célula inicial é obtida pelo piso matemático. Na fronteira de uma célula, apontar para o sentido negativo pode produzir impacto com parâmetro zero. A saída da grade retorna `None`, sem inventar uma parede externa.
 
 O DDA mantém o parâmetro da próxima fronteira e o incremento entre fronteiras para cada eixo; componentes nulas usam infinito e não dividem por zero. Em M1-5, a prioridade de x em empate exato foi consolidada por testes. Não se usa tolerância para agrupar cruzamentos próximos. Após um avanço em x livre, y pode avançar no mesmo parâmetro; a outra lateral apenas tocada pelo canto não é consultada. Essa política é assimétrica e não bloqueia toda parede apenas tocada pelo raio. O percurso tem orçamento de `world.width + world.height` avanços: cada avanço desloca uma coluna ou linha em sentido fixo, permitindo sair de uma grade finita. Esgotamento inesperado causa `RuntimeError`, distinguindo falha interna de saída sem impacto. Os símbolos ficam neste módulo, sem exportação em `__init__.py`.
+
+
+## 14. Geometria da câmera implementada em M2-1
+
+`Camera(angle, field_of_view=pi/3)`, em `retro_fps.camera`, é uma dataclass imutável sem dependência gráfica. Os ângulos usam radianos; o campo de visão é horizontal e tem padrão de 60 graus. A construção exige ângulo finito e campo de visão finito estritamente entre 0 e pi, com `ValueError` para violações. O ângulo é normalizado para `[0, 2*pi)`, incluindo proteção para arredondamento do resto a uma volta completa.
+
+As propriedades `direction` e `plane` calculam valores derivados em cada leitura, sem cache ou armazenamento duplicado. `direction=(cos(angle), sin(angle))` tem comprimento 1. `plane=(-sin(angle), cos(angle))*tan(field_of_view/2)` aponta para a direita da imagem e é perpendicular à direção, respeitando y crescente para baixo.
+
+A câmera não guarda posição nem executa o percurso dos raios. A origem é fornecida separadamente ao DDA; não há exportação por `__init__.py`.
+
+### Raios por coluna implementados em M2-2/M2-3
+
+`camera.ray_direction(column, width)` retorna um par com a direção pelo centro da coluna da imagem interna. A largura é a quantidade de colunas dessa imagem, sem relação obrigatória com a janela. Calcula `u = 2 * (column + 0.5) / width - 1` e retorna `direction + u * plane`, componente por componente. A posição `0.5` seleciona o centro, e não a borda da coluna.
+
+Coluna e largura devem ser inteiros, sem booleanos (`TypeError`); largura deve ser positiva (`ValueError`); coluna deve estar entre zero e largura menos um (`IndexError`). A direção não é normalizada. Como a direção frontal é unitária e o plano é perpendicular, a componente frontal de cada raio é 1: o parâmetro retornado pelo DDA representa profundidade frontal. Não aplicar correção adicional por cosseno.
+
+A aplicação fornece a direção resultante a `cast_ray(world, origin, direction)`. Não há novo executor, resolução fixa ou alteração no loop. Projeção, desenho e recorte continuam pendentes.
