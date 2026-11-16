@@ -313,3 +313,12 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Estado:** carregador implementado e com automação; conferência manual pendente. Commits locais autorizados antecipadamente nesta sessão.
 
 - **Verificações estáticas:** Ruff, formatação e `git diff --check` aprovados nesta entrega.
+
+
+## 34. Registro — M4-5/M4-6: seleção e navegação em arquivos externos
+
+- **Branch:** `feat/m4-5-6-load-maps-from-command-line`, baseada no carregador local `28714a0`.
+- **Contribuição:** argumento de caminho, ajuda e erros antes do import gráfico; integração sem duplicar algoritmos, 15 casos novos e roteiro de conferência posterior. Dois mapas originais preservados.
+- **Decisão:** caminho obrigatório evita presumir instalação dos mapas do repositório. O mesmo objeto de configuração passa pelo carregador e executor. Seleção em `__main__` é a demonstração de M4; aplicação externa e API consolidada ficam para M5.
+- **Verificação:** 490 testes aprovados, incluindo carga, desenho dummy, erro sem janela e percurso. Ruff, formatação e diff aprovados.
+- **Estado:** implementação de M4 preparada em duas branches e commits locais autorizados antecipadamente. Conferência manual, revisão e relato de aprendizado pendentes. Nenhum push, PR, merge ou tag pela IA.

@@ -2,7 +2,7 @@
 
 ## 1. Intenção e estado
 
-A engine oferecerá mecanismos reutilizáveis para jogos baseados em ambientes de grade, inspirados visualmente em Wolfenstein 3D. Em M0-3, `engine.run()` passou a abrir a janela, processar eventos de encerramento e liberar recursos; `__main__` chama esse executor. M0-4 e M0-5 acrescentaram configuração da janela, medição em segundos e desenho de cor sólida. M1-1 implementou `World`, descrito na seção 11; M1-2 acrescentou a sala temporária descrita na seção 12. Os demais módulos permanecem esqueleto; os contratos abaixo continuam propostas, exceto onde identificados como implementados.
+A engine oferecerá mecanismos reutilizáveis para jogos baseados em ambientes de grade, inspirados visualmente em Wolfenstein 3D. Em M0-3, `engine.run()` passou a abrir a janela, processar eventos de encerramento e liberar recursos; `__main__` chama esse executor. M0-4 e M0-5 acrescentaram configuração da janela, medição em segundos e desenho de cor sólida. M1-1 implementou `World`, descrito na seção 11; M1-2 acrescentou a sala temporária descrita na seção 12. M2 implementou câmera, projeção e desenho; M3, comandos e colisões; M4 implementou carregamento e seleção do mapa, com conferência manual ainda pendente. Os contratos abaixo continuam propostas onde não identificados como implementados.
 
 Reutilização significa que outro programa pode importar a engine, fornecer um mundo e controlar uma sessão sem copiar o renderizador ou editar suas regras internas. Não significa oferecer antecipadamente um editor, um sistema universal de plugins ou suporte a qualquer tipo de jogo.
 
@@ -304,3 +304,12 @@ Sem configuração explícita, usa `MovementConfig()`; o raio dessa configuraç�
 ## 27. Leitura de arquivo implementada em M4-2/M4-4
 
 `load_map(path, *, movement_config=None)` aceita caminho como string ou `Path`, lê bytes e decodifica UTF-8, encaminhando texto, origem e configuração a `parse_map`. `OSError` e `UnicodeDecodeError` são encadeados como causa de `MapLoadError`. Erro de leitura não inventa número de linha; erro de codificação conta as quebras anteriores ao byte inválido. Cada chamada relê o arquivo, sem cache. Não importa Pygame nem inicia sessão parcial.
+
+
+## 28. Seleção de mapa implementada em M4-5/M4-6
+
+`python -m retro_fps MAPA` usa um argumento de caminho obrigatório, relativo ao diretório de execução ou absoluto. Não presume que os mapas do repositório estejam instalados junto ao pacote. `main(argv=None)` facilita testar argumentos; `--help` descreve uso e controles. O modo anterior sem argumentos foi substituído por seleção explícita, com erro de uso e código 2.
+
+A demonstração cria uma única `MovementConfig`, carrega o mapa com ela e fornece o mundo, jogador e a mesma configuração a `run`. O import do coordenador gráfico acontece somente após sucesso; ajuda, erros de argumento e erros de mapa não importam Pygame. `MapLoadError` vira diagnóstico via argparse, código 2, sem traceback de mapa. Outros erros inesperados não são ocultados.
+
+A sala temporária e o corredor de estudo continuam usados nos testes anteriores. Os arquivos existentes em `maps/` foram preservados e são usados pela execução real; o corredor externo mede 8 × 5, com obstáculos, diferente do corredor de estudo de 9 × 5. A aplicação externa em `examples/exploration/` e a consolidação da API continuam em M5. Nenhuma regra de jogo foi acrescentada.

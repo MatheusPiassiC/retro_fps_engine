@@ -6,9 +6,9 @@ A entrega mínima planejada é carregar um mapa externo e explorá-lo em primeir
 
 ## Estado atual
 
-M0, M1, M2 e M3 concluídos no ambiente atual: o comando `python -m retro_fps` apresenta uma sala em perspectiva com movimento com colisões, com paredes em tons diferentes por orientação, teto e piso de cor sólida. O desenvolvedor confirmou as conferências visuais da sala e do corredor em M2-5/M2-6. A janela padrão mede 640 × 480; a imagem interna de 320 × 200 é ampliada para 640 × 400, centralizada com faixas pretas acima e abaixo. Escape ou o botão de fechar encerram a aplicação.
+M0, M1, M2 e M3 concluídos no ambiente atual: o comando `python -m retro_fps maps/room.map` apresenta uma sala em perspectiva com movimento e colisões, com paredes em tons diferentes por orientação, teto e piso de cor sólida. O desenvolvedor confirmou as conferências visuais da sala e do corredor em M2-5/M2-6. A janela padrão mede 640 × 480; a imagem interna de 320 × 200 é ampliada para 640 × 400, centralizada com faixas pretas acima e abaixo. Escape ou o botão de fechar encerram a aplicação.
 
-M3 concluído com testes e conferência visual de navegação na sala, corredor e cenário com obstáculo confirmada pelo desenvolvedor. O carregador de mapas está implementado e testado, sem conferência manual de M4 ainda; o comando principal continua usando a sala em memória até a integração de M4-5/M4-6. Os arquivos em `maps/` seguem a sintaxe documentada. A comparação controlada entre sala e corredor foi concluída em M2-6.
+M3 concluído com testes e conferência visual de navegação na sala, corredor e cenário com obstáculo confirmada pelo desenvolvedor. M4 está implementado e testado automaticamente, com revisão e conferência manual pendentes. O comando principal lê o arquivo indicado, valida a grade e o volume inicial antes de abrir a janela. Os mapas em `maps/` são os cenários executáveis da demonstração; a sala em memória continua disponível para estudo e testes. A comparação controlada entre sala e corredor foi concluída em M2-6.
 
 ## Documentação
 
@@ -29,7 +29,7 @@ Python 3.12 é a versão de referência. Em M0-2 foram conferidas as versões in
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e '.[dev]'
-python -m retro_fps
+python -m retro_fps maps/room.map
 ```
 
 No Windows, a ativação do ambiente usa `.venv\Scripts\Activate.ps1` no PowerShell. A instalação exige acesso ao índice de pacotes. O último comando abre a sala com movimento e colisões e exige uma sessão gráfica disponível. Escape ou o botão de fechar encerram a aplicação.
@@ -84,7 +84,7 @@ Mundo, origem e câmera devem ser fornecidos juntos. A configuração de renderi
 
 ### Movimento e colisões — M3
 
-`python -m retro_fps` usa W/S para avançar/recuar, A/D para deslocar lateralmente e setas esquerda/direita para girar. Manter uma tecla pressionada mantém o comando; teclas opostas se cancelam. Velocidades padrão: 1 unidade/s e pi/2 rad/s. O mouse ainda não tem função. A diagonal mantém a mesma velocidade total do movimento reto; A/D não alteram o ângulo. A extensão WASD está implementada e testada, com conferência manual confirmada pelo desenvolvedor.
+`python -m retro_fps maps/room.map` usa W/S para avançar/recuar, A/D para deslocar lateralmente e setas esquerda/direita para girar. Manter uma tecla pressionada mantém o comando; teclas opostas se cancelam. Velocidades padrão: 1 unidade/s e pi/2 rad/s. O mouse ainda não tem função. A diagonal mantém a mesma velocidade total do movimento reto; A/D não alteram o ângulo. A extensão WASD está implementada e testada, com conferência manual confirmada pelo desenvolvedor.
 
 O jogador ocupa um círculo de raio padrão 0.2 unidade. Paredes e limites bloqueiam o círculo; resolver x e depois y permite deslizar. Um eixo bloqueado conserva a coordenada anterior, podendo deixar pequena folga. O início deve acomodar o círculo sem contato.
 
@@ -104,6 +104,33 @@ run(
 
 O modo móvel exige mundo e jogador, sem `origin` ou `camera` separados. `field_of_view` pode configurar a visão horizontal em radianos (padrão pi/3); ele e `movement_config` exigem jogador. A posição e o ângulo do jogador alimentam o desenho a cada quadro.
 
+### Mapas externos — M4 (conferência manual pendente)
+
+Na raiz do repositório, com a `.venv` ativa:
+
+```sh
+python -m retro_fps maps/room.map
+python -m retro_fps maps/corridor.map
+python -m retro_fps --help
+```
+
+Feche uma janela antes de abrir a próxima. O caminho agora é obrigatório: `python -m retro_fps` sem argumentos mostra o uso e termina com código 2. Caminhos relativos são resolvidos a partir do diretório atual; fora do projeto, forneça um caminho absoluto. Os arquivos de exemplo pertencem ao repositório, não são procurados automaticamente dentro do pacote instalado.
+
+`room.map` é a sala 5 × 5; `corridor.map` é 8 × 5 com obstáculos internos. Erros exibem caminho e linha quando localizáveis, terminando antes de abrir a janela. Editar um arquivo válido só muda a cena na próxima execução; não há recarga durante a janela. Sintaxe em [formato de mapa](docs/formato_mapa.md).
+
+Para carregar pela biblioteca sem teclado ou janela:
+
+```python
+from retro_fps.map_loader import load_map
+from retro_fps.player import MovementConfig
+
+movement = MovementConfig(radius=0.2)
+scene = load_map("maps/room.map", movement_config=movement)
+print(scene.world.width, scene.world.height, scene.player)
+```
+
+Use `scene.world`, `scene.player` e a mesma `movement` ao chamar `run`. O arquivo usa graus; o estado retornado usa radianos. As funções de estudo e o modo estático continuam disponíveis, mas o comando principal não constrói mais o mundo em memória.
+
 ## Verificação
 
 ```sh
@@ -112,8 +139,8 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-A suíte contém 475 casos de mundo, sala, raios, câmera, projeção, desenho, loop, comandos, movimento e colisões. Há verificações de volume, contato, cantos, deslizamento, descarte de tempo e subdivisão espacial. Os testes automatizados são distintos da conferência visual confirmada pelo desenvolvedor; M3-7 consolidou aproximações oblíquas, cantos, movimentos grandes, limites e percursos. As versões instaladas estão registradas em `requirements-dev.txt`.
+A suíte contém 490 casos de mundo, sala, raios, câmera, projeção, desenho, loop, comandos, movimento, colisões, análise de mapas, arquivos e linha de comando. Há verificações de volume, contato, cantos, deslizamento, descarte de tempo e subdivisão espacial. Os testes automatizados são distintos da conferência visual confirmada pelo desenvolvedor; M3-7 consolidou aproximações oblíquas, cantos, movimentos grandes, limites e percursos. As versões instaladas estão registradas em `requirements-dev.txt`.
 
 ## Próximo passo
 
-Após integrar M3-7 por PR, iniciar o planejamento de M4: carregamento e validação de mapas externos. O contrato implementado de `World` está na [arquitetura](docs/arquitetura.md#11-mundo-implementado-em-m1-1). A demonstração de exploração será desenvolvida em `examples/exploration/`.
+Conferir M4 seguindo o [roteiro de revisão](docs/conferencia_m4.md). M4 permanece aguardando a revisão e a conferência manual do desenvolvedor; integração por PR é uma etapa separada. M5 ainda não foi iniciado. O contrato implementado de `World` está na [arquitetura](docs/arquitetura.md#11-mundo-implementado-em-m1-1). A demonstração de exploração será desenvolvida em `examples/exploration/`.
