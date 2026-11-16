@@ -283,3 +283,13 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Verificação:** 397 testes aprovados; Ruff, formatação e diff aprovados. Display dummy separado da conferência visual.
 - **Aprovação:** o desenvolvedor respondeu “Ficou muito legal! Pode concluir”; documentação atualizada após aprovação, sem inventar relatos individuais ou aprendizado com palavras próprias.
 - **Estado:** segundo grupo concluído; M3-7 e integração por PR permanecem separados. Sem push, PR, merge ou tag pela IA.
+
+
+## 31. Registro — M3-7: validação de navegação e conclusão do marco
+
+- **Branch:** `test/m3-7-validate-navigation-and-collision`.
+- **Contribuição:** conferência da integração do PR #13, revisão da cobertura, explicação prévia dos cenários e 21 casos integrados sem alterar algoritmos; procedimento manual de sala, corredor e obstáculo.
+- **Ajuste do teste:** corrigida expectativa incompleta junto à fronteira de subdivisão de 0.1 unidade, usando exemplo de 0.05 s longe dessa fronteira. Motivo e contas independentes na seção 27 da validação.
+- **Verificação:** 418 testes aprovados; Ruff, formatação e diff aprovados.
+- **Conferência do desenvolvedor:** “Tudo funcional, pode prosseguir”, após receber o procedimento das três cenas. Sem observação direta da janela pela IA ou invenção de resultados individuais.
+- **Estado:** M3-7 e M3 concluídos no ambiente atual; documentação atualizada após aprovação. Integração por PR e eventual tag permanecem separadas; sem push, PR, merge ou tag pela IA. Aprendizado com palavras próprias sobre os algoritmos ainda não registrado.

@@ -284,4 +284,11 @@ A consulta rejeita círculos que alcançam o exterior e percorre células próxi
 
 O número de passos é o teto do comprimento do deslocamento dividido por `min(0.1, config.radius)`, com mínimo de um. Cada passo chama `resolve_movement`. Usar o próprio raio quando menor que 0.1 mantém a subdivisão compatível com volumes menores. Retorna novo estado sem alterar o recebido. Isso não constitui detecção contínua de colisões nem garante equivalência temporal quando há giro simultâneo ou bloqueio por eixos.
 
-O loop móvel usa essa atualização; valida o volume inicial antes de abrir o display e deriva origem e câmera do resultado. O título continua mostrando o tempo medido, que pode exceder o tempo aceito. `update_player` permanece disponível como cálculo livre, sem limite ou colisões; `resolve_movement` isoladamente continua sendo consulta de destinos por eixos e exige subdivisão pelo chamador. A conferência visual foi confirmada pelo desenvolvedor; M3-7 permanece pendente.
+O loop móvel usa essa atualização; valida o volume inicial antes de abrir o display e deriva origem e câmera do resultado. O título continua mostrando o tempo medido, que pode exceder o tempo aceito. `update_player` permanece disponível como cálculo livre, sem limite ou colisões; `resolve_movement` isoladamente continua sendo consulta de destinos por eixos e exige subdivisão pelo chamador. A conferência visual foi confirmada pelo desenvolvedor; a validação consolidada de M3-7 está descrita na seção 25.
+
+
+## 25. Navegação validada em M3-7
+
+A consolidação acrescenta testes integrados sem alterar os algoritmos: aproximações oblíquas e cantos nos quatro sentidos, movimentos grandes contra paredes e limites abertos, equivalência temporal em espaço livre sem giro simultâneo e percurso de ida e volta ao redor de um obstáculo unitário. O cenário com obstáculo é construído nos testes e no procedimento manual, sem ampliar a API ou alterar a sala de estudo.
+
+O desenvolvedor confirmou a conferência manual de sala, corredor e obstáculo. M3 está concluído no ambiente atual; permanecem as limitações documentadas de resolução por eixos, folga após bloqueio, aproximação do giro simultâneo e descarte de tempo. Evidências e contas na seção 27 da [validação](validacao.md).

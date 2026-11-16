@@ -6,9 +6,9 @@ A entrega mínima planejada é carregar um mapa externo e explorá-lo em primeir
 
 ## Estado atual
 
-M0, M1 e M2 concluídos no ambiente atual: o comando `python -m retro_fps` apresenta uma sala em perspectiva com movimento com colisões, com paredes em tons diferentes por orientação, teto e piso de cor sólida. O desenvolvedor confirmou as conferências visuais da sala e do corredor em M2-5/M2-6. A janela padrão mede 640 × 480; a imagem interna de 320 × 200 é ampliada para 640 × 400, centralizada com faixas pretas acima e abaixo. Escape ou o botão de fechar encerram a aplicação.
+M0, M1, M2 e M3 concluídos no ambiente atual: o comando `python -m retro_fps` apresenta uma sala em perspectiva com movimento com colisões, com paredes em tons diferentes por orientação, teto e piso de cor sólida. O desenvolvedor confirmou as conferências visuais da sala e do corredor em M2-5/M2-6. A janela padrão mede 640 × 480; a imagem interna de 320 × 200 é ampliada para 640 × 400, centralizada com faixas pretas acima e abaixo. Escape ou o botão de fechar encerram a aplicação.
 
-M3-1 a M3-6 implementados, com conferência visual do movimento e das colisões confirmada. M3-7 permanece pendente para consolidar a validação do marco. Ainda não há carregador de mapas. Os arquivos em `maps/` são exemplos da sintaxe proposta; a sala atual é construída em memória. A comparação controlada entre sala e corredor foi concluída em M2-6.
+M3 concluído com testes e conferência visual de navegação na sala, corredor e cenário com obstáculo confirmada pelo desenvolvedor. Ainda não há carregador de mapas. Os arquivos em `maps/` são exemplos da sintaxe proposta; a sala atual é construída em memória. A comparação controlada entre sala e corredor foi concluída em M2-6.
 
 ## Documentação
 
@@ -82,7 +82,7 @@ run(
 
 Mundo, origem e câmera devem ser fornecidos juntos. A configuração de renderização exige uma cena. A ampliação preserva a proporção da imagem, usando faixas pretas no espaço restante. Essa chamada preserva a cena estática. O comando principal usa o modo móvel descrito abaixo.
 
-### Movimento e colisões — M3-1 a M3-6
+### Movimento e colisões — M3
 
 `python -m retro_fps` usa W/S para avançar/recuar, A/D para deslocar lateralmente e setas esquerda/direita para girar. Manter uma tecla pressionada mantém o comando; teclas opostas se cancelam. Velocidades padrão: 1 unidade/s e pi/2 rad/s. O mouse ainda não tem função. A diagonal mantém a mesma velocidade total do movimento reto; A/D não alteram o ângulo. A extensão WASD está implementada e testada, com conferência manual confirmada pelo desenvolvedor.
 
@@ -112,8 +112,8 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-A suíte contém 397 casos de mundo, sala, raios, câmera, projeção, desenho, loop, comandos, movimento e colisões. Há verificações de volume, contato, cantos, deslizamento, descarte de tempo e subdivisão espacial. Os testes automatizados são distintos da conferência visual confirmada pelo desenvolvedor; a consolidação de M3 permanece em M3-7. As versões instaladas estão registradas em `requirements-dev.txt`.
+A suíte contém 418 casos de mundo, sala, raios, câmera, projeção, desenho, loop, comandos, movimento e colisões. Há verificações de volume, contato, cantos, deslizamento, descarte de tempo e subdivisão espacial. Os testes automatizados são distintos da conferência visual confirmada pelo desenvolvedor; M3-7 consolidou aproximações oblíquas, cantos, movimentos grandes, limites e percursos. As versões instaladas estão registradas em `requirements-dev.txt`.
 
 ## Próximo passo
 
-Após integrar o grupo M3-4/M3-5/M3-6 por PR, seguir para M3-7: validação consolidada de navegação e colisões. O contrato implementado de `World` está na [arquitetura](docs/arquitetura.md#11-mundo-implementado-em-m1-1). A demonstração de exploração será desenvolvida em `examples/exploration/`.
+Após integrar M3-7 por PR, iniciar o planejamento de M4: carregamento e validação de mapas externos. O contrato implementado de `World` está na [arquitetura](docs/arquitetura.md#11-mundo-implementado-em-m1-1). A demonstração de exploração será desenvolvida em `examples/exploration/`.
