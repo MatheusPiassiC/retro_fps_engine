@@ -271,3 +271,8 @@ Após o giro, frente é `(cos(angle), sin(angle))` e direita é `(-sin(angle), c
 `MovementConfig.radius` tem padrão 0.2 e exige valor finito e positivo. O raio pertence à configuração, sem duplicação no estado. `can_occupy(world, position, radius)`, em `retro_fps.collision`, consulta se o círculo cabe sem tocar paredes ou limites, independentemente de janela. Valores não finitos e raio não positivo causam `ValueError`.
 
 A consulta rejeita círculos que alcançam o exterior e percorre células próximas à caixa do círculo, incluindo a célula anterior à borda mínima para não omitir tangência. Para cada célula sólida, calcula o ponto mais próximo no retângulo e compara sua distância ao raio. Contato bloqueia; tolerância relativa de 1e-12 considera conservadoramente os arredondamentos próximos da tangência. Essa consulta avalia apenas uma posição, sem conferir o caminho ou modificar movimento.
+
+
+## 23. Resolução por eixos implementada em M3-5
+
+`resolve_movement(world, position, displacement, radius)`, em `retro_fps.collision`, exige início livre para o círculo e componentes finitas do deslocamento. Tenta x primeiro e depois y a partir da posição aceita. Um eixo bloqueado conserva a coordenada anterior, sem buscar uma posição intermediária junto à parede; o outro eixo continua livre para deslizar. A ordem fixa pode favorecer x em cantos. A função verifica destinos e ainda exige que o chamador subdivida deslocamentos grandes; não constitui detecção contínua de colisões.

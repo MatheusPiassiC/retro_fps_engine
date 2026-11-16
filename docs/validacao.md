@@ -429,3 +429,13 @@ Os critérios do roadmap foram conferidos: face frontal plana alinhada, parede d
 - **Conferência sugerida:** consultar na sala posições (3.7,2.5), (3.8,2.5), (3.9,2.5), raio 0.2, sem janela.
 - **Validação do desenvolvedor:** confirmou “Validado, pode seguir”; não relatou saídas individuais.
 - **Limites:** a consulta não percorre deslocamento nem protege o loop. Resolução por eixos e passos grandes seguem em entregas separadas.
+
+
+## 25. M3-5 — Resolução por eixos
+
+- **Branch:** `feat/m3-4-5-6-add-player-collision`, após `4f91072`.
+- **Exemplo prévio:** início `(3.75, 2.5)`, raio 0.2, deslocamento `(0.1, 0.1)`: x=3.85 sobreporia a parede em x=4, portanto x permanece 3.75; y avança para 2.6. Resultado `(3.75, 2.6)`.
+- **Canto independente:** parede na célula (2,2), início (1.8,1.8). Após x até 1.9, distância ao canto sqrt(0.05)>0.2; tentar y até 1.9 daria sqrt(0.02)<0.2. Resultado (1.9,1.8), evidenciando ordem x antes de y.
+- **Automação:** 17 casos novos de movimento livre, bloqueios, deslizamento repetido, ordem no canto, limites e entradas inválidas. 384 testes aprovados; Ruff, formatação e diff aprovados.
+- **Validação do desenvolvedor:** confirmou “Pode seguir, validei.” após receber procedimento sem janela; sem saídas individuais relatadas.
+- **Limites:** ainda sem integração ao loop ou proteção para deslocamentos grandes; M3-6 seguirá na mesma branch.

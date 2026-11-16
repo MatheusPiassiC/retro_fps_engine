@@ -264,3 +264,12 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Decisões implementadas:** contato bloqueado, tolerância relativa 1e-12 para tangência e inclusão da célula anterior à borda mínima; núcleo independente de Pygame. Sem integração de colisões ao loop.
 - **Verificação:** 367 testes aprovados; Ruff, formatação e diff aprovados. Contas independentes na seção 24 da validação.
 - **Aprovação:** o desenvolvedor confirmou “Validado, pode seguir”; documentação atualizada após aprovação, sem inventar resultados manuais. Aprendizado com palavras próprias não registrado.
+
+
+## 29. Registro — M3-5: resolução por eixos
+
+- **Branch:** `feat/m3-4-5-6-add-player-collision`.
+- **Contribuição:** explicação prévia de deslizamento e influência da ordem x/y, implementação do resolvedor e 17 testes; atualização documental após aprovação.
+- **Decisões implementadas:** x antes de y, rejeitar início ocupado, conservar coordenada bloqueada sem aproximar até contato. Subdivisão e integração pendentes.
+- **Verificação:** 384 testes aprovados; Ruff, formatação e diff aprovados. Contas independentes na seção 25 da validação.
+- **Aprovação:** “Pode seguir, validei.”; sem relato de saídas manuais individuais ou aprendizado com palavras próprias.

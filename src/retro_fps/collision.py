@@ -36,3 +36,29 @@ def can_occupy(world: World, position: tuple[float, float], radius: float) -> bo
             if distance <= radius or isclose(distance, radius, rel_tol=1e-12):
                 return False
     return True
+
+
+def resolve_movement(
+    world: World,
+    position: tuple[float, float],
+    displacement: tuple[float, float],
+    radius: float,
+) -> tuple[float, float]:
+    """Tente um passo em x e depois em y, preservando o eixo livre.
+
+    A posição inicial deve caber sem contato. Um eixo bloqueado mantém
+    sua coordenada anterior, sem aproximar até a parede. Esta função
+    testa destinos: o chamador deverá subdividir deslocamentos grandes
+    para impedir atravessar obstáculos entre início e fim (M3-6).
+    """
+    dx, dy = displacement
+    if not all(isfinite(value) for value in (dx, dy)):
+        raise ValueError("O deslocamento deve ter componentes finitas.")
+    if not can_occupy(world, position, radius):
+        raise ValueError("A posição inicial deve acomodar o círculo sem contato.")
+    x, y = position
+    if can_occupy(world, (x + dx, y), radius):
+        x += dx
+    if can_occupy(world, (x, y + dy), radius):
+        y += dy
+    return x, y
