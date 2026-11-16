@@ -1,8 +1,8 @@
-# Formato de mapa — versão inicial proposta
+# Formato de mapa — versão inicial
 
 ## 1. Estado
 
-Esta é a especificação proposta para o carregador a implementar em M4. Os exemplos já seguem estas regras, mas ainda não há carregador funcional.
+A análise de texto e a validação estão implementadas por `parse_map`; `load_map` lê o arquivo UTF-8 e delega à análise, sem janela. A integração da demonstração segue nas entregas de M4. A conferência manual de M4 está pendente.
 
 ## 2. Sintaxe
 
@@ -21,7 +21,8 @@ PLAYER 1.5 1.5 0
 - A primeira linha contém exatamente `MAP`.
 - Em seguida vêm as linhas da grade, compostas exclusivamente por `0` e `1`, sem espaços: `0` é livre e `1` é parede.
 - A última linha de conteúdo é `PLAYER x y angulo`, com exatamente quatro campos separados por espaços.
-- `x` e `y` são números reais finitos com ponto decimal; `angulo` é um número real finito em graus.
+- `x` e `y` são números reais finitos com ponto decimal; `angulo` é um número real finito em graus. São aceitos inteiros, sinal, fração com ponto e notação científica (por exemplo `1.5e0`); vírgula decimal, separador `_` e números não finitos são rejeitados.
+- `PLAYER` fica no início da linha; seus campos são separados por um ou mais espaços ASCII, sem espaços finais ou tabulações.
 - Uma quebra de linha ao final é permitida. Linhas vazias internas, comentários, cabeçalhos adicionais e conteúdo após `PLAYER` não são aceitos nesta versão.
 - Quebras de linha LF e CRLF são aceitas.
 
@@ -37,7 +38,7 @@ A altura das paredes é uma unidade. A câmera inicial fica a meia altura; piso,
 
 ## 4. Validação
 
-O carregador deverá rejeitar:
+O carregador rejeita:
 
 - Arquivo ausente, ilegível ou com codificação inválida, informando o motivo.
 - Ausência de `MAP`, de grade ou de uma única linha `PLAYER`.
@@ -46,9 +47,9 @@ O carregador deverá rejeitar:
 - Números inválidos ou não finitos, como infinito e NaN.
 - Jogador fora do cenário, dentro de parede ou sem espaço para seu volume completo.
 
-O jogador será um círculo de raio inicial 0.2 unidade. A validação verifica a distância do centro às células sólidas próximas: o círculo não pode tocar nem sobrepor paredes no início. O mesmo raio usado na configuração de movimento deve ser usado na validação do spawn.
+O jogador é um círculo de raio inicial 0.2 unidade. A validação verifica a distância do centro às células sólidas próximas: o círculo não pode tocar nem sobrepor paredes no início. O mesmo raio usado na configuração de movimento deve ser usado na validação do spawn.
 
-As mensagens deverão indicar caminho do arquivo e linha quando houver erro de sintaxe localizável. O carregador não deve criar um cenário parcialmente válido nem corrigir silenciosamente a grade.
+`MapLoadError`, derivado de `ValueError`, guarda `source`, `line` (quando localizável) e `message`; sua representação inclui origem e linha. `parse_map` usa `<texto>` por padrão e permite fornecer outra origem. Não retorna cenário parcialmente válido nem corrige silenciosamente a grade.
 
 Não será exigido que toda área livre seja alcançável. A demonstração deverá ter seu percurso verificado manualmente. Consultas fora da grade são tratadas como sólidas pela colisão; o raycasting também deve encerrar com segurança ao alcançar um limite.
 
@@ -57,3 +58,10 @@ Não será exigido que toda área livre seja alcançável. A demonstração deve
 Chaves, saídas e regras de jogo não pertencem a esta sintaxe inicial. Um exemplo de jogo poderá manter sua própria configuração de objetivos separada do mapa geométrico.
 
 Se novos materiais ou objetos genéricos forem necessários, o formato será revisado explicitamente, com exemplos e testes. O significado de arquivos existentes não deverá mudar silenciosamente.
+
+
+## 6. Uso do carregador implementado
+
+`parse_map(text, *, movement_config=None, source="<texto>")` e `load_map(path, *, movement_config=None)` retornam `MapData(world, player)`. A configuração padrão é `MovementConfig()`; forneça a mesma configuração ao carregador e ao executor quando personalizar o raio.
+
+`load_map` lê bytes e exige UTF-8 válido; erros de leitura identificam caminho e motivo, e erros de codificação identificam também a linha do byte inválido. Não há cache: editar o arquivo e carregar novamente produz outro mundo, sem modificar o anterior. Nenhuma função inicializa ou importa Pygame.

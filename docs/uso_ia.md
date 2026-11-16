@@ -293,3 +293,23 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Verificação:** 418 testes aprovados; Ruff, formatação e diff aprovados.
 - **Conferência do desenvolvedor:** “Tudo funcional, pode prosseguir”, após receber o procedimento das três cenas. Sem observação direta da janela pela IA ou invenção de resultados individuais.
 - **Estado:** M3-7 e M3 concluídos no ambiente atual; documentação atualizada após aprovação. Integração por PR e eventual tag permanecem separadas; sem push, PR, merge ou tag pela IA. Aprendizado com palavras próprias sobre os algoritmos ainda não registrado.
+
+
+## 32. Registro — preparação de M4 e análise de mapas
+
+- **Pedido:** avançar M4 com autonomia e commits locais, para validação manual posterior, sem alterar remoto. A autorização desta sessão substitui as pausas de aprovação por etapa apenas para este trabalho.
+- **Branch:** `feat/m4-1-2-3-4-add-map-loader`, baseada em `1887add`, com M3 concluído e integrado. Consulta ao remoto via fetch somente para leitura; nenhum push, PR, merge ou tag.
+- **Contribuição:** explicação de análise versus leitura, dados imutáveis do mapa, erros com origem e linha, sintaxe estrita, validação do círculo e conversão de graus; 47 testes novos.
+- **Verificação:** 465 testes aprovados. Conferência manual e relato de aprendizagem continuam pendentes.
+
+- **Verificação estática desta entrega:** Ruff apontou ordenação dos imports; após corrigir, Ruff, formatação e `git diff --check` passaram.
+
+
+## 33. Registro — M4-2/M4-4: leitura de arquivos e diagnóstico
+
+- **Branch:** `feat/m4-1-2-3-4-add-map-loader`.
+- **Contribuição:** leitura UTF-8 delegada ao analisador, erros com caminho e causas preservadas, releitura sem cache e dez casos adicionais, incluindo processo sem Pygame.
+- **Automação:** 475 testes aprovados. Ajustados imports e explicitação de `check=False` no subprocesso dos testes conforme Ruff.
+- **Estado:** carregador implementado e com automação; conferência manual pendente. Commits locais autorizados antecipadamente nesta sessão.
+
+- **Verificações estáticas:** Ruff, formatação e `git diff --check` aprovados nesta entrega.

@@ -8,7 +8,7 @@ A entrega mínima planejada é carregar um mapa externo e explorá-lo em primeir
 
 M0, M1, M2 e M3 concluídos no ambiente atual: o comando `python -m retro_fps` apresenta uma sala em perspectiva com movimento com colisões, com paredes em tons diferentes por orientação, teto e piso de cor sólida. O desenvolvedor confirmou as conferências visuais da sala e do corredor em M2-5/M2-6. A janela padrão mede 640 × 480; a imagem interna de 320 × 200 é ampliada para 640 × 400, centralizada com faixas pretas acima e abaixo. Escape ou o botão de fechar encerram a aplicação.
 
-M3 concluído com testes e conferência visual de navegação na sala, corredor e cenário com obstáculo confirmada pelo desenvolvedor. Ainda não há carregador de mapas. Os arquivos em `maps/` são exemplos da sintaxe proposta; a sala atual é construída em memória. A comparação controlada entre sala e corredor foi concluída em M2-6.
+M3 concluído com testes e conferência visual de navegação na sala, corredor e cenário com obstáculo confirmada pelo desenvolvedor. O carregador de mapas está implementado e testado, sem conferência manual de M4 ainda; o comando principal continua usando a sala em memória até a integração de M4-5/M4-6. Os arquivos em `maps/` seguem a sintaxe documentada. A comparação controlada entre sala e corredor foi concluída em M2-6.
 
 ## Documentação
 
@@ -112,7 +112,7 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-A suíte contém 418 casos de mundo, sala, raios, câmera, projeção, desenho, loop, comandos, movimento e colisões. Há verificações de volume, contato, cantos, deslizamento, descarte de tempo e subdivisão espacial. Os testes automatizados são distintos da conferência visual confirmada pelo desenvolvedor; M3-7 consolidou aproximações oblíquas, cantos, movimentos grandes, limites e percursos. As versões instaladas estão registradas em `requirements-dev.txt`.
+A suíte contém 475 casos de mundo, sala, raios, câmera, projeção, desenho, loop, comandos, movimento e colisões. Há verificações de volume, contato, cantos, deslizamento, descarte de tempo e subdivisão espacial. Os testes automatizados são distintos da conferência visual confirmada pelo desenvolvedor; M3-7 consolidou aproximações oblíquas, cantos, movimentos grandes, limites e percursos. As versões instaladas estão registradas em `requirements-dev.txt`.
 
 ## Próximo passo
 
