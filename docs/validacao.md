@@ -2,7 +2,7 @@
 
 ## 1. Estado e princípio
 
-Este documento reúne verificações propostas e evidências de M0 e M1-1. A suíte contém testes comportamentais de mundo; ainda não há resultados de desempenho medidos. Cada teste deve dizer qual comportamento protege e por que o resultado esperado faz sentido.
+Este documento reúne verificações propostas e evidências de M0, M1-1 e M1-2. A suíte contém testes comportamentais de mundo; ainda não há resultados de desempenho medidos. Cada teste deve dizer qual comportamento protege e por que o resultado esperado faz sentido.
 
 Não se espera que o desenvolvedor já conheça computação gráfica. Antes de aceitar um teste, a implementação deverá vir acompanhada de uma explicação acessível e de um exemplo que possa ser conferido com desenho e contas simples.
 
@@ -65,7 +65,7 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-A pasta `tests/` contém os primeiros testes comportamentais, introduzidos em M1-1. Os registros de M0 preservam o resultado histórico de ausência de testes; as evidências atuais estão na seção 10.
+A pasta `tests/` contém os primeiros testes comportamentais, introduzidos em M1-1. Os registros de M0 preservam o resultado histórico de ausência de testes; as evidências de mundo e sala estão nas seções 10 e 11.
 
 ## 7. M0-2 — Versões do ambiente
 
@@ -173,3 +173,15 @@ O procedimento sugerido foi criar `World([[0, 1, 0], [0, 0, 1]])` no interpretad
 **Resultado informado pelo desenvolvedor:** aprovou o código, confirmou ter testado o procedimento sugerido e também executado os testes com pytest. Esse relato foi recebido separadamente da execução automatizada pela IA; a conferência manual não foi observada diretamente pela IA e não exigia janela.
 
 **Conclusão:** M1-1 concluída com implementação, testes automatizados e aprovação do desenvolvedor. M1 permanece em andamento. Sala padrão, raycasting, colisões, carregador e renderização não foram implementados nem validados nesta tarefa. Integração por PR permanece uma etapa separada.
+
+
+## 11. M1-2 — Sala temporária em memória
+
+- **Branch:** `feat/m1-2-add-temporary-study-room`.
+- **Implementação:** `create_study_world()` constrói um `World` com a sala 5 × 5 do exemplo da seção 2, sem janela ou leitura de arquivo.
+- **Resultados esperados, explicados antes da implementação:** cinco linhas de cinco células; 16 paredes (cinco na linha superior, cinco na inferior e seis nas laterais intermediárias); nove células livres (interior 3 × 3). A célula `(0, 2)` é parede, `(2, 2)` é livre e `(4, 2)` é parede.
+- **Validação automatizada pela IA:** três testes novos em `tests/test_study_world.py` conferem dimensões, cada célula da borda e cada célula do interior. Os 23 casos da suíte passaram com Python 3.12.3 e pytest 9.2.0 da `.venv`. Também passaram Ruff, conferência de formatação e `git diff --check`.
+- **Comandos executados:** `.venv/bin/python -m pytest`, `.venv/bin/python -m ruff check .`, `.venv/bin/python -m ruff format --check .` e `git diff --check`.
+- **Conferência manual sugerida:** importar `create_study_world`, imprimir cada linha como uma sequência de 0/1, comparar com o desenho da seção 2 e consultar dimensões, borda esquerda, centro e borda direita. Resultados esperados: `(5, 5)`, `1`, `0` e `1`, respectivamente.
+- **Aprovação do desenvolvedor:** após receber a implementação, os resultados automatizados e o procedimento manual, respondeu “Aprovado, pode atualizar a documentação”. A aprovação foi explícita; não houve relato detalhado dos resultados manuais nem de execução própria do pytest nesta tarefa. Esses passos não são apresentados como observados pela IA.
+- **Conclusão:** M1-2 concluída com testes automatizados e aprovação do desenvolvedor; M1 continua em andamento. Raycasting, carregamento e apresentação gráfica do mapa não fazem parte desta entrega. Integração por PR permanece separada.

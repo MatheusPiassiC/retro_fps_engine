@@ -123,3 +123,15 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Conferência do desenvolvedor:** aprovou explicitamente o código, confirmou o procedimento manual sugerido e relatou execução dos testes no pytest.
 - **Estado:** M1-1 concluída; M1 continua em andamento; integração por PR é separada.
 - **Aprendizado com palavras próprias:** ainda não registrado pelo desenvolvedor; aprovação e execução de testes não substituem esse relato.
+
+
+## 15. Registro — M1-2: sala temporária em memória
+
+- **Tarefa e branch:** M1-2; `feat/m1-2-add-temporary-study-room`.
+- **Pedido:** implementar apenas M1-2, com explicação prévia, validação por partes e commit próprio; atualizar a documentação após aprovação.
+- **Contribuição da IA:** explicação da contagem de paredes e células livres, criação de `create_study_world()` e três testes da geometria, execução das verificações, procedimento manual e atualização documental após a aprovação.
+- **Decisão implementada:** cenário explícito em módulo separado de `World`, sem dependência gráfica ou leitura de arquivo; nenhuma implementação de M1-3.
+- **Verificação:** 23 casos aprovados no pytest; Ruff, formatação e `git diff --check` aprovados. Evidências e limites na [validação de M1-2](validacao.md#11-m1-2--sala-temporária-em-memória).
+- **Aprovação:** o desenvolvedor aprovou a entrega e autorizou a atualização documental; não relatou resultados manuais específicos nesta tarefa.
+- **Estado:** M1-2 concluída; integração por PR separada. Commit previsto: `feat: [M1-2] adiciona sala temporária em memória`.
+- **Aprendizado com palavras próprias:** ainda não registrado pelo desenvolvedor.
