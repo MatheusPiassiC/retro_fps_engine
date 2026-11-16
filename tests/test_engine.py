@@ -234,8 +234,56 @@ def test_diagonal_keys_feed_camera_without_changing_angle(dummy_display, monkeyp
     monkeypatch.setattr(pygame.key, "get_pressed", keys)
     monkeypatch.setattr(engine, "render_scene", render)
     monkeypatch.setattr(pygame.display, "flip", flip)
-    engine.run(world=World([[0]]), player=PlayerState((0, 0), 0))
+    engine.run(world=World([[0]]), player=PlayerState((0.5, 0.5), 0))
     assert len(frames) == 2
-    assert frames[0][0] == pytest.approx((0.1 / sqrt(2), 0.1 / sqrt(2)))
+    assert frames[0][0] == pytest.approx((0.5 + 0.1 / sqrt(2), 0.5 + 0.1 / sqrt(2)))
     assert frames[0][1] == 0
     assert frames[1] == frames[0]
+
+
+def test_mobile_spawn_volume_is_validated_before_display(monkeypatch):
+    from retro_fps.player import PlayerState
+    from retro_fps.study_world import create_study_world
+
+    def unexpected_init():
+        pytest.fail("Início sem espaço para o círculo deve falhar antes do display.")
+
+    monkeypatch.setattr(pygame.display, "init", unexpected_init)
+    with pytest.raises(ValueError):
+        engine.run(world=create_study_world(), player=PlayerState((3.9, 2.5), 0))
+
+
+def test_loop_applies_time_limit_and_wall_collision(dummy_display, monkeypatch):
+    from collections import defaultdict
+
+    from retro_fps.player import MovementConfig, PlayerState
+    from retro_fps.study_world import create_study_world
+
+    class Clock:
+        def tick(self, frame_limit):
+            return 500  # Tempo aceito será 0.1 s; deslocamento desejado será 5.
+
+    frames = []
+    original = engine.render_scene
+
+    def render(surface, world, origin, camera):
+        frames.append(origin)
+        original(surface, world, origin, camera)
+
+    def flip():
+        pygame.event.post(pygame.event.Event(pygame.QUIT))
+
+    monkeypatch.setattr(pygame.time, "Clock", Clock)
+    monkeypatch.setattr(
+        pygame.key, "get_pressed", lambda: defaultdict(bool, {pygame.K_w: True})
+    )
+    monkeypatch.setattr(engine, "render_scene", render)
+    monkeypatch.setattr(pygame.display, "flip", flip)
+    engine.run(
+        world=create_study_world(),
+        player=PlayerState((2.5, 2.5), 0),
+        movement_config=MovementConfig(move_speed=50),
+    )
+    assert len(frames) == 1
+    assert 3.69 < frames[0][0] < 3.8
+    assert frames[0][1] == 2.5

@@ -273,3 +273,13 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Decisões implementadas:** x antes de y, rejeitar início ocupado, conservar coordenada bloqueada sem aproximar até contato. Subdivisão e integração pendentes.
 - **Verificação:** 384 testes aprovados; Ruff, formatação e diff aprovados. Contas independentes na seção 25 da validação.
 - **Aprovação:** “Pode seguir, validei.”; sem relato de saídas manuais individuais ou aprendizado com palavras próprias.
+
+
+## 30. Registro — M3-6: integração e proteção dos deslocamentos
+
+- **Branch:** `feat/m3-4-5-6-add-player-collision`.
+- **Contribuição:** explicação prévia do descarte temporal e divisão espacial; atualização com mundo reutilizando o cálculo livre; validação do início, integração ao loop e 13 casos automatizados.
+- **Decisões implementadas:** limite de 0.1 s para movimento e giro, passos de até min(0.1, raio), giro antes de subdividir o deslocamento e resolução por eixos. O cálculo livre continua disponível. Limitações e contas na seção 26 da validação.
+- **Verificação:** 397 testes aprovados; Ruff, formatação e diff aprovados. Display dummy separado da conferência visual.
+- **Aprovação:** o desenvolvedor respondeu “Ficou muito legal! Pode concluir”; documentação atualizada após aprovação, sem inventar relatos individuais ou aprendizado com palavras próprias.
+- **Estado:** segundo grupo concluído; M3-7 e integração por PR permanecem separados. Sem push, PR, merge ou tag pela IA.

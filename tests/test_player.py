@@ -239,3 +239,104 @@ def test_player_radius_default_and_immutability():
     assert config.radius == 0.2
     with pytest.raises(FrozenInstanceError):
         config.radius = 0.3
+
+
+@pytest.mark.parametrize("elapsed", [0.1, 0.5, 10])
+def test_world_update_discards_excess_time_for_motion_and_turn(elapsed):
+    from retro_fps.player import update_player_in_world
+    from retro_fps.study_world import create_study_world
+
+    result = update_player_in_world(
+        create_study_world(),
+        PlayerState((2.5, 2.5), 0),
+        MovementCommand(1, 1),
+        MovementConfig(turn_speed=5 * pi),
+        elapsed,
+    )
+    assert result.position == pytest.approx((2.5, 2.6), abs=1e-12)
+    assert result.angle == pytest.approx(pi / 2)
+
+
+def test_world_update_subdivides_large_motion_before_wall():
+    from retro_fps.player import update_player_in_world
+    from retro_fps.world import World
+
+    # Parede em x=[3,4], destino livre x=6.5: testar só destino a atravessaria.
+    world = World([[0, 0, 0, 1, 0, 0, 0, 0] for _ in range(5)])
+    result = update_player_in_world(
+        world,
+        PlayerState((1.5, 2.5), 0),
+        MovementCommand(1),
+        MovementConfig(move_speed=50),
+        0.1,
+    )
+    assert 2.69 < result.position[0] < 2.8
+    assert result.position[1] == 2.5
+
+
+def test_world_update_preserves_diagonal_sliding():
+    from retro_fps.player import update_player_in_world
+    from retro_fps.study_world import create_study_world
+
+    result = update_player_in_world(
+        create_study_world(),
+        PlayerState((3.75, 2.5), 0),
+        MovementCommand(1, strafe=1),
+        MovementConfig(),
+        0.1,
+    )
+    assert result.position == pytest.approx((3.75, 2.5 + 0.1 / sqrt(2)), abs=1e-12)
+
+
+@pytest.mark.parametrize("elapsed", [-1, float("nan"), float("inf")])
+def test_world_update_rejects_invalid_time(elapsed):
+    from retro_fps.player import update_player_in_world
+    from retro_fps.study_world import create_study_world
+
+    with pytest.raises(ValueError):
+        update_player_in_world(
+            create_study_world(),
+            PlayerState((2.5, 2.5), 0),
+            MovementCommand(),
+            MovementConfig(),
+            elapsed,
+        )
+
+
+def test_world_update_rejects_occupied_start_even_without_motion():
+    from retro_fps.player import update_player_in_world
+    from retro_fps.study_world import create_study_world
+
+    with pytest.raises(ValueError):
+        update_player_in_world(
+            create_study_world(),
+            PlayerState((3.9, 2.5), 0),
+            MovementCommand(),
+            MovementConfig(),
+            0,
+        )
+
+
+@pytest.mark.parametrize("radius, expected_steps", [(0.2, 4), (0.04, 9)])
+def test_world_update_bounds_each_step(monkeypatch, radius, expected_steps):
+    from retro_fps import player
+    from retro_fps.world import World
+
+    original = player.resolve_movement
+    steps = []
+
+    def resolve(world, position, displacement, radius):
+        steps.append(hypot(*displacement))
+        return original(world, position, displacement, radius)
+
+    monkeypatch.setattr(player, "resolve_movement", resolve)
+    result = player.update_player_in_world(
+        World([[0] * 5 for _ in range(5)]),
+        PlayerState((2, 2), 0),
+        MovementCommand(1),
+        MovementConfig(move_speed=3.5, radius=radius),
+        0.1,
+    )
+    assert len(steps) == expected_steps
+    assert all(step <= min(0.1, radius) for step in steps)
+    assert result.position == pytest.approx((2.35, 2))

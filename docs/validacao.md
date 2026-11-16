@@ -439,3 +439,15 @@ Os critérios do roadmap foram conferidos: face frontal plana alinhada, parede d
 - **Automação:** 17 casos novos de movimento livre, bloqueios, deslizamento repetido, ordem no canto, limites e entradas inválidas. 384 testes aprovados; Ruff, formatação e diff aprovados.
 - **Validação do desenvolvedor:** confirmou “Pode seguir, validei.” após receber procedimento sem janela; sem saídas individuais relatadas.
 - **Limites:** ainda sem integração ao loop ou proteção para deslocamentos grandes; M3-6 seguirá na mesma branch.
+
+
+## 26. M3-6 — Tempo limitado, subdivisão e integração
+
+- **Branch:** `feat/m3-4-5-6-add-player-collision`, após `b49c4b3` de M3-5.
+- **Contas prévias:** 0.5 s medidos aceitam apenas 0.1 s, descartando 0.4 s. A 1 unidade/s, deslocamento reto aceito 0.1 unidade. Para 0.35 unidade, ceil(0.35/0.1)=4 passos de 0.0875; com raio 0.04, ceil(0.35/0.04)=9 passos menores que 0.04.
+- **Parede intermediária:** início x=1.5, velocidade 50, tempo aceito 0.1: destino livre x=6.5, além da parede x=[3,4]. Subdividir impede saltá-la; raio 0.2 exige centro antes de x=2.8, conservando o último passo livre.
+- **Automação:** 13 novos casos de tempo limitado para avanço/giro, passos grandes com parede intermediária, diagonal com deslizamento, entradas inválidas, limite de cada subpasso e início ocupado. Integração com display dummy confere bloqueio antes do desenho e validação do volume antes de abrir a janela. 397 testes totais aprovados; Ruff, formatação e diff aprovados.
+- **Procedimento visual fornecido:** manter W até parede, deslizar com W+A/W+D, tentar canto, recuar/girar e repetir com A/D, conferir Escape e fechamento.
+- **Conferência do desenvolvedor:** respondeu “Ficou muito legal! Pode concluir” após receber o procedimento. Confirmação registrada sem atribuir resultados individuais não relatados; a IA não observou diretamente a janela.
+- **Estado:** M3-4/M3-5/M3-6 concluídas neste grupo; integração por PR separada. M3-7 permanece pendente para consolidação de cantos, aproximações oblíquas, movimentos grandes e navegação.
+- **Limites:** ordem x/y e rejeição integral do passo bloqueado podem deixar folga; movimento com giro simultâneo depende da subdivisão temporal; excesso de tempo é descartado. Não há detecção contínua ou carregador de mapas.

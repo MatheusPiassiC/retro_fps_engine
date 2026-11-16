@@ -5,8 +5,14 @@ from math import pi
 import pygame
 
 from retro_fps.camera import Camera
+from retro_fps.collision import can_occupy
 from retro_fps.config import RenderConfig, WindowConfig
-from retro_fps.player import MovementCommand, MovementConfig, PlayerState, update_player
+from retro_fps.player import (
+    MovementCommand,
+    MovementConfig,
+    PlayerState,
+    update_player_in_world,
+)
 from retro_fps.renderer import render_scene
 from retro_fps.world import World
 
@@ -22,10 +28,10 @@ def run(
     movement_config: MovementConfig | None = None,
     field_of_view: float | None = None,
 ) -> None:
-    """Apresente cena estática, movimento experimental sem colisão ou fundo sólido.
+    """Apresente cena estática, movimento com colisões ou fundo sólido.
 
     No modo móvel, forneça mundo e jogador; origem e câmera são derivadas
-    do estado a cada quadro. Entrar em parede pode causar erro no DDA.
+    do estado a cada quadro. O círculo inicial deve caber sem contato.
     """
     if player is not None:
         if world is None or origin is not None or camera is not None:
@@ -37,6 +43,8 @@ def run(
         if field_of_view is None:
             field_of_view = pi / 3
         Camera(player.angle, field_of_view)  # Valida antes de inicializar o display.
+        if not can_occupy(world, player.position, movement_config.radius):
+            raise ValueError("A posição inicial deve acomodar o círculo sem contato.")
         has_scene = True
     else:
         if movement_config is not None or field_of_view is not None:
@@ -92,7 +100,9 @@ def run(
 
             if player is not None:
                 command = read_movement_command()
-                player = update_player(player, command, movement_config, delta_time)
+                player = update_player_in_world(
+                    world, player, command, movement_config, delta_time
+                )
                 origin = player.position
                 camera = Camera(player.angle, field_of_view)
 

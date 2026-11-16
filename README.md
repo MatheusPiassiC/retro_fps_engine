@@ -6,9 +6,9 @@ A entrega mínima planejada é carregar um mapa externo e explorá-lo em primeir
 
 ## Estado atual
 
-M0, M1 e M2 concluídos no ambiente atual: o comando `python -m retro_fps` apresenta uma sala em perspectiva com movimento experimental sem colisões, com paredes em tons diferentes por orientação, teto e piso de cor sólida. O desenvolvedor confirmou as conferências visuais da sala e do corredor em M2-5/M2-6. A janela padrão mede 640 × 480; a imagem interna de 320 × 200 é ampliada para 640 × 400, centralizada com faixas pretas acima e abaixo. Escape ou o botão de fechar encerram a aplicação.
+M0, M1 e M2 concluídos no ambiente atual: o comando `python -m retro_fps` apresenta uma sala em perspectiva com movimento com colisões, com paredes em tons diferentes por orientação, teto e piso de cor sólida. O desenvolvedor confirmou as conferências visuais da sala e do corredor em M2-5/M2-6. A janela padrão mede 640 × 480; a imagem interna de 320 × 200 é ampliada para 640 × 400, centralizada com faixas pretas acima e abaixo. Escape ou o botão de fechar encerram a aplicação.
 
-M3-1, M3-2 e M3-3 implementados e com conferência visual confirmada. Ainda não há colisões ou carregador de mapas. Os arquivos em `maps/` são exemplos da sintaxe proposta; a sala atual é construída em memória. A comparação controlada entre sala e corredor foi concluída em M2-6.
+M3-1 a M3-6 implementados, com conferência visual do movimento e das colisões confirmada. M3-7 permanece pendente para consolidar a validação do marco. Ainda não há carregador de mapas. Os arquivos em `maps/` são exemplos da sintaxe proposta; a sala atual é construída em memória. A comparação controlada entre sala e corredor foi concluída em M2-6.
 
 ## Documentação
 
@@ -32,7 +32,7 @@ python -m pip install -e '.[dev]'
 python -m retro_fps
 ```
 
-No Windows, a ativação do ambiente usa `.venv\Scripts\Activate.ps1` no PowerShell. A instalação exige acesso ao índice de pacotes. O último comando abre a sala com movimento experimental e exige uma sessão gráfica disponível. Escape ou o botão de fechar encerram a aplicação.
+No Windows, a ativação do ambiente usa `.venv\Scripts\Activate.ps1` no PowerShell. A instalação exige acesso ao índice de pacotes. O último comando abre a sala com movimento e colisões e exige uma sessão gráfica disponível. Escape ou o botão de fechar encerram a aplicação.
 
 ### Instalação com as versões registradas
 
@@ -82,14 +82,18 @@ run(
 
 Mundo, origem e câmera devem ser fornecidos juntos. A configuração de renderização exige uma cena. A ampliação preserva a proporção da imagem, usando faixas pretas no espaço restante. Essa chamada preserva a cena estática. O comando principal usa o modo móvel descrito abaixo.
 
-### Movimento experimental — M3-1/M3-2/M3-3
+### Movimento e colisões — M3-1 a M3-6
 
 `python -m retro_fps` usa W/S para avançar/recuar, A/D para deslocar lateralmente e setas esquerda/direita para girar. Manter uma tecla pressionada mantém o comando; teclas opostas se cancelam. Velocidades padrão: 1 unidade/s e pi/2 rad/s. O mouse ainda não tem função. A diagonal mantém a mesma velocidade total do movimento reto; A/D não alteram o ângulo. A extensão WASD está implementada e testada, com conferência manual confirmada pelo desenvolvedor.
 
-**Sem colisões:** faça toques curtos a partir do centro. Entrar em parede pode causar erro no DDA; não é navegação segura. Limitação temporal e subdivisão espacial serão implementadas em M3-6.
+O jogador ocupa um círculo de raio padrão 0.2 unidade. Paredes e limites bloqueiam o círculo; resolver x e depois y permite deslizar. Um eixo bloqueado conserva a coordenada anterior, podendo deixar pequena folga. O início deve acomodar o círculo sem contato.
+
+Cada atualização usa no máximo 0.1 segundo, descartando o excedente também para o giro. O deslocamento é subdividido em passos de até min(0.1, raio) unidade. Isso reduz saltos sobre paredes; não é detecção contínua de colisões. Girar e mover simultaneamente continua sendo uma aproximação dependente da subdivisão temporal.
 
 ```python
+from retro_fps.engine import run
 from retro_fps.player import PlayerState, MovementConfig
+from retro_fps.study_world import create_study_world
 
 run(
     world=create_study_world(),
@@ -108,8 +112,8 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-A suíte contém 339 casos: 109 de estado, comandos e movimento em `tests/test_player.py`, oito de comparação de cenários em `tests/test_perspective_scenarios.py`, 38 de loop/configuração em `tests/test_engine.py`, cinco de desenho em `tests/test_renderer.py`, 29 de projeção em `tests/test_projection.py`, 46 de câmera em `tests/test_camera.py`, 81 de raios em `tests/test_raycasting.py`, 20 de mundo em `tests/test_world.py` e três da sala temporária em `tests/test_study_world.py`. Eles verificam dimensões, consultas, limites, imutabilidade, entradas inválidas, geometria da sala, cantos e saída dentro do orçamento de avanços. Esses resultados não validam os componentes ainda não implementados. As versões instaladas estão registradas em `requirements-dev.txt`; isso não comprova o funcionamento da engine.
+A suíte contém 397 casos de mundo, sala, raios, câmera, projeção, desenho, loop, comandos, movimento e colisões. Há verificações de volume, contato, cantos, deslizamento, descarte de tempo e subdivisão espacial. Os testes automatizados são distintos da conferência visual confirmada pelo desenvolvedor; a consolidação de M3 permanece em M3-7. As versões instaladas estão registradas em `requirements-dev.txt`.
 
 ## Próximo passo
 
-Após integrar o grupo M3-1/M3-2/M3-3 por PR, seguir para M3-4/M3-5/M3-6: volume e colisões. O contrato implementado de `World` está na [arquitetura](docs/arquitetura.md#11-mundo-implementado-em-m1-1). A demonstração de exploração será desenvolvida em `examples/exploration/`.
+Após integrar o grupo M3-4/M3-5/M3-6 por PR, seguir para M3-7: validação consolidada de navegação e colisões. O contrato implementado de `World` está na [arquitetura](docs/arquitetura.md#11-mundo-implementado-em-m1-1). A demonstração de exploração será desenvolvida em `examples/exploration/`.
