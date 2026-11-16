@@ -282,3 +282,27 @@ Com a validação final do desenvolvedor, M1 está concluído no ambiente atual.
 - **Conferência sugerida:** gerar as três direções no interpretador, lançá-las com `cast_ray` na sala e comparar direções, células, lado e parâmetro com a tabela apresentada ao desenvolvedor. Não exige janela.
 - **Validação do desenvolvedor:** após receber os resultados e o procedimento, confirmou “Considere validado, pode prosseguir”. A confirmação é registrada separadamente da execução automatizada pela IA; não foram relatadas saídas manuais detalhadas.
 - **Conclusão:** M2-2/M2-3 concluídas; M2 continua em andamento, com projeção, desenho e conferência visual pendentes. Integração por PR é uma etapa separada.
+
+
+## 17. M2-4 — Projeção e recorte
+
+- **Branch:** `feat/m2-4-5-render-static-perspective`; primeira etapa.
+- **Exemplos prévios:** largura 320, FOV 90 graus, escala 160; profundidades 2 e 4 produzem alturas 80 e 40, com intervalos `(60, 140)` e `(80, 120)` numa imagem de altura 200. Profundidade zero usa o mínimo de 0.000001 e resulta em recorte de tela inteira.
+- **Automação:** 29 casos novos conferem alturas conhecidas, relação inversa com profundidade, proteção próxima de zero, arredondamento, recorte, altura zero e entradas inválidas. Os 179 casos totais passaram com `.venv/bin/python -m pytest`; Ruff, formatação e `git diff --check` passaram. Python 3.12.3, pytest 9.2.0.
+- **Conferência sugerida:** executar no interpretador as contas de profundidades 2, 4 e zero e comparar alturas e intervalos acima. Não há janela nesta etapa.
+- **Aprovação:** o desenvolvedor respondeu “EU aprovo, pode seguir” após receber os resultados e procedimento. Não foram relatadas saídas manuais detalhadas; aprovação e automação são evidências separadas.
+- **Estado:** M2-4 concluída; desenho e validação visual permanecem em M2-5. M2 continua em andamento.
+
+
+## 18. M2-5 — Primeira imagem em perspectiva
+
+- **Branch:** `feat/m2-4-5-render-static-perspective`; segunda etapa, após aprovação e commit `c9e4f42` de M2-4.
+- **Implementação:** desenho por colunas em superfície interna, cores por orientação, piso/teto sólidos, ampliação proporcional centralizada, cena opcional no executor e sala estática pelo comando principal.
+- **Exemplos prévios:** cada coluna interna tem largura 1; a imagem 320 × 200 ocupa 640 × 400 na janela 640 × 480, deixando faixas de 40 pixels. Desenhar [top,bottom) exige altura `bottom-top`.
+- **Testes de desenho:** cinco casos com superfícies reais verificam fundo sem impacto, faces x/y e alinhamento frontal, parede próxima e impacto de profundidade zero. Para largura 12, visão de 60 graus e profundidade 1.5, a altura é `4*sqrt(3)`, cerca de 6.928: em altura 10, ocupa [1,9). O resultado foi calculado independentemente do DDA.
+- **Ajuste durante a verificação:** o exemplo inicial de visão de 90 graus produziu altura próxima de 4, ligeiramente maior por ponto flutuante; piso/teto matemáticos ampliaram o intervalo. O teste de pixels foi substituído por um exemplo distante de uma fronteira inteira, sem alterar o algoritmo. As contas de projeção continuam verificadas com tolerância explícita.
+- **Testes de loop/configuração:** 17 casos cobrem cena e fundo sólido, encerramento com eventos reais de Escape/QUIT na fila após um quadro, liberação do display, tamanho interno, cores e faixas pretas, cenas incompletas e dimensões inválidas. O driver dummy não apresenta janela real.
+- **Resultados automatizados:** 201 casos totais aprovados com Python 3.12.3 e pytest 9.2.0. Ruff, formatação e `git diff --check` aprovados após ajustes de formatação e uso de literais de dicionário nos testes.
+- **Procedimento visual fornecido:** executar `python -m retro_fps`; conferir parede frontal alinhada, teto/piso, faixas pretas e encerramento. Repetir com `Camera(pi/4)` para observar o canto e as tonalidades diferentes das faces.
+- **Conferência pelo desenvolvedor:** após receber o procedimento, confirmou “Funcionou. Pode seguir”. Essa confirmação da execução real é separada dos testes com driver dummy; não foi observada diretamente pela IA nem constitui medição de desempenho.
+- **Conclusão:** M2-5 concluída com conferência visual confirmada. M2 permanece em andamento até M2-6; integração por PR é separada. Ainda não há movimento, colisões ou carregamento de mapas.

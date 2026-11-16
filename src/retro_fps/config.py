@@ -4,6 +4,21 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
+class RenderConfig:
+    """Resolução interna em pixels, independente das dimensões da janela."""
+
+    internal_width: int = 320
+    internal_height: int = 200
+
+    def __post_init__(self) -> None:
+        if any(
+            type(value) is not int or value <= 0
+            for value in (self.internal_width, self.internal_height)
+        ):
+            raise ValueError("As dimensões internas devem ser inteiros positivos.")
+
+
+@dataclass(frozen=True)
 class WindowConfig:
     """Dimensões em pixels, limite de quadros por segundo e cor RGB."""
 

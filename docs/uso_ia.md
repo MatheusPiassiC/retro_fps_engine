@@ -183,3 +183,23 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Verificação:** 150 casos totais aprovados; Ruff, formatação e diff aprovados. Exemplos e limites na seção 16 da validação.
 - **Validação:** o desenvolvedor confirmou “Considere validado, pode prosseguir”, sem relatar saídas manuais detalhadas. Aprendizado com palavras próprias ainda não registrado.
 - **Estado:** M2-1/M2-2/M2-3 concluídas; M2 permanece em andamento. Integração por PR é separada.
+
+
+## 21. Registro — M2-4: projeção e recorte
+
+- **Branch:** `feat/m2-4-5-render-static-perspective`.
+- **Contribuição:** explicação prévia da escala de projeção, altura inversamente proporcional à profundidade e intervalos de linhas; implementação sem Pygame e 29 casos de teste.
+- **Decisões:** altura mundial 1, câmera a meia altura, mínimo de profundidade 0.000001, recorte antes da conversão para inteiros e intervalo vazio para altura projetada zero.
+- **Verificação:** 179 casos aprovados; Ruff, formatação e diff aprovados. Exemplos na seção 17 da validação.
+- **Aprovação:** o desenvolvedor aprovou e autorizou continuar, sem relatar saídas manuais detalhadas. Aprendizado com palavras próprias ainda não registrado.
+- **Estado:** M2-4 concluída; M2-5 segue na mesma branch.
+
+
+## 22. Registro — M2-5: primeira imagem em perspectiva
+
+- **Branch:** `feat/m2-4-5-render-static-perspective`.
+- **Contribuição:** ligação entre câmera, DDA, projeção e desenho; resolução interna configurável, apresentação proporcional e sala no comando principal; 22 novos casos de desenho, loop e configuração; procedimento visual e documentação após confirmação.
+- **Decisões:** preservar `run()` sem cena como fundo sólido; comando principal mostra a sala; cores constantes por orientação; imagem padrão 320 × 200 centralizada na janela 640 × 480, conforme escolhas do desenvolvedor no planejamento.
+- **Verificação:** 201 testes aprovados; Ruff, formatação e diff aprovados. Ajuste do exemplo de pixels para evitar sensibilidade a arredondamento em altura inteira, registrado na seção 18 da validação.
+- **Conferência visual:** o desenvolvedor confirmou que funcionou e autorizou continuar após receber o procedimento da sala frontal, canto e encerramento. A IA não observou diretamente a janela real.
+- **Estado:** M2-4/M2-5 concluídas; M2-6 pendente. Aprendizado com palavras próprias ainda não registrado. Push e integração por PR separados.
