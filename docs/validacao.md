@@ -476,3 +476,14 @@ O percurso contorna por cima o obstáculo: de (2.5,3.5), norte 1 até (2.5,2.5),
 - **Procedimento fornecido:** abrir sequencialmente sala, corredor e mundo 7 × 7 com borda sólida e obstáculo na célula (3,3), usando o mesmo executor. Tentar diagonais contra paredes/cantos, percorrer corredor nos dois sentidos, contornar obstáculo, soltar teclas e conferir encerramento.
 - **Confirmação do desenvolvedor:** respondeu “Tudo funcional, pode prosseguir” após receber as três cenas. A IA não observou diretamente a janela; não são atribuídos resultados individuais adicionais.
 - **Conclusão:** M3-7 e M3 concluídos no ambiente atual. Critérios revisados: comandos e giro, equivalência temporal em espaço livre dentro do limite, volume fora de paredes, deslizamento, obstáculos e limites bloqueados nos casos testados. Limitações da aproximação discreta permanecem documentadas; não se afirma detecção contínua. Integração por PR e eventual tag são separadas. M4 não iniciado.
+
+
+## 28. M4-1/M4-3/M4-4 — Análise de texto e validação
+
+- **Branch:** `feat/m4-1-2-3-4-add-map-loader`, baseada em `1887add`, com M3-7 integrado pelo PR #14. Árvore inicialmente limpa.
+- **Autorização especial desta sessão:** o desenvolvedor autorizou implementação e commits locais de M4 sem aguardar validação de cada etapa, com roteiro de conferência posterior e sem alterar o remoto. Isso não constitui aprovação manual do resultado.
+- **Contas independentes:** sala 5 × 5 tem nove células livres. Ângulos 90/450 graus dão pi/2 e -90 dá 3*pi/2. Centro x=1.3 tem distância 0.3 da parede que termina em x=1: raio 0.2 cabe, raio 0.3 toca e é rejeitado.
+- **Automação:** 47 novos casos de estrutura, linhas de erro, LF/CRLF, quebra final opcional, conversão angular, domínio numérico, volume inicial e imutabilidade. 465 testes totais aprovados; conferência manual pendente.
+- **Decisões de sintaxe:** um ou mais espaços ASCII entre campos PLAYER, sem espaços externos; números decimais com sinal e expoente, sem separadores ou valores não finitos. Grade não é corrigida. Regras registradas na especificação sem duplicar a implementação.
+
+- **Verificação estática desta entrega:** Ruff apontou ordenação dos imports; após corrigir, Ruff, formatação e `git diff --check` passaram.

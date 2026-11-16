@@ -292,3 +292,10 @@ O loop móvel usa essa atualização; valida o volume inicial antes de abrir o d
 A consolidação acrescenta testes integrados sem alterar os algoritmos: aproximações oblíquas e cantos nos quatro sentidos, movimentos grandes contra paredes e limites abertos, equivalência temporal em espaço livre sem giro simultâneo e percurso de ida e volta ao redor de um obstáculo unitário. O cenário com obstáculo é construído nos testes e no procedimento manual, sem ampliar a API ou alterar a sala de estudo.
 
 O desenvolvedor confirmou a conferência manual de sala, corredor e obstáculo. M3 está concluído no ambiente atual; permanecem as limitações documentadas de resolução por eixos, folga após bloqueio, aproximação do giro simultâneo e descarte de tempo. Evidências e contas na seção 27 da [validação](validacao.md).
+
+
+## 26. Análise de mapas implementada em M4-1/M4-3/M4-4
+
+`parse_map(text, *, movement_config=None, source="<texto>")`, em `retro_fps.map_loader`, analisa texto conforme [formato_mapa.md](formato_mapa.md). Retorna `MapData(world, player)`, imutável, sem janela ou regras de jogo. `MapLoadError(ValueError)` identifica origem, linha e motivo. Sintaxe e mensagens têm testes independentes de Pygame.
+
+Sem configuração explícita, usa `MovementConfig()`; o raio dessa configuração valida o início com a mesma consulta geométrica das colisões. O chamador deve passar a mesma configuração ao executor. A análise normaliza graus por uma volta e converte para radianos ao criar `PlayerState`; o mapa não mantém orientação paralela. Não verifica alcançabilidade de áreas. Os símbolos permanecem no módulo; consolidação de exports públicos segue em M5.
