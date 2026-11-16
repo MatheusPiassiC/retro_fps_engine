@@ -1,7 +1,7 @@
 """Estado e intenções de movimento, sem dependência de teclado ou janela."""
 
 from dataclasses import dataclass
-from math import isfinite, tau
+from math import cos, isfinite, pi, sin, tau
 
 
 @dataclass(frozen=True)
@@ -38,3 +38,35 @@ class MovementCommand:
                 raise TypeError("Os comandos devem ser inteiros, sem booleanos.")
             if value not in (-1, 0, 1):
                 raise ValueError("Os comandos devem ser -1, 0 ou 1.")
+
+
+@dataclass(frozen=True)
+class MovementConfig:
+    """Velocidades linear em unidades/s e angular em radianos/s."""
+
+    move_speed: float = 1.0
+    turn_speed: float = pi / 2
+
+    def __post_init__(self) -> None:
+        for speed in (self.move_speed, self.turn_speed):
+            if not isfinite(speed) or speed <= 0:
+                raise ValueError("As velocidades devem ser finitas e positivas.")
+
+
+def update_player(
+    state: PlayerState,
+    command: MovementCommand,
+    config: MovementConfig,
+    delta_time: float,
+) -> PlayerState:
+    """Gire e depois desloque na nova direção, sem colisão ou limite de tempo.
+
+    O tempo é dado em segundos. Avançar enquanto gira aproxima uma curva
+    por segmentos retos; subdividir o tempo pode alterar essa trajetória.
+    """
+    if not isfinite(delta_time) or delta_time < 0:
+        raise ValueError("O intervalo deve ser finito e não negativo.")
+    angle = state.angle + command.turn * config.turn_speed * delta_time
+    distance = command.forward * config.move_speed * delta_time
+    x, y = state.position
+    return PlayerState((x + distance * cos(angle), y + distance * sin(angle)), angle)

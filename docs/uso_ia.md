@@ -222,3 +222,13 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Verificação:** 251 testes aprovados; Ruff, formatação e diff aprovados. Evidências na seção 20 da validação.
 - **Aprovação:** o desenvolvedor confirmou “Pode seguir, está validado”; não relatou saídas manuais específicas. Documentação atualizada após aprovação.
 - **Estado:** M3-1 concluída; cálculo e integração de movimento seguem em entregas separadas na mesma branch. Aprendizado com palavras próprias ainda não registrado.
+
+
+## 25. Registro — M3-2/M3-3: cálculo de movimento
+
+- **Branch:** `feat/m3-1-2-3-add-player-movement`; segunda entrega.
+- **Contribuição:** explicação de velocidade multiplicada pelo tempo e ordem de giro/deslocamento, implementação de configuração e atualização sem janela, 30 testes novos e procedimento de conferência.
+- **Decisões implementadas:** velocidades padrão aprovadas de 1 unidade/s e pi/2 rad/s; giro antes do deslocamento; retorno de estado imutável; sem colisões ou limite temporal.
+- **Automação:** 281 testes aprovados; Ruff, formatação e diff aprovados. Contas e limitações na seção 21 da validação.
+- **Aprovação:** o desenvolvedor confirmou “Pode seguir, está validado também”; documentação atualizada após aprovação, sem inventar resultados manuais.
+- **Estado:** M3-3 concluída; integração do teclado e câmera de M3-2 segue em entrega separada. Aprendizado com palavras próprias não registrado.

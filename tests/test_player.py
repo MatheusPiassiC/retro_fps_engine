@@ -5,7 +5,7 @@ from math import pi, tau
 
 import pytest
 
-from retro_fps.player import MovementCommand, PlayerState
+from retro_fps.player import MovementCommand, MovementConfig, PlayerState, update_player
 
 
 def test_position_is_preserved_and_copied():
@@ -78,3 +78,100 @@ def test_command_is_immutable():
     command = MovementCommand()
     with pytest.raises(FrozenInstanceError):
         command.forward = 1
+
+
+@pytest.mark.parametrize(
+    "angle, forward, expected",
+    [
+        (0, 1, (2.6, 2.5)),
+        (0, -1, (2.4, 2.5)),
+        (pi / 2, 1, (2.5, 2.6)),
+        (pi, 1, (2.4, 2.5)),
+        (3 * pi / 2, 1, (2.5, 2.4)),
+    ],
+)
+def test_movement_in_cardinal_directions(angle, forward, expected):
+    state = PlayerState((2.5, 2.5), angle)
+    result = update_player(state, MovementCommand(forward), MovementConfig(), 0.1)
+    assert result.position == pytest.approx(expected, abs=1e-12)
+    assert result.angle == state.angle
+    assert state.position == (2.5, 2.5)
+
+
+@pytest.mark.parametrize("turn, expected", [(1, pi / 20), (-1, 39 * pi / 20)])
+def test_turning_keeps_position(turn, expected):
+    state = PlayerState((2.5, 2.5), 0)
+    result = update_player(state, MovementCommand(turn=turn), MovementConfig(), 0.1)
+    assert result.angle == pytest.approx(expected, abs=1e-12)
+    assert result.position == state.position
+
+
+def test_turn_is_applied_before_translation():
+    # Em 1 s a 90 graus/s, o giro leva de leste a sul; avança uma unidade em y.
+    result = update_player(
+        PlayerState((2.5, 2.5), 0), MovementCommand(1, 1), MovementConfig(), 1
+    )
+    assert result.position == pytest.approx((2.5, 3.5), abs=1e-12)
+    assert result.angle == pytest.approx(pi / 2)
+
+
+@pytest.mark.parametrize(
+    "command, elapsed", [(MovementCommand(), 0.1), (MovementCommand(1, 1), 0)]
+)
+def test_no_command_or_zero_time_preserves_state(command, elapsed):
+    state = PlayerState((2.5, 2.5), pi / 4)
+    assert update_player(state, command, MovementConfig(), elapsed) == state
+
+
+@pytest.mark.parametrize(
+    "command",
+    [
+        MovementCommand(1),
+        MovementCommand(-1),
+        MovementCommand(turn=1),
+        MovementCommand(turn=-1),
+    ],
+)
+def test_straight_motion_or_turn_matches_two_half_steps(command):
+    state = PlayerState((2.5, 2.5), pi / 4)
+    config = MovementConfig()
+    single = update_player(state, command, config, 0.1)
+    half = update_player(state, command, config, 0.05)
+    split = update_player(half, command, config, 0.05)
+    assert split.position == pytest.approx(single.position, abs=1e-12)
+    assert split.angle == pytest.approx(single.angle, abs=1e-12)
+
+
+def test_custom_speeds_and_angle_normalization():
+    # Meia volta a pi rad/s por 1 s; recuar 2 unidades olhando para oeste leva a leste.
+    result = update_player(
+        PlayerState((2.5, 2.5), tau),
+        MovementCommand(-1, 1),
+        MovementConfig(move_speed=2, turn_speed=pi),
+        1,
+    )
+    assert result.position == pytest.approx((4.5, 2.5), abs=1e-12)
+    assert result.angle == pytest.approx(pi)
+
+
+@pytest.mark.parametrize("elapsed", [-0.1, float("nan"), float("inf"), -float("inf")])
+def test_invalid_elapsed_time_is_rejected(elapsed):
+    with pytest.raises(ValueError):
+        update_player(
+            PlayerState((0, 0), 0), MovementCommand(), MovementConfig(), elapsed
+        )
+
+
+@pytest.mark.parametrize("attribute", ["move_speed", "turn_speed"])
+@pytest.mark.parametrize("speed", [0, -1, float("nan"), float("inf"), -float("inf")])
+def test_invalid_speed_is_rejected(attribute, speed):
+    with pytest.raises(ValueError):
+        MovementConfig(**{attribute: speed})
+
+
+def test_movement_config_defaults_and_immutability():
+    config = MovementConfig()
+    assert config.move_speed == 1
+    assert config.turn_speed == pi / 2
+    with pytest.raises(FrozenInstanceError):
+        config.move_speed = 2

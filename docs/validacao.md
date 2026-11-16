@@ -384,3 +384,13 @@ Os critérios do roadmap foram conferidos: face frontal plana alinhada, parede d
 - **Conferência sugerida:** construir jogador em `(2.5, 2.5)` com ângulo -pi/2 e imprimir estado e comandos padrão e `(1, -1)`. Esperado: posição preservada, ângulo aproximadamente 4.712389 e intenções preservadas. Não exige janela.
 - **Validação do desenvolvedor:** confirmou “Pode seguir, está validado”, sem relatar saídas manuais específicas. Essa aprovação é distinta da automação.
 - **Limites:** ainda sem cálculo de movimento, teclado, colisões ou alteração visual; M3 permanece em andamento.
+
+
+## 21. M3-2/M3-3 — Movimento independente da janela
+
+- **Branch:** `feat/m3-1-2-3-add-player-movement`; segunda entrega, após `fb2cfc9` de M3-1.
+- **Contas prévias:** a 1 unidade/s, 0.1 s desloca 0.1 unidade. Partindo de `(2.5, 2.5)`, avanço para leste resulta em `(2.6, 2.5)` e para sul em `(2.5, 2.6)`. A pi/2 rad/s, 0.1 s gira pi/20 rad, ou 9 graus. Girar 90 graus à direita antes de avançar uma unidade leva de `(2.5, 2.5)` para `(2.5, 3.5)` quando o início olha para leste.
+- **Automação:** 30 casos novos verificam cardinais, recuo, giro, ordem das operações, repouso, tempo zero, equivalência temporal no avanço reto/giro isolado, configuração e entradas inválidas. 281 testes totais aprovados; Ruff, formatação e `git diff --check` aprovados.
+- **Conferência sugerida:** no interpretador, avançar por 0.1 s, girar por 0.1 s e imprimir o estado original para conferir sua preservação. Não há mudança visual nesta entrega.
+- **Validação do desenvolvedor:** confirmou “Pode seguir, está validado também”, sem relatar saídas manuais específicas.
+- **Limites:** teclado e ligação da câmera pendentes; sem colisões ou proteção para passos grandes. M3-3 concluída; M3-2 aguarda integração dos controles.
