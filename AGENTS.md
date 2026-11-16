@@ -6,7 +6,7 @@ Este é um projeto universitário de aprendizagem. Não presumir conhecimento pr
 
 ## Escopo e arquitetura
 
-- Seguir `docs/roadmap.md`; M0 foi concluído no ambiente atual; M1 está em andamento, com M1-1 implementada, testada e aprovada pelo desenvolvedor.
+- Seguir `docs/roadmap.md`; M0 foi concluído no ambiente atual; M1 está em andamento, com M1-1 e M1-2 implementadas, testadas e aprovadas pelo desenvolvedor.
 - Usar Wolfenstein 3D como referência conceitual, dentro dos limites de `docs/missao.md`.
 - Manter regras de jogo fora de `src/retro_fps/`. O núcleo não importa exemplos.
 - Manter mundo, carregamento, raycasting e colisões independentes da inicialização gráfica.
@@ -34,6 +34,6 @@ Este é um projeto universitário de aprendizagem. Não presumir conhecimento pr
 
 Após instalar o ambiente conforme o README, usar `python -m pytest`, `python -m ruff check .` e `python -m ruff format --check .` conforme o escopo da mudança.
 
-O ciclo da janela, a configuração inicial, o desenho de cor sólida e as consultas do mundo estão implementados; os demais módulos permanecem esqueleto. A suíte contém testes comportamentais de mundo em `tests/test_world.py`. Não declarar funcionalidades validadas por verificar apenas imports ou sintaxe. Ao implementar, explicar por que o resultado de cada teste relevante é esperado, usando casos independentes do algoritmo.
+O ciclo da janela, a configuração inicial, o desenho de cor sólida, as consultas do mundo e a sala temporária em memória estão implementados; os demais módulos permanecem esqueleto. A suíte contém testes comportamentais de mundo e da sala temporária em `tests/test_world.py` e `tests/test_study_world.py`. Não declarar funcionalidades validadas por verificar apenas imports ou sintaxe. Ao implementar, explicar por que o resultado de cada teste relevante é esperado, usando casos independentes do algoritmo.
 
 Registrar contribuições relevantes de IA em `docs/uso_ia.md`. Não tratar desconhecimento do desenvolvedor como aprovação automática de decisões.

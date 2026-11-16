@@ -6,7 +6,7 @@ A entrega mínima planejada é carregar um mapa externo e explorá-lo em primeir
 
 ## Estado atual
 
-M0 concluído no ambiente atual: a entrada do pacote abre uma janela de 640 × 480 pixels com fundo azul e intervalo entre quadros em segundos no título. Escape ou o botão de fechar encerram a aplicação. O desenvolvedor confirmou a conferência visual de M0-3 e da entrega conjunta M0-4 e M0-5. M1 está em andamento: M1-1 implementou a representação do mundo e consultas de células, com testes comportamentais e aprovação do desenvolvedor. Ainda não há raycasting, renderização de mapas, movimento ou carregador. Os mapas são exemplos da sintaxe proposta.
+M0 concluído no ambiente atual: a entrada do pacote abre uma janela de 640 × 480 pixels com fundo azul e intervalo entre quadros em segundos no título. Escape ou o botão de fechar encerram a aplicação. O desenvolvedor confirmou a conferência visual de M0-3 e da entrega conjunta M0-4 e M0-5. M1 está em andamento: M1-1 implementou a representação do mundo e consultas de células; M1-2 acrescentou uma sala temporária 5 × 5 em memória. As duas tarefas têm testes comportamentais e aprovação do desenvolvedor. Ainda não há raycasting, renderização de mapas, movimento ou carregador. Os mapas são exemplos da sintaxe proposta.
 
 ## Documentação
 
@@ -67,8 +67,8 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-A suíte contém 20 casos de mundo em `tests/test_world.py`; eles verificam dimensões, consultas, limites, imutabilidade e entradas inválidas. Esses resultados não validam os componentes ainda não implementados. As versões instaladas estão registradas em `requirements-dev.txt`; isso não comprova o funcionamento da engine.
+A suíte contém 23 casos: 20 de mundo em `tests/test_world.py` e três da sala temporária em `tests/test_study_world.py`. Eles verificam dimensões, consultas, limites, imutabilidade, entradas inválidas e geometria da sala. Esses resultados não validam os componentes ainda não implementados. As versões instaladas estão registradas em `requirements-dev.txt`; isso não comprova o funcionamento da engine.
 
 ## Próximo passo
 
-Após integrar M1-1 por PR, continuar com M1-2: sala temporária 5 × 5 em memória. O contrato implementado de `World` está na [arquitetura](docs/arquitetura.md#11-mundo-implementado-em-m1-1). A demonstração de exploração será desenvolvida em `examples/exploration/`.
+Após integrar M1-2 por PR, continuar com M1-3: primeiro raio sem dependência gráfica. O contrato implementado de `World` está na [arquitetura](docs/arquitetura.md#11-mundo-implementado-em-m1-1). A demonstração de exploração será desenvolvida em `examples/exploration/`.
