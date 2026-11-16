@@ -373,3 +373,14 @@ Informar se as quatro cenas correspondem ao esperado. Não há movimento nesta e
 Após receber o procedimento, o desenvolvedor confirmou que todos os testes funcionaram e relatou ter visto o resultado funcionando. Essa confirmação da conferência das quatro cenas é distinta dos 209 casos automatizados executados pela IA; a janela real não foi observada diretamente pela IA.
 
 Os critérios do roadmap foram conferidos: face frontal plana alinhada, parede distante menor, metade da altura não arredondada ao dobrar a profundidade e recorte seguro perto da parede. A sala e o corredor foram comparados com contas e imagens, sem correção adicional de fish-eye. M2 está concluído no ambiente atual. Integração por PR e eventual tag são etapas separadas; nenhuma tag foi criada nesta tarefa. Movimento, colisões e carregamento permanecem fora desta entrega.
+
+
+## 20. M3-1 — Estado do jogador e comandos lógicos
+
+- **Branch:** `feat/m3-1-2-3-add-player-movement`; primeira entrega do grupo. Base: main em `55673d2`, contendo `5558bd7`, sincronizada com origin após fetch.
+- **Conceitos prévios:** comando `(1, -1)` solicita avanço e giro à esquerda, sem executar movimento; ângulos separados por uma volta representam a mesma orientação.
+- **Contas independentes:** -pi/2 + 2*pi = 3*pi/2; 5*pi/2 - 2*pi = pi/2. Três valores independentes em cada comando produzem nove combinações. Alterar a lista de posição após a construção não deve alterar o estado copiado.
+- **Automação:** 42 novos casos verificam cópia, imutabilidade, normalização angular, coordenadas e ângulos não finitos, comandos padrão, nove combinações e rejeição de tipos/valores inválidos. Os 251 testes totais passaram; Ruff, formatação e `git diff --check` passaram.
+- **Conferência sugerida:** construir jogador em `(2.5, 2.5)` com ângulo -pi/2 e imprimir estado e comandos padrão e `(1, -1)`. Esperado: posição preservada, ângulo aproximadamente 4.712389 e intenções preservadas. Não exige janela.
+- **Validação do desenvolvedor:** confirmou “Pode seguir, está validado”, sem relatar saídas manuais específicas. Essa aprovação é distinta da automação.
+- **Limites:** ainda sem cálculo de movimento, teclado, colisões ou alteração visual; M3 permanece em andamento.

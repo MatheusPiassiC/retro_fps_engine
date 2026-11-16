@@ -212,3 +212,13 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Conferência visual:** o desenvolvedor confirmou que todos os testes funcionaram, após receber o procedimento das quatro cenas. A confirmação foi registrada separadamente da automação, sem observação direta da janela pela IA.
 - **Estado:** M2-6 e M2 concluídos no ambiente atual, após revisão dos critérios do roadmap. Integração por PR e eventual tag são etapas separadas.
 - **Aprendizado com palavras próprias:** ainda não registrado pelo desenvolvedor.
+
+
+## 24. Registro — M3-1: estado e comandos
+
+- **Branch:** `feat/m3-1-2-3-add-player-movement`; primeira entrega do grupo.
+- **Contribuição:** leitura dos documentos, conferência da integração de M2-6 e atualização das referências remotas; planejamento incremental, explicação de comandos e normalização, implementação dos dados imutáveis e 42 testes.
+- **Decisões implementadas:** posição copiada para tupla, coordenadas e ângulo finitos, ângulo normalizado, comandos discretos independentes do teclado; sem Pygame ou colisões.
+- **Verificação:** 251 testes aprovados; Ruff, formatação e diff aprovados. Evidências na seção 20 da validação.
+- **Aprovação:** o desenvolvedor confirmou “Pode seguir, está validado”; não relatou saídas manuais específicas. Documentação atualizada após aprovação.
+- **Estado:** M3-1 concluída; cálculo e integração de movimento seguem em entregas separadas na mesma branch. Aprendizado com palavras próprias ainda não registrado.

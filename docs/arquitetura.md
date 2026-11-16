@@ -232,3 +232,12 @@ O comando `python -m retro_fps` fornece a sala de estudo, origem `(2.5, 2.5)` e 
 `create_study_corridor()`, em `retro_fps.study_world`, constrói um mundo 9 × 5 com borda sólida e interior livre, separado da sala 5 × 5 preservada por `create_study_world()`. Ambos são cenários temporários em memória, sem leitura de arquivos. O corredor é usado por testes e chamadas explícitas a `run`; o comando principal continua apresentando a sala.
 
 A comparação com origens fixas verifica face frontal alinhada, redução da altura com profundidade, crescimento das paredes laterais e recorte perto da parede. As [evidências de M2-6](validacao.md#19-m2-6--comparação-controlada-de-sala-e-corredor) separam testes automatizados da conferência visual confirmada pelo desenvolvedor. Nenhum algoritmo foi alterado nesta revisão.
+
+
+## 18. Estado e comandos implementados em M3-1
+
+`PlayerState(position, angle)` e `MovementCommand(forward=0, turn=0)`, em `retro_fps.player`, são dataclasses imutáveis sem dependência gráfica. A posição é copiada para uma tupla de duas coordenadas finitas; o ângulo finito é normalizado para `[0, 2*pi)`, com a mesma proteção de arredondamento da câmera. Não há validação de colisões ou limites do mundo.
+
+Os comandos aceitam apenas os inteiros -1, 0 e 1, sem booleanos. `forward` positivo solicita avanço e negativo, recuo; `turn` positivo solicita giro à direita e negativo, à esquerda. Zero não solicita ação naquele eixo. Tipos inválidos causam `TypeError` e inteiros fora do domínio, `ValueError`. Ainda não há atualização de movimento ou tradução de teclas.
+
+**Proposta para as próximas entregas:** o estado do jogador será a única fonte persistente de posição e orientação no modo móvel. A origem dos raios e a câmera de cada quadro serão derivadas dele; o campo de visão será configuração independente.

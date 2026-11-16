@@ -6,7 +6,7 @@ Este planejamento organiza um projeto universitário de aprendizagem. Não press
 
 A referência conceitual é Wolfenstein 3D: mundo em grade, paredes verticais e exploração em primeira pessoa. A entrega mínima é uma engine reutilizável com uma demonstração de navegação. Objetivos, combate e reprodução completa do jogo de referência não são obrigatórios.
 
-Não há datas ou estimativas de horas neste planejamento. O avanço depende das evidências de conclusão. M0, M1 e M2 estão concluídos no ambiente atual e os demais marcos estão pendentes; a preparação de documentos e arquivos não significa que seus comportamentos já foram implementados.
+Não há datas ou estimativas de horas neste planejamento. O avanço depende das evidências de conclusão. M0, M1 e M2 estão concluídos no ambiente atual, M3 está em andamento e os demais marcos estão pendentes; a preparação de documentos e arquivos não significa que seus comportamentos já foram implementados.
 
 O ciclo de trabalho será: entender uma ideia, especificar uma pequena mudança, implementar, verificar, explicar o resultado e atualizar a documentação. Esse uso de especificações será leve e incremental.
 
@@ -35,7 +35,7 @@ Inimigos, armas, combate e editor visual ficam adiados. Desníveis, mapas origin
 | M0 | Ambiente validado e janela responsiva | Revisão deste planejamento | Obrigatória | Concluído (tag `M0`) |
 | M1 | Interseções de raios conferidas em mapa pequeno | M0 | Obrigatória | Concluído |
 | M2 | Sala em perspectiva com câmera fixa | M1 | Obrigatória | Concluído |
-| M3 | Navegação com colisões no mapa em memória | M2 | Obrigatória | Pendente |
+| M3 | Navegação com colisões no mapa em memória | M2 | Obrigatória | Em andamento |
 | M4 | Dois mapas externos carregados e exploráveis | M3 | Obrigatória | Pendente |
 | M5 | Aplicação externa usando a engine | M4 | Obrigatória | Pendente |
 | M6 | Entrega validada, documentada e explicável | M5 | Obrigatória | Pendente |
@@ -111,7 +111,7 @@ Testes e documentação acompanham cada marco. M6 consolida essas verificações
 
 **Tarefas:**
 
-1. Separar comando lógico de movimento das teclas que o produzem.
+1. Separar comando lógico de movimento das teclas que o produzem. **Concluída (M3-1):** estado imutável e comandos independentes do teclado aprovados pelo desenvolvedor; ver seção 20 da [validação](validacao.md).
 2. Implementar avanço, recuo e giro; configurar controles iniciais W/S e setas esquerda/direita.
 3. Usar velocidades por segundo e ângulos internos em radianos.
 4. Representar o jogador por um círculo de raio inicial 0.2 unidade.
