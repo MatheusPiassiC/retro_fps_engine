@@ -6,9 +6,9 @@ A entrega mínima planejada é carregar um mapa externo e explorá-lo em primeir
 
 ## Estado atual
 
-M0, M1, M2 e M3 concluídos no ambiente atual: o comando `python -m retro_fps maps/room.map` apresenta uma sala em perspectiva com movimento e colisões, com paredes em tons diferentes por orientação, teto e piso de cor sólida. O desenvolvedor confirmou as conferências visuais da sala e do corredor em M2-5/M2-6. A janela padrão mede 640 × 480; a imagem interna de 320 × 200 é ampliada para 640 × 400, centralizada com faixas pretas acima e abaixo. Escape ou o botão de fechar encerram a aplicação.
+M0, M1, M2, M3 e M4 concluídos no ambiente atual: o comando `python -m retro_fps maps/room.map` apresenta uma sala em perspectiva com movimento e colisões, com paredes em tons diferentes por orientação, teto e piso de cor sólida. O desenvolvedor confirmou as conferências visuais da sala e do corredor em M2-5/M2-6. A janela padrão mede 640 × 480; a imagem interna de 320 × 200 é ampliada para 640 × 400, centralizada com faixas pretas acima e abaixo. Escape ou o botão de fechar encerram a aplicação.
 
-M3 concluído com testes e conferência visual de navegação na sala, corredor e cenário com obstáculo confirmada pelo desenvolvedor. M4 está implementado e testado automaticamente, com revisão e conferência manual pendentes. O comando principal lê o arquivo indicado, valida a grade e o volume inicial antes de abrir a janela. Os mapas em `maps/` são os cenários executáveis da demonstração; a sala em memória continua disponível para estudo e testes. A comparação controlada entre sala e corredor foi concluída em M2-6.
+M3 concluído com testes e conferência visual de navegação na sala, corredor e cenário com obstáculo confirmada pelo desenvolvedor. M4 foi aprovado pelo desenvolvedor e integrado pelos PRs #15/#16, com tag `M4` em `8930134`. O comando principal lê o arquivo indicado, valida a grade e o volume inicial antes de abrir a janela. Os mapas em `maps/` são os cenários executáveis da demonstração; a sala em memória continua disponível para estudo e testes. A comparação controlada entre sala e corredor foi concluída em M2-6.
 
 ## Documentação
 
@@ -104,7 +104,7 @@ run(
 
 O modo móvel exige mundo e jogador, sem `origin` ou `camera` separados. `field_of_view` pode configurar a visão horizontal em radianos (padrão pi/3); ele e `movement_config` exigem jogador. A posição e o ângulo do jogador alimentam o desenho a cada quadro.
 
-### Mapas externos — M4 (conferência manual pendente)
+### Mapas externos — M4
 
 Na raiz do repositório, com a `.venv` ativa:
 
@@ -143,4 +143,4 @@ A suíte contém 490 casos de mundo, sala, raios, câmera, projeção, desenho, 
 
 ## Próximo passo
 
-Conferir M4 seguindo o [roteiro de revisão](docs/conferencia_m4.md). M4 permanece aguardando a revisão e a conferência manual do desenvolvedor; integração por PR é uma etapa separada. M5 ainda não foi iniciado. O contrato implementado de `World` está na [arquitetura](docs/arquitetura.md#11-mundo-implementado-em-m1-1). A demonstração de exploração será desenvolvida em `examples/exploration/`.
+M4 concluído e integrado. O [roteiro de revisão](docs/conferencia_m4.md) permanece disponível para reprodução. O próximo passo é planejar M5: aplicação externa e API mínima; sua implementação ainda não foi iniciada. O contrato implementado de `World` está na [arquitetura](docs/arquitetura.md#11-mundo-implementado-em-m1-1). A demonstração de exploração será desenvolvida em `examples/exploration/`.
