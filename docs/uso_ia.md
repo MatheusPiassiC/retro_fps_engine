@@ -212,3 +212,46 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Conferência visual:** o desenvolvedor confirmou que todos os testes funcionaram, após receber o procedimento das quatro cenas. A confirmação foi registrada separadamente da automação, sem observação direta da janela pela IA.
 - **Estado:** M2-6 e M2 concluídos no ambiente atual, após revisão dos critérios do roadmap. Integração por PR e eventual tag são etapas separadas.
 - **Aprendizado com palavras próprias:** ainda não registrado pelo desenvolvedor.
+
+
+## 24. Registro — M3-1: estado e comandos
+
+- **Branch:** `feat/m3-1-2-3-add-player-movement`; primeira entrega do grupo.
+- **Contribuição:** leitura dos documentos, conferência da integração de M2-6 e atualização das referências remotas; planejamento incremental, explicação de comandos e normalização, implementação dos dados imutáveis e 42 testes.
+- **Decisões implementadas:** posição copiada para tupla, coordenadas e ângulo finitos, ângulo normalizado, comandos discretos independentes do teclado; sem Pygame ou colisões.
+- **Verificação:** 251 testes aprovados; Ruff, formatação e diff aprovados. Evidências na seção 20 da validação.
+- **Aprovação:** o desenvolvedor confirmou “Pode seguir, está validado”; não relatou saídas manuais específicas. Documentação atualizada após aprovação.
+- **Estado:** M3-1 concluída; cálculo e integração de movimento seguem em entregas separadas na mesma branch. Aprendizado com palavras próprias ainda não registrado.
+
+
+## 25. Registro — M3-2/M3-3: cálculo de movimento
+
+- **Branch:** `feat/m3-1-2-3-add-player-movement`; segunda entrega.
+- **Contribuição:** explicação de velocidade multiplicada pelo tempo e ordem de giro/deslocamento, implementação de configuração e atualização sem janela, 30 testes novos e procedimento de conferência.
+- **Decisões implementadas:** velocidades padrão aprovadas de 1 unidade/s e pi/2 rad/s; giro antes do deslocamento; retorno de estado imutável; sem colisões ou limite temporal.
+- **Automação:** 281 testes aprovados; Ruff, formatação e diff aprovados. Contas e limitações na seção 21 da validação.
+- **Aprovação:** o desenvolvedor confirmou “Pode seguir, está validado também”; documentação atualizada após aprovação, sem inventar resultados manuais.
+- **Estado:** M3-3 concluída; integração do teclado e câmera de M3-2 segue em entrega separada. Aprendizado com palavras próprias não registrado.
+
+
+## 26. Registro — M3-2: integração de controles e câmera
+
+- **Branch:** `feat/m3-1-2-3-add-player-movement`; terceira entrega.
+- **Contribuição:** integração de teclas mantidas pressionadas, atualização antes do desenho e câmera derivada do jogador; preservação dos modos anteriores; 15 testes novos e procedimento visual.
+- **Verificação anterior à conferência:** 296 testes aprovados; Ruff, formatação e diff aprovados. Evidências e contas na seção 22 da validação.
+- **Conferência:** o desenvolvedor confirmou “Está validado” e comentou a sensação de controle de tanque. Explicado que deslocamento lateral é extensão opcional e que A/D e mouse não estão implementados.
+- **Estado:** grupo M3-1/M3-2/M3-3 concluído; documentação atualizada após aprovação. Sem push, PR, merge ou tag. Alteração local do desenvolvedor na sala de estudo preservada e excluída deste commit. Aprendizado com palavras próprias sobre o algoritmo não registrado.
+
+- **Verificação final:** sete falhas na árvore local com a parede de estudo editada pelo desenvolvedor; 296 aprovados em cópia temporária com sala original, sem alterar a edição local. Detalhes na seção 22 da validação.
+
+
+## 27. Registro — M3-2: extensão WASD
+
+- **Pedido:** implementar lateral e diagonal na mesma branch, com registros documentais.
+- **Contribuição:** explicação prévia da diagonal por Pitágoras; extensão do comando lógico com `strafe`, adaptação de A/D, combinação normalizada de frente/direita e testes.
+- **Decisão autorizada:** antecipar deslocamento lateral antes das colisões, preservando velocidade total nas diagonais e setas para giro. Sem mouse ou colisões.
+- **Verificação:** 339 aprovados em cópia temporária com sala original; 332 aprovados e sete falhas conhecidas na árvore com sala alterada pelo desenvolvedor. Ruff, formatação e diff aprovados. Edição local preservada.
+- **Aprovação:** o desenvolvedor confirmou “Muito bem, está validado”. Registros atualizados após essa confirmação, sem inventar resultados individuais ou explicações do desenvolvedor.
+- **Estado:** extensão concluída na mesma branch, com commit após validação; colisões seguem pendentes.
+
+- **Verificação final:** sala sem diferença local e 339 testes aprovados diretamente no repositório; Ruff, formatação e diff aprovados.

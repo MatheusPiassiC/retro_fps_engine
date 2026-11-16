@@ -373,3 +373,49 @@ Informar se as quatro cenas correspondem ao esperado. Não há movimento nesta e
 Após receber o procedimento, o desenvolvedor confirmou que todos os testes funcionaram e relatou ter visto o resultado funcionando. Essa confirmação da conferência das quatro cenas é distinta dos 209 casos automatizados executados pela IA; a janela real não foi observada diretamente pela IA.
 
 Os critérios do roadmap foram conferidos: face frontal plana alinhada, parede distante menor, metade da altura não arredondada ao dobrar a profundidade e recorte seguro perto da parede. A sala e o corredor foram comparados com contas e imagens, sem correção adicional de fish-eye. M2 está concluído no ambiente atual. Integração por PR e eventual tag são etapas separadas; nenhuma tag foi criada nesta tarefa. Movimento, colisões e carregamento permanecem fora desta entrega.
+
+
+## 20. M3-1 — Estado do jogador e comandos lógicos
+
+- **Branch:** `feat/m3-1-2-3-add-player-movement`; primeira entrega do grupo. Base: main em `55673d2`, contendo `5558bd7`, sincronizada com origin após fetch.
+- **Conceitos prévios:** comando `(1, -1)` solicita avanço e giro à esquerda, sem executar movimento; ângulos separados por uma volta representam a mesma orientação.
+- **Contas independentes:** -pi/2 + 2*pi = 3*pi/2; 5*pi/2 - 2*pi = pi/2. Três valores independentes em cada comando produzem nove combinações. Alterar a lista de posição após a construção não deve alterar o estado copiado.
+- **Automação:** 42 novos casos verificam cópia, imutabilidade, normalização angular, coordenadas e ângulos não finitos, comandos padrão, nove combinações e rejeição de tipos/valores inválidos. Os 251 testes totais passaram; Ruff, formatação e `git diff --check` passaram.
+- **Conferência sugerida:** construir jogador em `(2.5, 2.5)` com ângulo -pi/2 e imprimir estado e comandos padrão e `(1, -1)`. Esperado: posição preservada, ângulo aproximadamente 4.712389 e intenções preservadas. Não exige janela.
+- **Validação do desenvolvedor:** confirmou “Pode seguir, está validado”, sem relatar saídas manuais específicas. Essa aprovação é distinta da automação.
+- **Limites:** ainda sem cálculo de movimento, teclado, colisões ou alteração visual; M3 permanece em andamento.
+
+
+## 21. M3-2/M3-3 — Movimento independente da janela
+
+- **Branch:** `feat/m3-1-2-3-add-player-movement`; segunda entrega, após `fb2cfc9` de M3-1.
+- **Contas prévias:** a 1 unidade/s, 0.1 s desloca 0.1 unidade. Partindo de `(2.5, 2.5)`, avanço para leste resulta em `(2.6, 2.5)` e para sul em `(2.5, 2.6)`. A pi/2 rad/s, 0.1 s gira pi/20 rad, ou 9 graus. Girar 90 graus à direita antes de avançar uma unidade leva de `(2.5, 2.5)` para `(2.5, 3.5)` quando o início olha para leste.
+- **Automação:** 30 casos novos verificam cardinais, recuo, giro, ordem das operações, repouso, tempo zero, equivalência temporal no avanço reto/giro isolado, configuração e entradas inválidas. 281 testes totais aprovados; Ruff, formatação e `git diff --check` aprovados.
+- **Conferência sugerida:** no interpretador, avançar por 0.1 s, girar por 0.1 s e imprimir o estado original para conferir sua preservação. Não há mudança visual nesta entrega.
+- **Validação do desenvolvedor:** confirmou “Pode seguir, está validado também”, sem relatar saídas manuais específicas.
+- **Limites:** teclado e ligação da câmera pendentes; sem colisões ou proteção para passos grandes. M3-3 concluída; M3-2 aguarda integração dos controles.
+
+
+## 22. M3-2 — Teclado e câmera derivados do jogador
+
+- **Branch:** `feat/m3-1-2-3-add-player-movement`; terceira entrega, após `d77651e`.
+- **Contas independentes:** com intervalo controlado de 100 ms, velocidade linear 1 e angular 5*pi, cada quadro gira 90 graus e desloca 0.1 unidade na nova direção. Partindo de `(2.5, 2.5)` para leste, os dois quadros pressionados resultam em `(2.5, 2.6)` para sul e `(2.4, 2.6)` para oeste. Soltar mantém esse estado.
+- **Automação anterior à conferência visual:** 15 casos novos de tradução de teclas, cancelamento, quadros consecutivos, liberação, origem/ângulo/FOV no renderizador, encerramento e parâmetros inválidos. 296 testes passaram; Ruff, formatação e diff passaram. Display dummy não comprova aparência real.
+- **Procedimento visual:** executar `python -m retro_fps`; dar toques curtos em W/S e setas; conferir aproximação/afastamento, giro, parada ao soltar, cancelamento e encerramento. Evitar entrar em paredes.
+- **Conferência do desenvolvedor:** confirmou “Está validado” e descreveu o movimento como semelhante a tanque. A IA não observou diretamente a janela; não foram relatados resultados individuais de cada item.
+- **Estado:** primeiro grupo M3-1/M3-2/M3-3 concluído; M3 permanece em andamento, sem colisões ou navegação segura.
+
+- **Conferência antes do commit:** com a edição local do desenvolvedor em `study_world.py` (célula `(1, 2)` transformada em parede), a suíte resultou em 289 aprovados e sete falhas que dependem da sala original. A edição foi preservada e excluída do commit. Em cópia temporária de código e testes, usando apenas a sala original obtida de HEAD, os 296 testes passaram. Ruff, formatação e diff passaram na árvore local.
+
+
+## 23. M3-2 — Extensão lateral e diagonal
+
+- **Branch:** `feat/m3-1-2-3-add-player-movement`; extensão solicitada após `79885ec`.
+- **Contas independentes:** olhando para leste, direita é sul: D por 0.1 s a 1 unidade/s leva `(2.5, 2.5)` a `(2.5, 2.6)`. Para W+D, Pitágoras exige componentes iguais de 0.1/sqrt(2), aproximadamente 0.0707107: a soma dos quadrados é 0.01 e a distância total é 0.1. Ao olhar para sul, D leva para oeste. O ângulo não muda sem comando de giro.
+- **Automação:** 43 casos adicionais (incluindo expansão das parametrizações) cobrem comandos laterais, domínio de valores, orientações, quatro diagonais, giro antes da diagonal, subdivisão temporal, tradução de A/D e cancelamentos. Integração confere W+D no desenho e parada ao soltar, com tempo controlado.
+- **Resultados:** 339 casos aprovados em cópia temporária com sala original obtida de HEAD. Na árvore local: 332 aprovados e as mesmas sete falhas de geometria causadas pela parede editada pelo desenvolvedor. A edição permanece intacta. Ruff, formatação e `git diff --check` passaram.
+- **Procedimento manual proposto:** executar `python -m retro_fps`; com toques curtos, verificar A/D sem giro, W+D e W+A, S+D e S+A, cancelamento A+D e parada ao soltar. Girar com uma seta e repetir A/D para conferir orientação relativa. Evitar paredes, especialmente a parede local na célula `(1, 2)`.
+- **Conferência do desenvolvedor:** confirmou “Muito bem, está validado” após receber o procedimento. Não relatou resultados individuais; a IA não observou diretamente a janela.
+- **Estado:** extensão concluída com implementação, automação e conferência manual confirmada. Sem colisões, limitação temporal ou subdivisão espacial.
+
+- **Verificação final após aprovação:** `study_world.py` já não apresenta diferença local; a suíte foi executada diretamente na árvore de trabalho e os 339 casos passaram. Ruff, formatação e `git diff --check` também passaram. O registro anterior das sete falhas descreve a execução com a sala então editada.

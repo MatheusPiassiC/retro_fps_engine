@@ -232,3 +232,35 @@ O comando `python -m retro_fps` fornece a sala de estudo, origem `(2.5, 2.5)` e 
 `create_study_corridor()`, em `retro_fps.study_world`, constrói um mundo 9 × 5 com borda sólida e interior livre, separado da sala 5 × 5 preservada por `create_study_world()`. Ambos são cenários temporários em memória, sem leitura de arquivos. O corredor é usado por testes e chamadas explícitas a `run`; o comando principal continua apresentando a sala.
 
 A comparação com origens fixas verifica face frontal alinhada, redução da altura com profundidade, crescimento das paredes laterais e recorte perto da parede. As [evidências de M2-6](validacao.md#19-m2-6--comparação-controlada-de-sala-e-corredor) separam testes automatizados da conferência visual confirmada pelo desenvolvedor. Nenhum algoritmo foi alterado nesta revisão.
+
+
+## 18. Estado e comandos implementados em M3-1
+
+`PlayerState(position, angle)` e `MovementCommand(forward=0, turn=0)`, em `retro_fps.player`, são dataclasses imutáveis sem dependência gráfica. A posição é copiada para uma tupla de duas coordenadas finitas; o ângulo finito é normalizado para `[0, 2*pi)`, com a mesma proteção de arredondamento da câmera. Não há validação de colisões ou limites do mundo.
+
+Os comandos aceitam apenas os inteiros -1, 0 e 1, sem booleanos. `forward` positivo solicita avanço e negativo, recuo; `turn` positivo solicita giro à direita e negativo, à esquerda. Zero não solicita ação naquele eixo. Tipos inválidos causam `TypeError` e inteiros fora do domínio, `ValueError`. Ainda não há atualização de movimento ou tradução de teclas.
+
+**Proposta para as próximas entregas:** o estado do jogador será a única fonte persistente de posição e orientação no modo móvel. A origem dos raios e a câmera de cada quadro serão derivadas dele; o campo de visão será configuração independente.
+
+
+## 19. Cálculo de movimento implementado em M3-2/M3-3
+
+`MovementConfig(move_speed=1.0, turn_speed=pi/2)`, em `retro_fps.player`, é imutável e exige velocidades finitas e positivas, em unidades/s e radianos/s. `update_player(state, command, config, delta_time)` exige intervalo finito e não negativo, gira primeiro e desloca na nova direção, retornando outro `PlayerState`. O estado recebido permanece intacto.
+
+Avanço reto e giro isolado produzem resultados equivalentes ao subdividir o tempo, dentro da tolerância numérica. Avançar e girar simultaneamente aproxima uma curva por segmentos e pode produzir trajetórias diferentes conforme a subdivisão. Ainda não há consulta ao mundo, colisão, limitação do intervalo ou subdivisão espacial; as proteções pertencem a M3-4/M3-5/M3-6.
+
+
+## 20. Integração de movimento implementada em M3-2
+
+`run` aceita `player`, `movement_config` e `field_of_view` opcionais. O modo móvel exige mundo e jogador e rejeita origem/câmera independentes. Campo de visão padrão pi/3, validado antes do display; configuração de movimento e campo de visão explícitos exigem jogador. Os modos estático e de fundo sólido permanecem disponíveis.
+
+Após eventos de saída e antes do desenho, `read_movement_command()` traduz teclas mantidas pressionadas (W/S e setas) em comandos; opostos se cancelam. O loop atualiza seu estado local, usa sua posição como origem e cria a câmera a partir do ângulo e campo de visão. Não existe orientação persistente independente no modo móvel. O estado imutável fornecido pelo chamador não é alterado.
+
+O comando principal usa o modo móvel experimental. Não há colisões; entrar em parede pode ser rejeitado pelo DDA. Deslocamento lateral continua extensão opcional do roadmap.
+
+
+## 21. Extensão WASD implementada em M3-2 — conferência manual confirmada pelo desenvolvedor
+
+Por solicitação do desenvolvedor, o deslocamento lateral foi antecipado na mesma branch. `MovementCommand(forward=0, turn=0, strafe=0)` acrescenta `strafe` ao final, preservando os argumentos posicionais anteriores; o novo campo aceita os mesmos inteiros -1/0/1 e rejeita booleanos. Positivo solicita movimento à direita do olhar. A/D geram lateral negativo/positivo, com cancelamento entre opostos. Setas continuam girando.
+
+Após o giro, frente é `(cos(angle), sin(angle))` e direita é `(-sin(angle), cos(angle))`. A combinação das intenções frontal e lateral é dividida por `max(1, hypot(forward, strafe))`, antes de multiplicar por velocidade e tempo. Assim, a diagonal não aumenta a velocidade e o repouso não divide por zero. Campo de visão não influencia movimento. Não há colisões. Testes automatizados concluídos; conferência manual confirmada pelo desenvolvedor. A afirmação anterior de deslocamento lateral opcional descreve o escopo anterior a esta decisão.

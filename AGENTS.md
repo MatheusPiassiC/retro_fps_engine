@@ -6,7 +6,7 @@ Este é um projeto universitário de aprendizagem. Não presumir conhecimento pr
 
 ## Escopo e arquitetura
 
-- Seguir `docs/roadmap.md`; M0, M1 e M2 foram concluídos no ambiente atual, com testes e conferência visual confirmada pelo desenvolvedor; M3 permanece pendente.
+- Seguir `docs/roadmap.md`; M0, M1 e M2 foram concluídos no ambiente atual, com testes e conferência visual confirmada pelo desenvolvedor; M3 está em andamento.
 - Usar Wolfenstein 3D como referência conceitual, dentro dos limites de `docs/missao.md`.
 - Manter regras de jogo fora de `src/retro_fps/`. O núcleo não importa exemplos.
 - Manter mundo, carregamento, raycasting e colisões independentes da inicialização gráfica.
@@ -34,6 +34,6 @@ Este é um projeto universitário de aprendizagem. Não presumir conhecimento pr
 
 Após instalar o ambiente conforme o README, usar `python -m pytest`, `python -m ruff check .` e `python -m ruff format --check .` conforme o escopo da mudança.
 
-O ciclo da janela, a configuração inicial, o desenho de cor sólida, as consultas do mundo, a sala temporária em memória o percurso de raios, a câmera, a projeção e o desenho da sala estática estão implementados; os demais módulos permanecem esqueleto. A suíte contém testes comportamentais de mundo, sala, raios, câmera, projeção, desenho e loop. As conferências visuais de M2-5 e M2-6 foram confirmadas pelo desenvolvedor. Não declarar funcionalidades validadas por verificar apenas imports ou sintaxe. Ao implementar, explicar por que o resultado de cada teste relevante é esperado, usando casos independentes do algoritmo.
+O ciclo da janela, a configuração inicial, o desenho de cor sólida, as consultas do mundo, a sala temporária em memória o percurso de raios, a câmera, a projeção e o desenho da sala estática estão implementados; estado do jogador e comandos lógicos estão implementados; os demais módulos permanecem esqueleto. A suíte contém testes comportamentais de mundo, sala, raios, câmera, projeção, desenho e loop. As conferências visuais de M2-5 e M2-6 foram confirmadas pelo desenvolvedor. Não declarar funcionalidades validadas por verificar apenas imports ou sintaxe. Ao implementar, explicar por que o resultado de cada teste relevante é esperado, usando casos independentes do algoritmo.
 
 Registrar contribuições relevantes de IA em `docs/uso_ia.md`. Não tratar desconhecimento do desenvolvedor como aprovação automática de decisões.
