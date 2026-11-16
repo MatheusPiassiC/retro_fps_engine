@@ -36,3 +36,21 @@ class Camera:
         """Vetor perpendicular para a direita da imagem, de tamanho tan(FOV/2)."""
         scale = tan(self.field_of_view / 2)
         return -sin(self.angle) * scale, cos(self.angle) * scale
+
+    def ray_direction(self, column: int, width: int) -> tuple[float, float]:
+        """Direção não normalizada pelo centro de uma coluna da imagem interna.
+
+        Com direção frontal unitária e plano perpendicular, o parâmetro
+        do DDA representa profundidade frontal. Não corrigir por cosseno.
+        """
+        if type(column) is not int or type(width) is not int:
+            raise TypeError("Coluna e largura devem ser inteiros.")
+        if width <= 0:
+            raise ValueError("A largura interna deve ser positiva.")
+        if not 0 <= column < width:
+            raise IndexError("A coluna deve pertencer à largura interna.")
+
+        offset = 2 * (column + 0.5) / width - 1
+        direction_x, direction_y = self.direction
+        plane_x, plane_y = self.plane
+        return direction_x + offset * plane_x, direction_y + offset * plane_y

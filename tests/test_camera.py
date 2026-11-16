@@ -6,6 +6,8 @@ from math import hypot, pi, sqrt, tau
 import pytest
 
 from retro_fps.camera import Camera
+from retro_fps.raycasting import cast_ray
+from retro_fps.study_world import create_study_world
 
 
 @pytest.mark.parametrize(
@@ -64,3 +66,74 @@ def test_camera_is_immutable():
     camera = Camera(0)
     with pytest.raises(FrozenInstanceError):
         camera.angle = pi
+
+
+@pytest.mark.parametrize("angle", [0, pi / 2, pi, 3 * pi / 2])
+def test_single_column_points_forward(angle):
+    camera = Camera(angle, pi / 2)
+    assert camera.ray_direction(0, 1) == pytest.approx(
+        camera.direction, rel=1e-12, abs=1e-12
+    )
+
+
+@pytest.mark.parametrize(
+    "width, offsets",
+    [(3, (-2 / 3, 0, 2 / 3)), (4, (-0.75, -0.25, 0.25, 0.75))],
+)
+def test_columns_use_centers_with_symmetric_offsets(width, offsets):
+    # Leste, FOV 90 graus: frente=(1,0), plano=(0,1), raio=(1,u).
+    camera = Camera(0, pi / 2)
+    for column, offset in enumerate(offsets):
+        assert camera.ray_direction(column, width) == pytest.approx(
+            (1, offset), rel=1e-12, abs=1e-12
+        )
+
+
+def test_rotated_camera_preserves_image_left_and_right():
+    # Olhando para sul, esquerda da imagem é leste e direita é oeste.
+    camera = Camera(pi / 2, pi / 2)
+    assert camera.ray_direction(0, 3) == pytest.approx((2 / 3, 1), rel=1e-12, abs=1e-12)
+    assert camera.ray_direction(2, 3) == pytest.approx(
+        (-2 / 3, 1), rel=1e-12, abs=1e-12
+    )
+
+
+@pytest.mark.parametrize("angle", [0, pi / 7, pi / 2, pi])
+def test_lateral_ray_is_not_normalized_but_has_unit_forward_component(angle):
+    camera = Camera(angle, pi / 2)
+    ray_x, ray_y = camera.ray_direction(0, 3)
+    forward_x, forward_y = camera.direction
+    # Comprimento de (1,-2/3): sqrt(1+4/9)=sqrt(13)/3.
+    assert hypot(ray_x, ray_y) == pytest.approx(sqrt(13) / 3, rel=1e-12, abs=1e-12)
+    assert ray_x * forward_x + ray_y * forward_y == pytest.approx(
+        1, rel=1e-12, abs=1e-12
+    )
+
+
+@pytest.mark.parametrize("column, cell_y", [(0, 1), (1, 2), (2, 3)])
+def test_column_rays_have_constant_depth_to_front_wall(column, cell_y):
+    # x=2.5+t atinge x=4 em t=1.5 para todos os raios.
+    # y=2.5+t*u dá 1.5, 2.5 e 3.5: linhas 1, 2 e 3.
+    camera = Camera(0, pi / 2)
+    hit = cast_ray(create_study_world(), (2.5, 2.5), camera.ray_direction(column, 3))
+    assert hit is not None
+    assert (hit.cell_x, hit.cell_y, hit.side) == (4, cell_y, "x")
+    assert hit.parameter == pytest.approx(1.5, rel=1e-12, abs=1e-12)
+
+
+@pytest.mark.parametrize("column, width", [(0.0, 3), (0, 3.0), (True, 3), (0, True)])
+def test_column_and_width_require_integers(column, width):
+    with pytest.raises(TypeError):
+        Camera(0).ray_direction(column, width)
+
+
+@pytest.mark.parametrize("width", [0, -1])
+def test_nonpositive_width_is_rejected(width):
+    with pytest.raises(ValueError):
+        Camera(0).ray_direction(0, width)
+
+
+@pytest.mark.parametrize("column", [-1, 3])
+def test_column_outside_image_is_rejected(column):
+    with pytest.raises(IndexError):
+        Camera(0).ray_direction(column, 3)

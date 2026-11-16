@@ -173,3 +173,13 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Verificação:** 128 casos totais aprovados, Ruff, formatação e diff aprovados; evidências na seção 15 da validação.
 - **Aprovação:** após a explicação, o desenvolvedor confirmou entendimento e autorizou os próximos passos. Não houve relato detalhado de resultados manuais; aprofundamento conceitual foi deixado para depois pelo desenvolvedor.
 - **Estado:** M2-1 concluída; M2-2/M2-3 seguem na mesma branch. Aprendizado com palavras próprias ainda não registrado.
+
+
+## 20. Registro — M2-2 e M2-3: raios por coluna
+
+- **Branch:** `feat/m2-1-2-3-add-camera-column-rays`; segunda etapa da entrega conjunta.
+- **Contribuição:** explicação de centros de colunas e profundidade frontal; implementação de `Camera.ray_direction()` sem normalização; 22 novos testes, incluindo integração com DDA; procedimento de conferência e documentação após validação.
+- **Decisões implementadas:** largura interna fornecida por chamada, sem resolução fixa ou mudança na janela; validação de coluna e largura; origem e execução do DDA permanecem separadas da câmera.
+- **Verificação:** 150 casos totais aprovados; Ruff, formatação e diff aprovados. Exemplos e limites na seção 16 da validação.
+- **Validação:** o desenvolvedor confirmou “Considere validado, pode prosseguir”, sem relatar saídas manuais detalhadas. Aprendizado com palavras próprias ainda não registrado.
+- **Estado:** M2-1/M2-2/M2-3 concluídas; M2 permanece em andamento. Integração por PR é separada.

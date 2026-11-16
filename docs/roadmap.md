@@ -91,8 +91,8 @@ Testes e documentação acompanham cada marco. M6 consolida essas verificações
 **Tarefas:**
 
 1. Definir direção unitária da câmera e vetor perpendicular com comprimento derivado do campo de visão. **Concluída (M2-1):** `Camera` implementada, 24 novos testes aprovados e etapa aprovada pelo desenvolvedor após explicação. Ver [evidências](validacao.md#15-m2-1--geometria-da-câmera).
-2. Calcular um raio para o centro de cada coluna da resolução interna.
-3. Usar direções não normalizadas, coerentes com a profundidade perpendicular do DDA.
+2. Calcular um raio para o centro de cada coluna da resolução interna. **Concluída (M2-2):** `Camera.ray_direction()` implementado e validado pelo desenvolvedor; ver [evidências](validacao.md#16-m2-2-e-m2-3--raios-pelos-centros-das-colunas).
+3. Usar direções não normalizadas, coerentes com a profundidade perpendicular do DDA. **Concluída (M2-3):** comprimento dos raios e profundidade frontal constante conferidos por testes integrados com o DDA; etapa validada pelo desenvolvedor.
 4. Converter profundidade em altura projetada; limitar o desenho à tela e proteger distâncias próximas de zero.
 5. Desenhar paredes coloridas, piso e teto; distinguir lados de parede por tonalidade para facilitar a inspeção.
 6. Comparar uma sala e um corredor controlados com a geometria esperada.

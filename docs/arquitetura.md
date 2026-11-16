@@ -192,4 +192,12 @@ O DDA mantém o parâmetro da próxima fronteira e o incremento entre fronteiras
 
 As propriedades `direction` e `plane` calculam valores derivados em cada leitura, sem cache ou armazenamento duplicado. `direction=(cos(angle), sin(angle))` tem comprimento 1. `plane=(-sin(angle), cos(angle))*tan(field_of_view/2)` aponta para a direita da imagem e é perpendicular à direção, respeitando y crescente para baixo.
 
-A câmera não guarda posição nem lança raios nesta etapa. A origem será fornecida separadamente ao DDA; não há exportação por `__init__.py`. Geração por coluna e preservação da profundidade serão implementadas em M2-2/M2-3.
+A câmera não guarda posição nem executa o percurso dos raios. A origem é fornecida separadamente ao DDA; não há exportação por `__init__.py`.
+
+### Raios por coluna implementados em M2-2/M2-3
+
+`camera.ray_direction(column, width)` retorna um par com a direção pelo centro da coluna da imagem interna. A largura é a quantidade de colunas dessa imagem, sem relação obrigatória com a janela. Calcula `u = 2 * (column + 0.5) / width - 1` e retorna `direction + u * plane`, componente por componente. A posição `0.5` seleciona o centro, e não a borda da coluna.
+
+Coluna e largura devem ser inteiros, sem booleanos (`TypeError`); largura deve ser positiva (`ValueError`); coluna deve estar entre zero e largura menos um (`IndexError`). A direção não é normalizada. Como a direção frontal é unitária e o plano é perpendicular, a componente frontal de cada raio é 1: o parâmetro retornado pelo DDA representa profundidade frontal. Não aplicar correção adicional por cosseno.
+
+A aplicação fornece a direção resultante a `cast_ray(world, origin, direction)`. Não há novo executor, resolução fixa ou alteração no loop. Projeção, desenho e recorte continuam pendentes.

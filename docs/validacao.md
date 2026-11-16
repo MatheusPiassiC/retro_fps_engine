@@ -270,3 +270,15 @@ Com a validação final do desenvolvedor, M1 está concluído no ambiente atual.
 - **Conferência sugerida:** construir câmeras para leste e sul, comparar os vetores, normalizar -90 graus e verificar rejeição de campo de visão igual a pi. Não exige janela.
 - **Aprovação:** após receber resultados e procedimento, o desenvolvedor pediu explicação de `@property`, implementação e interação com o projeto. A explicação foi fornecida; respondeu “Entendido” e autorizou continuar. Não relatou saídas manuais detalhadas.
 - **Limites:** esta etapa não gera raios por coluna, não desenha nem move jogador. M2 permanece em andamento.
+
+
+## 16. M2-2 e M2-3 — Raios pelos centros das colunas
+
+- **Branch:** `feat/m2-1-2-3-add-camera-column-rays`; segunda etapa, após aprovação e commit `7f47d05` de M2-1.
+- **Exemplos explicados antes do código:** olhando para leste com campo de visão de 90 graus, três colunas usam posições laterais `-2/3`, `0`, `2/3`, produzindo direções `(1, u)`. Quatro colunas usam `-0.75`, `-0.25`, `0.25`, `0.75`; nenhuma aponta exatamente para o centro.
+- **Resultados independentes:** na sala 5 × 5, origem `(2.5, 2.5)`, os três raios atingem `x=4` com parâmetro `1.5`. As coordenadas y são `1.5`, `2.5` e `3.5`, portanto células `(4, 1)`, `(4, 2)` e `(4, 3)`, lado x. O raio lateral mede `sqrt(13)/3`, maior que 1, mas sua componente frontal continua sendo 1. Isso verifica que a direção não foi normalizada e que o DDA fornece profundidade frontal constante.
+- **Automação:** 22 casos novos cobrem coluna única, centros e simetria com larguras par e ímpar, rotação, comprimento e componente frontal, integração com DDA e entradas inválidas. Tolerâncias de `1e-12` para resultados reais.
+- **Resultados:** `.venv/bin/python -m pytest` aprovou os 150 casos totais (46 de câmera, 81 de raios, 20 de mundo e três de sala). Ruff passou; após ajuste de formatação de um teste, Ruff, formatação e `git diff --check` passaram. Ambiente: Python 3.12.3 e pytest 9.2.0.
+- **Conferência sugerida:** gerar as três direções no interpretador, lançá-las com `cast_ray` na sala e comparar direções, células, lado e parâmetro com a tabela apresentada ao desenvolvedor. Não exige janela.
+- **Validação do desenvolvedor:** após receber os resultados e o procedimento, confirmou “Considere validado, pode prosseguir”. A confirmação é registrada separadamente da execução automatizada pela IA; não foram relatadas saídas manuais detalhadas.
+- **Conclusão:** M2-2/M2-3 concluídas; M2 continua em andamento, com projeção, desenho e conferência visual pendentes. Integração por PR é uma etapa separada.
