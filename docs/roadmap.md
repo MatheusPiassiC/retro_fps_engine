@@ -6,7 +6,7 @@ Este planejamento organiza um projeto universitário de aprendizagem. Não press
 
 A referência conceitual é Wolfenstein 3D: mundo em grade, paredes verticais e exploração em primeira pessoa. A entrega mínima é uma engine reutilizável com uma demonstração de navegação. Objetivos, combate e reprodução completa do jogo de referência não são obrigatórios.
 
-Não há datas ou estimativas de horas neste planejamento. O avanço depende das evidências de conclusão. M0 e M1 estão concluídos no ambiente atual, M2 está em andamento e os demais marcos estão pendentes; a preparação de documentos e arquivos não significa que seus comportamentos já foram implementados.
+Não há datas ou estimativas de horas neste planejamento. O avanço depende das evidências de conclusão. M0, M1 e M2 estão concluídos no ambiente atual e os demais marcos estão pendentes; a preparação de documentos e arquivos não significa que seus comportamentos já foram implementados.
 
 O ciclo de trabalho será: entender uma ideia, especificar uma pequena mudança, implementar, verificar, explicar o resultado e atualizar a documentação. Esse uso de especificações será leve e incremental.
 
@@ -34,7 +34,7 @@ Inimigos, armas, combate e editor visual ficam adiados. Desníveis, mapas origin
 |---|---|---|---|---|
 | M0 | Ambiente validado e janela responsiva | Revisão deste planejamento | Obrigatória | Concluído (tag `M0`) |
 | M1 | Interseções de raios conferidas em mapa pequeno | M0 | Obrigatória | Concluído |
-| M2 | Sala em perspectiva com câmera fixa | M1 | Obrigatória | Em andamento |
+| M2 | Sala em perspectiva com câmera fixa | M1 | Obrigatória | Concluído |
 | M3 | Navegação com colisões no mapa em memória | M2 | Obrigatória | Pendente |
 | M4 | Dois mapas externos carregados e exploráveis | M3 | Obrigatória | Pendente |
 | M5 | Aplicação externa usando a engine | M4 | Obrigatória | Pendente |
@@ -95,7 +95,9 @@ Testes e documentação acompanham cada marco. M6 consolida essas verificações
 3. Usar direções não normalizadas, coerentes com a profundidade perpendicular do DDA. **Concluída (M2-3):** comprimento dos raios e profundidade frontal constante conferidos por testes integrados com o DDA; etapa validada pelo desenvolvedor.
 4. Converter profundidade em altura projetada; limitar o desenho à tela e proteger distâncias próximas de zero. **Concluída (M2-4):** projeção independente de Pygame, recorte e proteção implementados, com 29 testes novos e aprovação do desenvolvedor. Ver [evidências](validacao.md#17-m2-4--projeção-e-recorte).
 5. Desenhar paredes coloridas, piso e teto; distinguir lados de parede por tonalidade para facilitar a inspeção. **Concluída (M2-5):** sala estática apresentada pelo comando principal, com ampliação proporcional, testes de pixels e loop e conferência visual confirmada pelo desenvolvedor. Ver [evidências](validacao.md#18-m2-5--primeira-imagem-em-perspectiva).
-6. Comparar uma sala e um corredor controlados com a geometria esperada.
+6. Comparar uma sala e um corredor controlados com a geometria esperada. **Concluída (M2-6):** oito novos casos de geometria, impactos e pixels; comparação visual de quatro cenas confirmada pelo desenvolvedor. Ver [evidências](validacao.md#19-m2-6--comparação-controlada-de-sala-e-corredor).
+
+**Estado:** M2 concluído no ambiente atual, com critérios geométricos cobertos por testes e conferência visual confirmada. Integração de M2-6 por PR e eventual tag são etapas separadas.
 
 **Entrega:** imagem estática em perspectiva, apresentada pelo Pygame.
 

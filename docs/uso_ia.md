@@ -203,3 +203,12 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Verificação:** 201 testes aprovados; Ruff, formatação e diff aprovados. Ajuste do exemplo de pixels para evitar sensibilidade a arredondamento em altura inteira, registrado na seção 18 da validação.
 - **Conferência visual:** o desenvolvedor confirmou que funcionou e autorizou continuar após receber o procedimento da sala frontal, canto e encerramento. A IA não observou diretamente a janela real.
 - **Estado:** M2-4/M2-5 concluídas; M2-6 pendente. Aprendizado com palavras próprias ainda não registrado. Push e integração por PR separados.
+
+## 23. Registro — M2-6: sala e corredor controlados
+
+- **Branch:** `test/m2-6-validate-room-and-corridor`.
+- **Contribuição:** revisão da cobertura, corredor temporário 9 × 5, explicação prévia das profundidades 5.5 e 2.75 e da relação inversa de altura; oito novos casos integrados e procedimento visual de quatro cenas, sem alterar algoritmos existentes.
+- **Verificação:** 209 testes aprovados; Ruff, formatação e diff aprovados. Contas independentes e limites na seção 19 da validação.
+- **Conferência visual:** o desenvolvedor confirmou que todos os testes funcionaram, após receber o procedimento das quatro cenas. A confirmação foi registrada separadamente da automação, sem observação direta da janela pela IA.
+- **Estado:** M2-6 e M2 concluídos no ambiente atual, após revisão dos critérios do roadmap. Integração por PR e eventual tag são etapas separadas.
+- **Aprendizado com palavras próprias:** ainda não registrado pelo desenvolvedor.
