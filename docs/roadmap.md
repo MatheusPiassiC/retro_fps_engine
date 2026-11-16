@@ -112,7 +112,7 @@ Testes e documentação acompanham cada marco. M6 consolida essas verificações
 **Tarefas:**
 
 1. Separar comando lógico de movimento das teclas que o produzem. **Concluída (M3-1):** estado imutável e comandos independentes do teclado aprovados pelo desenvolvedor; ver seção 20 da [validação](validacao.md).
-2. Implementar avanço, recuo e giro; configurar controles iniciais W/S e setas esquerda/direita. **Parcial (M3-2):** cálculo aprovado; integração do teclado pendente.
+2. Implementar avanço, recuo e giro; configurar controles iniciais W/S e setas esquerda/direita. **Concluída (M3-2):** cálculo e integração de W/S e setas aprovados, com conferência visual confirmada; ver seção 22 da [validação](validacao.md).
 3. Usar velocidades por segundo e ângulos internos em radianos. **Concluída (M3-3):** configuração e atualização independente da janela aprovadas; ver seção 21 da [validação](validacao.md).
 4. Representar o jogador por um círculo de raio inicial 0.2 unidade.
 5. Verificar colisão círculo-retângulo e resolver deslocamento por eixos para permitir deslizar.

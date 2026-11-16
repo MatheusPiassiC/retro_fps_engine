@@ -394,3 +394,15 @@ Os critérios do roadmap foram conferidos: face frontal plana alinhada, parede d
 - **Conferência sugerida:** no interpretador, avançar por 0.1 s, girar por 0.1 s e imprimir o estado original para conferir sua preservação. Não há mudança visual nesta entrega.
 - **Validação do desenvolvedor:** confirmou “Pode seguir, está validado também”, sem relatar saídas manuais específicas.
 - **Limites:** teclado e ligação da câmera pendentes; sem colisões ou proteção para passos grandes. M3-3 concluída; M3-2 aguarda integração dos controles.
+
+
+## 22. M3-2 — Teclado e câmera derivados do jogador
+
+- **Branch:** `feat/m3-1-2-3-add-player-movement`; terceira entrega, após `d77651e`.
+- **Contas independentes:** com intervalo controlado de 100 ms, velocidade linear 1 e angular 5*pi, cada quadro gira 90 graus e desloca 0.1 unidade na nova direção. Partindo de `(2.5, 2.5)` para leste, os dois quadros pressionados resultam em `(2.5, 2.6)` para sul e `(2.4, 2.6)` para oeste. Soltar mantém esse estado.
+- **Automação anterior à conferência visual:** 15 casos novos de tradução de teclas, cancelamento, quadros consecutivos, liberação, origem/ângulo/FOV no renderizador, encerramento e parâmetros inválidos. 296 testes passaram; Ruff, formatação e diff passaram. Display dummy não comprova aparência real.
+- **Procedimento visual:** executar `python -m retro_fps`; dar toques curtos em W/S e setas; conferir aproximação/afastamento, giro, parada ao soltar, cancelamento e encerramento. Evitar entrar em paredes.
+- **Conferência do desenvolvedor:** confirmou “Está validado” e descreveu o movimento como semelhante a tanque. A IA não observou diretamente a janela; não foram relatados resultados individuais de cada item.
+- **Estado:** primeiro grupo M3-1/M3-2/M3-3 concluído; M3 permanece em andamento, sem colisões ou navegação segura.
+
+- **Conferência antes do commit:** com a edição local do desenvolvedor em `study_world.py` (célula `(1, 2)` transformada em parede), a suíte resultou em 289 aprovados e sete falhas que dependem da sala original. A edição foi preservada e excluída do commit. Em cópia temporária de código e testes, usando apenas a sala original obtida de HEAD, os 296 testes passaram. Ruff, formatação e diff passaram na árvore local.

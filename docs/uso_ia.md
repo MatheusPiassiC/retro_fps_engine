@@ -232,3 +232,14 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Automação:** 281 testes aprovados; Ruff, formatação e diff aprovados. Contas e limitações na seção 21 da validação.
 - **Aprovação:** o desenvolvedor confirmou “Pode seguir, está validado também”; documentação atualizada após aprovação, sem inventar resultados manuais.
 - **Estado:** M3-3 concluída; integração do teclado e câmera de M3-2 segue em entrega separada. Aprendizado com palavras próprias não registrado.
+
+
+## 26. Registro — M3-2: integração de controles e câmera
+
+- **Branch:** `feat/m3-1-2-3-add-player-movement`; terceira entrega.
+- **Contribuição:** integração de teclas mantidas pressionadas, atualização antes do desenho e câmera derivada do jogador; preservação dos modos anteriores; 15 testes novos e procedimento visual.
+- **Verificação anterior à conferência:** 296 testes aprovados; Ruff, formatação e diff aprovados. Evidências e contas na seção 22 da validação.
+- **Conferência:** o desenvolvedor confirmou “Está validado” e comentou a sensação de controle de tanque. Explicado que deslocamento lateral é extensão opcional e que A/D e mouse não estão implementados.
+- **Estado:** grupo M3-1/M3-2/M3-3 concluído; documentação atualizada após aprovação. Sem push, PR, merge ou tag. Alteração local do desenvolvedor na sala de estudo preservada e excluída deste commit. Aprendizado com palavras próprias sobre o algoritmo não registrado.
+
+- **Verificação final:** sete falhas na árvore local com a parede de estudo editada pelo desenvolvedor; 296 aprovados em cópia temporária com sala original, sem alterar a edição local. Detalhes na seção 22 da validação.

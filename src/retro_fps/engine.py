@@ -1,9 +1,12 @@
 """Ciclo inicial da aplicação; a coordenação da sessão evoluirá em M0–M5."""
 
+from math import pi
+
 import pygame
 
 from retro_fps.camera import Camera
 from retro_fps.config import RenderConfig, WindowConfig
+from retro_fps.player import MovementCommand, MovementConfig, PlayerState, update_player
 from retro_fps.renderer import render_scene
 from retro_fps.world import World
 
@@ -15,12 +18,35 @@ def run(
     origin: tuple[float, float] | None = None,
     camera: Camera | None = None,
     render_config: RenderConfig | None = None,
+    player: PlayerState | None = None,
+    movement_config: MovementConfig | None = None,
+    field_of_view: float | None = None,
 ) -> None:
-    """Apresente uma cena estática ou, sem cena, o fundo sólido original."""
-    scene_values = (world, origin, camera)
-    has_scene = all(value is not None for value in scene_values)
-    if any(value is not None for value in scene_values) and not has_scene:
-        raise ValueError("Mundo, origem e câmera devem ser fornecidos juntos.")
+    """Apresente cena estática, movimento experimental sem colisão ou fundo sólido.
+
+    No modo móvel, forneça mundo e jogador; origem e câmera são derivadas
+    do estado a cada quadro. Entrar em parede pode causar erro no DDA.
+    """
+    if player is not None:
+        if world is None or origin is not None or camera is not None:
+            raise ValueError(
+                "Jogador exige mundo e não aceita origem ou câmera separadas."
+            )
+        if movement_config is None:
+            movement_config = MovementConfig()
+        if field_of_view is None:
+            field_of_view = pi / 3
+        Camera(player.angle, field_of_view)  # Valida antes de inicializar o display.
+        has_scene = True
+    else:
+        if movement_config is not None or field_of_view is not None:
+            raise ValueError(
+                "Configuração de movimento e campo de visão exigem jogador."
+            )
+        scene_values = (world, origin, camera)
+        has_scene = all(value is not None for value in scene_values)
+        if any(value is not None for value in scene_values) and not has_scene:
+            raise ValueError("Mundo, origem e câmera devem ser fornecidos juntos.")
     if render_config is not None and not has_scene:
         raise ValueError("A configuração de renderização exige uma cena.")
     if config is None:
@@ -64,6 +90,12 @@ def run(
             if not running:
                 break
 
+            if player is not None:
+                command = read_movement_command()
+                player = update_player(player, command, movement_config, delta_time)
+                origin = player.position
+                camera = Camera(player.angle, field_of_view)
+
             if internal_surface is None:
                 screen.fill(config.background_color)
             else:
@@ -76,3 +108,12 @@ def run(
             pygame.display.set_caption(f"{config.title} | dt: {delta_time:.3f} s")
     finally:
         pygame.quit()
+
+
+def read_movement_command() -> MovementCommand:
+    """Traduza teclas mantidas pressionadas; comandos opostos se cancelam."""
+    keys = pygame.key.get_pressed()
+    return MovementCommand(
+        forward=int(keys[pygame.K_w]) - int(keys[pygame.K_s]),
+        turn=int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT]),
+    )

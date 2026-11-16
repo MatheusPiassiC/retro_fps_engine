@@ -248,3 +248,12 @@ Os comandos aceitam apenas os inteiros -1, 0 e 1, sem booleanos. `forward` posit
 `MovementConfig(move_speed=1.0, turn_speed=pi/2)`, em `retro_fps.player`, é imutável e exige velocidades finitas e positivas, em unidades/s e radianos/s. `update_player(state, command, config, delta_time)` exige intervalo finito e não negativo, gira primeiro e desloca na nova direção, retornando outro `PlayerState`. O estado recebido permanece intacto.
 
 Avanço reto e giro isolado produzem resultados equivalentes ao subdividir o tempo, dentro da tolerância numérica. Avançar e girar simultaneamente aproxima uma curva por segmentos e pode produzir trajetórias diferentes conforme a subdivisão. Ainda não há consulta ao mundo, colisão, limitação do intervalo ou subdivisão espacial; as proteções pertencem a M3-4/M3-5/M3-6.
+
+
+## 20. Integração de movimento implementada em M3-2
+
+`run` aceita `player`, `movement_config` e `field_of_view` opcionais. O modo móvel exige mundo e jogador e rejeita origem/câmera independentes. Campo de visão padrão pi/3, validado antes do display; configuração de movimento e campo de visão explícitos exigem jogador. Os modos estático e de fundo sólido permanecem disponíveis.
+
+Após eventos de saída e antes do desenho, `read_movement_command()` traduz teclas mantidas pressionadas (W/S e setas) em comandos; opostos se cancelam. O loop atualiza seu estado local, usa sua posição como origem e cria a câmera a partir do ângulo e campo de visão. Não existe orientação persistente independente no modo móvel. O estado imutável fornecido pelo chamador não é alterado.
+
+O comando principal usa o modo móvel experimental. Não há colisões; entrar em parede pode ser rejeitado pelo DDA. Deslocamento lateral continua extensão opcional do roadmap.
