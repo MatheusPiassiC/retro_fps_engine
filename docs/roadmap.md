@@ -133,10 +133,10 @@ Testes e documentação acompanham cada marco. M6 consolida essas verificações
 
 **Tarefas:**
 
-1. Implementar a sintaxe de [formato_mapa.md](formato_mapa.md).
-2. Separar análise de conteúdo da abertura do arquivo, facilitando os testes.
-3. Validar grade, bordas, valores numéricos e espaço para o círculo do jogador.
-4. Produzir mensagens localizáveis de erro sem iniciar uma sessão inválida.
+1. Implementar a sintaxe de [formato_mapa.md](formato_mapa.md). **Implementada e testada; revisão manual pendente.**
+2. Separar análise de conteúdo da abertura do arquivo, facilitando os testes. **Implementada e testada; revisão manual pendente.**
+3. Validar grade, bordas, valores numéricos e espaço para o círculo do jogador. **Implementada e testada; revisão manual pendente.**
+4. Produzir mensagens localizáveis de erro sem iniciar uma sessão inválida. **Implementada e testada; revisão manual pendente.**
 5. Substituir o mapa temporário pelos arquivos em `maps/`.
 6. Permitir indicar o caminho do mapa ao executar a demonstração, sem editar código.
 

@@ -3,6 +3,7 @@
 import re
 from dataclasses import dataclass
 from math import isfinite, radians
+from pathlib import Path
 
 from retro_fps.collision import can_occupy
 from retro_fps.player import MovementConfig, PlayerState
@@ -125,3 +126,31 @@ def parse_map(
             line=player_line,
         )
     return MapData(world, PlayerState((x, y), radians(angle % 360)))
+
+
+def load_map(
+    path: str | Path,
+    *,
+    movement_config: MovementConfig | None = None,
+) -> MapData:
+    """Leia um arquivo UTF-8 e delegue análise/validação a parse_map.
+
+    Falhas de leitura ou codificação viram MapLoadError com o caminho.
+    Cada chamada relê o arquivo, sem cache ou correção do conteúdo.
+    """
+    path = Path(path)
+    source = str(path)
+    try:
+        content = path.read_bytes()
+    except OSError as error:
+        raise MapLoadError(
+            f"Não foi possível ler o arquivo: {error.strerror or error}", source=source
+        ) from error
+    try:
+        text = content.decode("utf-8")
+    except UnicodeDecodeError as error:
+        line = content[: error.start].count(b"\n") + 1
+        raise MapLoadError(
+            "O arquivo deve usar codificação UTF-8 válida.", source=source, line=line
+        ) from error
+    return parse_map(text, movement_config=movement_config, source=source)

@@ -303,3 +303,13 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Verificação:** 465 testes aprovados. Conferência manual e relato de aprendizagem continuam pendentes.
 
 - **Verificação estática desta entrega:** Ruff apontou ordenação dos imports; após corrigir, Ruff, formatação e `git diff --check` passaram.
+
+
+## 33. Registro — M4-2/M4-4: leitura de arquivos e diagnóstico
+
+- **Branch:** `feat/m4-1-2-3-4-add-map-loader`.
+- **Contribuição:** leitura UTF-8 delegada ao analisador, erros com caminho e causas preservadas, releitura sem cache e dez casos adicionais, incluindo processo sem Pygame.
+- **Automação:** 475 testes aprovados. Ajustados imports e explicitação de `check=False` no subprocesso dos testes conforme Ruff.
+- **Estado:** carregador implementado e com automação; conferência manual pendente. Commits locais autorizados antecipadamente nesta sessão.
+
+- **Verificações estáticas:** Ruff, formatação e `git diff --check` aprovados nesta entrega.

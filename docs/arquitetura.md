@@ -299,3 +299,8 @@ O desenvolvedor confirmou a conferência manual de sala, corredor e obstáculo. 
 `parse_map(text, *, movement_config=None, source="<texto>")`, em `retro_fps.map_loader`, analisa texto conforme [formato_mapa.md](formato_mapa.md). Retorna `MapData(world, player)`, imutável, sem janela ou regras de jogo. `MapLoadError(ValueError)` identifica origem, linha e motivo. Sintaxe e mensagens têm testes independentes de Pygame.
 
 Sem configuração explícita, usa `MovementConfig()`; o raio dessa configuração valida o início com a mesma consulta geométrica das colisões. O chamador deve passar a mesma configuração ao executor. A análise normaliza graus por uma volta e converte para radianos ao criar `PlayerState`; o mapa não mantém orientação paralela. Não verifica alcançabilidade de áreas. Os símbolos permanecem no módulo; consolidação de exports públicos segue em M5.
+
+
+## 27. Leitura de arquivo implementada em M4-2/M4-4
+
+`load_map(path, *, movement_config=None)` aceita caminho como string ou `Path`, lê bytes e decodifica UTF-8, encaminhando texto, origem e configuração a `parse_map`. `OSError` e `UnicodeDecodeError` são encadeados como causa de `MapLoadError`. Erro de leitura não inventa número de linha; erro de codificação conta as quebras anteriores ao byte inválido. Cada chamada relê o arquivo, sem cache. Não importa Pygame nem inicia sessão parcial.

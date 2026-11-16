@@ -112,3 +112,110 @@ def test_minimum_map_and_decimal_scientific_notation():
     data = parse_map("MAP\n111\n101\n111\nPLAYER +1.5 1.5e0 9e1")
     assert data.world.width == data.world.height == 3
     assert data.player.angle == pytest.approx(pi / 2)
+
+
+@pytest.mark.parametrize("newline", ["\n", "\r\n"])
+def test_file_reading_preserves_parser_contract(tmp_path, newline):
+    from retro_fps.map_loader import load_map
+
+    path = tmp_path / "sala com espaços.map"
+    path.write_bytes(ROOM.replace("\n", newline).encode("utf-8"))
+    data = load_map(path)
+    assert data == parse_map(ROOM)
+    assert load_map(str(path)) == data
+
+
+def test_file_can_be_changed_and_reloaded(tmp_path):
+    from retro_fps.map_loader import load_map
+
+    path = tmp_path / "editavel.map"
+    path.write_text(ROOM, encoding="utf-8")
+    first = load_map(path)
+    # Célula (1,1) é distante do início (2.5,2.5); ambas as versões são válidas.
+    path.write_text(ROOM.replace("10001", "11001", 1), encoding="utf-8")
+    second = load_map(path)
+    assert first.world.cell_at(1, 1) == 0
+    assert second.world.cell_at(1, 1) == 1
+    assert first.player == second.player
+
+
+def test_missing_file_reports_path(tmp_path):
+    from retro_fps.map_loader import load_map
+
+    path = tmp_path / "ausente.map"
+    with pytest.raises(MapLoadError, match="ler o arquivo") as error:
+        load_map(path)
+    assert error.value.source == str(path)
+    assert error.value.line is None
+    assert isinstance(error.value.__cause__, FileNotFoundError)
+
+
+def test_directory_cannot_be_loaded_as_map(tmp_path):
+    from retro_fps.map_loader import load_map
+
+    with pytest.raises(MapLoadError, match="ler o arquivo"):
+        load_map(tmp_path)
+
+
+def test_unreadable_file_reports_operating_system_reason(tmp_path, monkeypatch):
+    from pathlib import Path
+
+    from retro_fps.map_loader import load_map
+
+    def denied(path):
+        raise PermissionError(13, "Acesso negado", str(path))
+
+    monkeypatch.setattr(Path, "read_bytes", denied)
+    with pytest.raises(MapLoadError, match="Acesso negado"):
+        load_map(tmp_path / "restrito.map")
+
+
+def test_invalid_utf8_reports_path_and_line(tmp_path):
+    from retro_fps.map_loader import load_map
+
+    path = tmp_path / "invalido.map"
+    path.write_bytes(b"MAP\n111\n1\xff1\n111\nPLAYER 1.5 1.5 0\n")
+    with pytest.raises(MapLoadError, match="UTF-8") as error:
+        load_map(path)
+    assert error.value.source == str(path)
+    assert error.value.line == 3
+
+
+def test_file_syntax_error_includes_path(tmp_path):
+    from retro_fps.map_loader import load_map
+
+    path = tmp_path / "irregular.map"
+    path.write_text(ROOM.replace("10001", "101", 1), encoding="utf-8")
+    with pytest.raises(MapLoadError) as error:
+        load_map(path)
+    assert f"{path}:3:" in str(error.value)
+
+
+def test_file_loading_forwards_configured_radius(tmp_path):
+    from retro_fps.map_loader import load_map
+
+    path = tmp_path / "volume.map"
+    path.write_text(ROOM.replace("2.5 2.5 0", "1.3 2.5 0"), encoding="utf-8")
+    assert load_map(path).player.position == (1.3, 2.5)
+    with pytest.raises(MapLoadError, match="círculo"):
+        load_map(path, movement_config=MovementConfig(radius=0.3))
+
+
+def test_loading_does_not_import_pygame():
+    import subprocess
+    import sys
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            (
+                "import sys; from retro_fps.map_loader import parse_map; "
+                f"parse_map({ROOM!r}); assert 'pygame' not in sys.modules"
+            ),
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr

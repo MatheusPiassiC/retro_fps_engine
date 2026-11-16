@@ -487,3 +487,13 @@ O percurso contorna por cima o obstáculo: de (2.5,3.5), norte 1 até (2.5,2.5),
 - **Decisões de sintaxe:** um ou mais espaços ASCII entre campos PLAYER, sem espaços externos; números decimais com sinal e expoente, sem separadores ou valores não finitos. Grade não é corrigida. Regras registradas na especificação sem duplicar a implementação.
 
 - **Verificação estática desta entrega:** Ruff apontou ordenação dos imports; após corrigir, Ruff, formatação e `git diff --check` passaram.
+
+
+## 29. M4-2/M4-4 — Leitura UTF-8 separada da análise
+
+- **Branch:** `feat/m4-1-2-3-4-add-map-loader`.
+- **Automação:** dez casos novos usando diretórios temporários verificam LF/CRLF, caminho com espaços, releitura após edição, arquivo ausente, diretório no lugar de arquivo, erro de permissão simulado, UTF-8 inválido com linha, origem de erro sintático e encaminhamento do raio. Um processo Python separado comprova análise sem importar Pygame. 475 casos totais aprovados.
+- **Resultado esperado da edição:** mudar a célula (1,1) da sala de livre para sólida não afeta o início (2.5,2.5); a primeira carga preserva 0 e a segunda retorna 1. Nenhum cache ou alteração retroativa é aceitável.
+- **Limites:** permissão negada é simulada para resultado independente do usuário do sistema; o teste de leitura não substitui a conferência visual. M4 segue aguardando integração de execução e conferência manual posterior.
+
+- **Verificações estáticas:** Ruff, formatação e `git diff --check` aprovados nesta entrega.

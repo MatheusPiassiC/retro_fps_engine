@@ -2,7 +2,7 @@
 
 ## 1. Estado
 
-A análise de texto e a validação estão implementadas em M4-1/M4-3/M4-4 por `parse_map`, sem janela. A leitura de arquivo e a integração da demonstração seguem nas entregas de M4. A conferência manual de M4 está pendente.
+A análise de texto e a validação estão implementadas por `parse_map`; `load_map` lê o arquivo UTF-8 e delega à análise, sem janela. A integração da demonstração segue nas entregas de M4. A conferência manual de M4 está pendente.
 
 ## 2. Sintaxe
 
@@ -38,7 +38,7 @@ A altura das paredes é uma unidade. A câmera inicial fica a meia altura; piso,
 
 ## 4. Validação
 
-A análise rejeita:
+O carregador rejeita:
 
 - Arquivo ausente, ilegível ou com codificação inválida, informando o motivo.
 - Ausência de `MAP`, de grade ou de uma única linha `PLAYER`.
@@ -58,3 +58,10 @@ Não será exigido que toda área livre seja alcançável. A demonstração deve
 Chaves, saídas e regras de jogo não pertencem a esta sintaxe inicial. Um exemplo de jogo poderá manter sua própria configuração de objetivos separada do mapa geométrico.
 
 Se novos materiais ou objetos genéricos forem necessários, o formato será revisado explicitamente, com exemplos e testes. O significado de arquivos existentes não deverá mudar silenciosamente.
+
+
+## 6. Uso do carregador implementado
+
+`parse_map(text, *, movement_config=None, source="<texto>")` e `load_map(path, *, movement_config=None)` retornam `MapData(world, player)`. A configuração padrão é `MovementConfig()`; forneça a mesma configuração ao carregador e ao executor quando personalizar o raio.
+
+`load_map` lê bytes e exige UTF-8 válido; erros de leitura identificam caminho e motivo, e erros de codificação identificam também a linha do byte inválido. Não há cache: editar o arquivo e carregar novamente produz outro mundo, sem modificar o anterior. Nenhuma função inicializa ou importa Pygame.
