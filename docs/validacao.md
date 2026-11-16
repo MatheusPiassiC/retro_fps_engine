@@ -2,7 +2,7 @@
 
 ## 1. Estado e princípio
 
-Este documento reúne verificações propostas e evidências de M0, M1-1 e M1-2. A suíte contém testes comportamentais de mundo; ainda não há resultados de desempenho medidos. Cada teste deve dizer qual comportamento protege e por que o resultado esperado faz sentido.
+Este documento reúne verificações propostas e evidências de M0 e M1. A suíte contém testes comportamentais de mundo, sala e raios; ainda não há resultados de desempenho medidos. Cada teste deve dizer qual comportamento protege e por que o resultado esperado faz sentido.
 
 Não se espera que o desenvolvedor já conheça computação gráfica. Antes de aceitar um teste, a implementação deverá vir acompanhada de uma explicação acessível e de um exemplo que possa ser conferido com desenho e contas simples.
 
@@ -22,7 +22,7 @@ O centro `(2.5, 2.5)` fica no meio da sala. Um raio para leste tem direção `(1
 
 Para oeste, norte e sul, a distância também é 1.5 nesta sala. Esses exemplos permitem conferir sinais, índices e direções sem depender de uma imagem renderizada.
 
-O parâmetro de um raio não é sempre seu comprimento euclidiano: depende do tamanho de seu vetor de direção. Os testes deverão explicitar essa convenção. Um caso diagonal que atinge exatamente um canto deverá seguir a política de desempate definida em M1.
+O parâmetro de um raio não é sempre seu comprimento euclidiano: depende do tamanho de seu vetor de direção. Os testes explicitam essa convenção. Casos diagonais que atingem exatamente um canto seguem a prioridade de x documentada na seção 13.
 
 ## 3. Casos por componente
 
@@ -65,7 +65,7 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-A pasta `tests/` contém os primeiros testes comportamentais, introduzidos em M1-1. Os registros de M0 preservam o resultado histórico de ausência de testes; as evidências de mundo e sala estão nas seções 10 e 11.
+A pasta `tests/` contém os primeiros testes comportamentais, introduzidos em M1-1. Os registros de M0 preservam o resultado histórico de ausência de testes; as evidências de mundo, sala e raios estão nas seções 10 a 14.
 
 ## 7. M0-2 — Versões do ambiente
 
@@ -209,3 +209,53 @@ O procedimento sugerido foi criar `World([[0, 1, 0], [0, 0, 1]])` no interpretad
 - **Conferência manual sugerida:** executar os dois exemplos apresentados ao desenvolvedor: diagonal da sala, esperando `RayHit(4, 3, 'x', 1.5)`, e grade aberta com parede apenas na lateral não visitada, esperando `None`.
 - **Aprovação:** após receber explicação, exemplos e resultados, o desenvolvedor respondeu “Aprovado!”. Não houve relato detalhado da execução manual; aprovação explícita e resultados automatizados permanecem evidências distintas.
 - **Conclusão:** M1-5 concluída. M1-6 e o encerramento de M1 permanecem pendentes; integração por PR é separada. Esta entrega não valida renderização ou colisões.
+
+## 14. M1-6 — Revisão dos testes e explicação do percurso
+
+**Estado:** M1-6 concluída, com testes automatizados aprovados, explicação do percurso e validação confirmada pelo desenvolvedor.
+
+**Branch:** `test/m1-6-review-raycasting-cases`, a partir da `main` com M1-3/M1-4/M1-5 integradas.
+
+### Percurso conferível sem executar o algoritmo
+
+Na sala da seção 2, a origem `(2.5, 2.5)` está na célula `(2, 2)`. Para direção `(1, 0)`, a equação é `x = 2.5 + t`, `y = 2.5`. Cada nova fronteira vertical está uma unidade adiante; não há cruzamentos horizontais.
+
+| Passo | Fronteira | Conta para t | Célula consultada | Resultado |
+|---|---|---|---|---|
+| Início | Nenhuma | 0 | `(2, 2)` | Livre |
+| 1 | `x=3` | `3 - 2.5 = 0.5` | `(3, 2)` | Livre |
+| 2 | `x=4` | `4 - 2.5 = 1.5` | `(4, 2)` | Parede; lado `"x"` |
+
+O retorno deve ser `RayHit(4, 2, 'x', 1.5)`. Para direção `(2, 0)`, a equação muda para `x = 2.5 + 2t`; chegar a `x=4` exige `t=0.75`. O ponto de impacto continua igual. As contas não dependem da implementação do DDA.
+
+### Complementos desta revisão
+
+Sala retangular de largura 7 e altura 5:
+
+```text
+1111111
+1000001
+1000001
+1000001
+1111111
+```
+
+A origem `(3.5, 2.5)` e as direções `(±0.5, ±1)` atingem faces horizontais em `t=1.5`: ao sul, `y=4`; ao norte, `y=1`, face inferior das células da linha 0. O impacto em x é `3.5 ± 0.75`: coluna 4 ou 2. Quatro novos casos conferem célula, lado `"y"` e parâmetro. Esses exemplos foram explicados antes de escrever os testes.
+
+Seis novos casos ampliam as saídas em mapas abertos para uma grade 40 × 40. Na diagonal `(1, 1)` partindo de `(0.5, 0.5)`, são 39 pares de avanços internos e mais um avanço em x para sair: 79, dentro do orçamento 80. O teste confere a saída sem erro; não instrumenta nem conta os avanços internos.
+
+### Evidências e limites
+
+- `.venv/bin/python -m pytest`: 104 casos aprovados (81 de raios, 20 de mundo e três de sala), com Python 3.12.3 e pytest 9.2.0.
+- `.venv/bin/python -m ruff check .`, `.venv/bin/python -m ruff format --check .` e `git diff --check`: aprovados.
+- Os testes anteriores cobrem direções cardinais, componentes nulas, sinais negativos, saída, raio nulo, origem inválida, fronteiras e cantos. As seções 10 a 13 preservam exemplos e resultados históricos.
+- Nenhum algoritmo foi alterado nesta tarefa. Os testes usam geometrias pequenas e valores calculados por equações, sem gerar a resposta esperada pelo DDA.
+- Não foi simulada a falha interna de esgotamento do orçamento. Não há medição de desempenho, validação de renderização ou promessa de precisão para escalas numéricas extremas de ponto flutuante.
+- **Validação pelo desenvolvedor:** após receber os resultados, a explicação e o procedimento de conferência, confirmou “Está validado, pode prosseguir”. A confirmação é registrada separadamente da execução automatizada pela IA; não foram relatadas saídas detalhadas nem uma explicação com palavras próprias. Não foi necessária inspeção gráfica.
+
+
+### Encerramento de M1
+
+Os critérios do roadmap foram conferidos: raio para leste com impacto em `x=4` e parâmetro `1.5`, quatro direções cardinais, rejeição do raio nulo e término dos casos de canto segundo a política documentada. A sala em memória, consultas de mundo, saída da grade e orçamento de avanços também têm cobertura. Os resultados foram acompanhados de desenhos, contas independentes e explicação passo a passo.
+
+Com a validação final do desenvolvedor, M1 está concluído no ambiente atual. Integração de M1-6 por PR e eventual tag são etapas separadas. Renderização, movimento, colisões e carregamento de arquivos permanecem para os marcos seguintes.

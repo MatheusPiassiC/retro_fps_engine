@@ -6,7 +6,7 @@ Este planejamento organiza um projeto universitário de aprendizagem. Não press
 
 A referência conceitual é Wolfenstein 3D: mundo em grade, paredes verticais e exploração em primeira pessoa. A entrega mínima é uma engine reutilizável com uma demonstração de navegação. Objetivos, combate e reprodução completa do jogo de referência não são obrigatórios.
 
-Não há datas ou estimativas de horas neste planejamento. O avanço depende das evidências de conclusão. M0 está concluído no ambiente atual, M1 está em andamento e os demais marcos estão pendentes; a preparação de documentos e arquivos não significa que seus comportamentos já foram implementados.
+Não há datas ou estimativas de horas neste planejamento. O avanço depende das evidências de conclusão. M0 e M1 estão concluídos no ambiente atual e os demais marcos estão pendentes; a preparação de documentos e arquivos não significa que seus comportamentos já foram implementados.
 
 O ciclo de trabalho será: entender uma ideia, especificar uma pequena mudança, implementar, verificar, explicar o resultado e atualizar a documentação. Esse uso de especificações será leve e incremental.
 
@@ -33,7 +33,7 @@ Inimigos, armas, combate e editor visual ficam adiados. Desníveis, mapas origin
 | Marco | Resultado demonstrável | Dependência | Prioridade | Estado |
 |---|---|---|---|---|
 | M0 | Ambiente validado e janela responsiva | Revisão deste planejamento | Obrigatória | Concluído (tag `M0`) |
-| M1 | Interseções de raios conferidas em mapa pequeno | M0 | Obrigatória | Em andamento |
+| M1 | Interseções de raios conferidas em mapa pequeno | M0 | Obrigatória | Concluído |
 | M2 | Sala em perspectiva com câmera fixa | M1 | Obrigatória | Pendente |
 | M3 | Navegação com colisões no mapa em memória | M2 | Obrigatória | Pendente |
 | M4 | Dois mapas externos carregados e exploráveis | M3 | Obrigatória | Pendente |
@@ -74,7 +74,9 @@ Testes e documentação acompanham cada marco. M6 consolida essas verificações
 3. Implementar um raio sem dependência gráfica, retornando célula, lado e parâmetro de impacto. **Concluída (M1-3):** DDA implementado e aprovado pelo desenvolvedor; ver [evidências](validacao.md#12-m1-3-e-m1-4--percurso-de-raios).
 4. Tratar componentes nulas da direção, direções negativas e saída dos limites. **Concluída (M1-4):** direções cardinais, saída da grade e entradas inválidas testadas; entrega aprovada pelo desenvolvedor.
 5. Definir desempate em cruzamentos exatos de cantos e um limite de iterações adequado às dimensões do mundo. **Concluída (M1-5):** prioridade de x em empate exato e orçamento de largura + altura implementados, testados e aprovados pelo desenvolvedor. Ver [evidências](validacao.md#13-m1-5--cantos-e-limite-de-avanços).
-6. Escrever testes com desenhos e resultados calculados antes da implementação.
+6. Escrever testes com desenhos e resultados calculados antes da implementação. **Concluída (M1-6):** cobertura revisada e complementada, 104 casos aprovados, percurso explicado e validação confirmada pelo desenvolvedor. Ver [evidências](validacao.md#14-m1-6--revisão-dos-testes-e-explicação-do-percurso).
+
+**Estado:** M1 concluído no ambiente atual: critérios de aceitação cobertos por testes e explicações, com validação final confirmada pelo desenvolvedor. Integração de M1-6 por PR é uma etapa separada; não foi criada tag do marco nesta tarefa.
 
 **Entrega:** interseções conferidas por testes e por uma explicação passo a passo.
 
