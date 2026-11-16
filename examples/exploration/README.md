@@ -7,4 +7,4 @@ O exemplo importará `retro_fps` após a instalação do pacote e receberá um c
 A entrega mínima será explorar um cenário. Objetivos e condições de vitória, se adicionados, serão implementados aqui ou em outro exemplo, mantendo o núcleo reutilizável.
 
 
-Em M4, a demonstração existente já aceita `python -m retro_fps maps/room.map` e `python -m retro_fps maps/corridor.map` a partir da raiz do repositório. O [roteiro de conferência](../../docs/conferencia_m4.md) documenta a validação manual ainda pendente. A criação da aplicação externa nesta pasta permanece em M5.
+Em M4, a demonstração existente já aceita `python -m retro_fps maps/room.map` e `python -m retro_fps maps/corridor.map` a partir da raiz do repositório. O [roteiro de conferência](../../docs/conferencia_m4.md) documenta o procedimento de validação manual já aprovado pelo desenvolvedor. A criação da aplicação externa nesta pasta permanece em M5.

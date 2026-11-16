@@ -322,3 +322,12 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Decisão:** caminho obrigatório evita presumir instalação dos mapas do repositório. O mesmo objeto de configuração passa pelo carregador e executor. Seleção em `__main__` é a demonstração de M4; aplicação externa e API consolidada ficam para M5.
 - **Verificação:** 490 testes aprovados, incluindo carga, desenho dummy, erro sem janela e percurso. Ruff, formatação e diff aprovados.
 - **Estado:** implementação de M4 preparada em duas branches e commits locais autorizados antecipadamente. Conferência manual, revisão e relato de aprendizado pendentes. Nenhum push, PR, merge ou tag pela IA.
+
+
+## 35. Registro — conclusão aprovada e integração de M4
+
+- **Pedido/contexto:** desenvolvedor aprovou M4 e informou PRs feitos e atualização concluída.
+- **Contribuição:** conferência local dos PRs #15/#16 integrados, main em `8930134` e tag `M4`; atualização dos estados e registros anteriormente pendentes.
+- **Branch documental:** `docs/m4-6-record-map-validation`. Edição do desenvolvedor em `maps/room.map` preservada e excluída do commit.
+- **Verificação:** alteração apenas documental, com diff e referências conferidos; 490 testes são a evidência anterior de implementação, sem nova alegação de execução.
+- **Estado:** M4 concluído e aprovado. Nenhuma operação remota ou alteração de tag pela IA nesta atualização; relato de aprendizagem não preenchido em nome do desenvolvedor.

@@ -2,9 +2,9 @@
 
 ## 1. Estado e preparação
 
-**Implementado e testado automaticamente; conferência manual pendente.** O desenvolvedor autorizou commits locais sem parar em cada etapa nesta sessão. Essa autorização não substitui aprovação do código ou conferência visual. M4 ainda não está concluído.
+**M4 concluído e aprovado pelo desenvolvedor.** Após a implementação e os 490 testes aprovados, o desenvolvedor confirmou “Está tudo aprovado” e informou a integração dos PRs. Os PRs #15/#16 estão integrados na main em `8930134`, com tag `M4`. Este roteiro permanece para reprodução, sem atribuir resultados individuais não relatados.
 
-O trabalho foi dividido em duas branches locais, sem merge ou alteração no remoto:
+O trabalho foi preparado nas duas branches abaixo e posteriormente integrado pelos PRs #15/#16:
 
 - `feat/m4-1-2-3-4-add-map-loader`: análise, validação e leitura UTF-8.
 - `feat/m4-5-6-load-maps-from-command-line`: seleção do arquivo e integração. Esta branch contém também os commits da primeira e é o ponto de revisão do conjunto.
@@ -119,6 +119,6 @@ Cada chamada deve terminar com erro e **sem janela**, contendo o caminho e um mo
 
 ## 6. O que confirmar depois
 
-Informe se os dois mapas abriram e foram navegáveis, se a edição da cópia apareceu na nova execução e se os erros corresponderam ao esperado. Se algo divergir, envie comando, mensagem e observação. Revisão do código, relato de aprendizagem e conferência manual serão registrados com suas palavras ou sua confirmação, sem presumir aprovação.
+A aprovação geral do código e da conferência manual já foi registrada. Em futuras reproduções, informe divergências com comando, mensagem e observação. O relato de aprendizagem com palavras próprias continua separado dessa aprovação.
 
-Integração das branches e eventual push/PR seguem dependendo de autorização. M5 não foi iniciado.
+As branches de implementação já foram integradas pelo desenvolvedor. Novas publicações continuam dependendo de autorização. M5 não foi iniciado.

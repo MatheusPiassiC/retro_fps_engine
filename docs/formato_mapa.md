@@ -2,7 +2,7 @@
 
 ## 1. Estado
 
-A análise de texto e a validação estão implementadas por `parse_map`; `load_map` lê o arquivo UTF-8 e delega à análise, sem janela. A demonstração carrega o caminho indicado em `python -m retro_fps MAPA`. A conferência manual de M4 está pendente.
+A análise de texto e a validação estão implementadas por `parse_map`; `load_map` lê o arquivo UTF-8 e delega à análise, sem janela. A demonstração carrega o caminho indicado em `python -m retro_fps MAPA`. A revisão e a conferência manual de M4 foram aprovadas pelo desenvolvedor.
 
 ## 2. Sintaxe
 

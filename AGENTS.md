@@ -6,7 +6,7 @@ Este é um projeto universitário de aprendizagem. Não presumir conhecimento pr
 
 ## Escopo e arquitetura
 
-- Seguir `docs/roadmap.md`; M0, M1, M2 e M3 foram concluídos no ambiente atual, com testes e conferência visual confirmada pelo desenvolvedor; M4 está em implementação e aguarda revisão manual.
+- Seguir `docs/roadmap.md`; M0, M1, M2, M3 e M4 foram concluídos no ambiente atual, com testes e conferência visual confirmada pelo desenvolvedor; M5 permanece pendente.
 - Usar Wolfenstein 3D como referência conceitual, dentro dos limites de `docs/missao.md`.
 - Manter regras de jogo fora de `src/retro_fps/`. O núcleo não importa exemplos.
 - Manter mundo, carregamento, raycasting e colisões independentes da inicialização gráfica.
@@ -34,6 +34,6 @@ Este é um projeto universitário de aprendizagem. Não presumir conhecimento pr
 
 Após instalar o ambiente conforme o README, usar `python -m pytest`, `python -m ruff check .` e `python -m ruff format --check .` conforme o escopo da mudança.
 
-O ciclo da janela, a configuração inicial, o desenho de cor sólida, as consultas do mundo, a sala temporária em memória o percurso de raios, a câmera, a projeção e o desenho da sala estática estão implementados; estado, comandos, movimento WASD e colisões com volume circular, deslizamento e subdivisão estão implementados. M3-1 a M3-7 concluídos, incluindo validação consolidada de navegação. O carregador de mapas está implementado e testado, com conferência manual de M4 pendente. A suíte contém testes comportamentais de mundo, sala, raios, câmera, projeção, desenho, loop, movimento, colisões, análise de mapas, leitura de arquivos e linha de comando. As conferências visuais de M2-5/M2-6 e do movimento e colisões de M3 foram confirmadas pelo desenvolvedor. Não declarar funcionalidades validadas por verificar apenas imports ou sintaxe. Ao implementar, explicar por que o resultado de cada teste relevante é esperado, usando casos independentes do algoritmo.
+O ciclo da janela, a configuração inicial, o desenho de cor sólida, as consultas do mundo, a sala temporária em memória o percurso de raios, a câmera, a projeção e o desenho da sala estática estão implementados; estado, comandos, movimento WASD e colisões com volume circular, deslizamento e subdivisão estão implementados. M3-1 a M3-7 concluídos, incluindo validação consolidada de navegação. O carregador de mapas está implementado e testado, com revisão e conferência manual de M4 aprovadas pelo desenvolvedor. A suíte contém testes comportamentais de mundo, sala, raios, câmera, projeção, desenho, loop, movimento, colisões, análise de mapas, leitura de arquivos e linha de comando. As conferências visuais de M2-5/M2-6 e do movimento e colisões de M3 foram confirmadas pelo desenvolvedor. Não declarar funcionalidades validadas por verificar apenas imports ou sintaxe. Ao implementar, explicar por que o resultado de cada teste relevante é esperado, usando casos independentes do algoritmo.
 
 Registrar contribuições relevantes de IA em `docs/uso_ia.md`. Não tratar desconhecimento do desenvolvedor como aprovação automática de decisões.

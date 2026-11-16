@@ -508,3 +508,12 @@ O percurso contorna por cima o obstáculo: de (2.5,3.5), norte 1 até (2.5,2.5),
 - **Edição do mapa:** cópia temporária da sala recebe parede na célula (3,2). A face passa de x=4 para x=3 e a profundidade do raio leste muda de 1.5 para 0.5 após nova carga, sem alterar o mundo anterior.
 - **Automação:** 15 casos novos entre seleção/diagnóstico, integração de cada mapa ao desenho real com display dummy, fechamento por evento real, origem e raio compartilhados, funcionamento fora do diretório do projeto, profundidades e percurso. 490 testes totais aprovados. Ruff, formatação e `git diff --check` aprovados.
 - **Limites:** display dummy e percursos programados não substituem a conferência visual/teclado. Roteiro em [conferencia_m4.md](conferencia_m4.md), sem exigir edição dos mapas originais. M4 não declarado concluído; aprovação do código, execução manual e aprendizado permanecem pendentes.
+
+
+## 31. M4 — Aprovação e integração
+
+- **Confirmações do desenvolvedor:** “Está tudo aprovado”, seguida de “Pronto. PR feitos, e tudo atualizado”. Registram aprovação do código e da conferência manual de M4, sem inventar resultados individuais do roteiro.
+- **Integração observada localmente:** PR #15 em `550f814` (carregador), PR #16 em `8930134` (linha de comando); main e referência local origin/main em `8930134`, também apontado pela tag `M4`. Nenhum push, merge ou tag realizado pela IA para este registro.
+- **Automação da implementação:** 490 testes aprovados, Ruff, formatação e diff aprovados conforme seções anteriores. Não foram executados novamente testes de comportamento nesta atualização apenas documental.
+- **Conferência do registro:** revisão das referências Git, estados e diff documental. A edição local do desenvolvedor em `maps/room.map` foi preservada fora desta alteração; não se atribui a ela o resultado anterior da suíte.
+- **Conclusão:** M4-1 a M4-6 e M4 concluídos no ambiente atual. O relato de aprendizagem em palavras próprias permanece separado e não foi inventado. M5 ainda não iniciado.

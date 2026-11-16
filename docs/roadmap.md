@@ -6,7 +6,7 @@ Este planejamento organiza um projeto universitário de aprendizagem. Não press
 
 A referência conceitual é Wolfenstein 3D: mundo em grade, paredes verticais e exploração em primeira pessoa. A entrega mínima é uma engine reutilizável com uma demonstração de navegação. Objetivos, combate e reprodução completa do jogo de referência não são obrigatórios.
 
-Não há datas ou estimativas de horas neste planejamento. O avanço depende das evidências de conclusão. M0, M1, M2 e M3 estão concluídos no ambiente atual; M4 está em andamento e os demais marcos estão pendentes; a preparação de documentos e arquivos não significa que seus comportamentos já foram implementados.
+Não há datas ou estimativas de horas neste planejamento. O avanço depende das evidências de conclusão. M0, M1, M2, M3 e M4 estão concluídos no ambiente atual e os demais marcos estão pendentes; a preparação de documentos e arquivos não significa que seus comportamentos já foram implementados.
 
 O ciclo de trabalho será: entender uma ideia, especificar uma pequena mudança, implementar, verificar, explicar o resultado e atualizar a documentação. Esse uso de especificações será leve e incremental.
 
@@ -36,7 +36,7 @@ Inimigos, armas, combate e editor visual ficam adiados. Desníveis, mapas origin
 | M1 | Interseções de raios conferidas em mapa pequeno | M0 | Obrigatória | Concluído |
 | M2 | Sala em perspectiva com câmera fixa | M1 | Obrigatória | Concluído |
 | M3 | Navegação com colisões no mapa em memória | M2 | Obrigatória | Concluído |
-| M4 | Dois mapas externos carregados e exploráveis | M3 | Obrigatória | Em andamento |
+| M4 | Dois mapas externos carregados e exploráveis | M3 | Obrigatória | Concluído (tag `M4`) |
 | M5 | Aplicação externa usando a engine | M4 | Obrigatória | Pendente |
 | M6 | Entrega validada, documentada e explicável | M5 | Obrigatória | Pendente |
 | M7 | Uma extensão escolhida e validada | M6 | Opcional | Pendente |
@@ -133,14 +133,14 @@ Testes e documentação acompanham cada marco. M6 consolida essas verificações
 
 **Tarefas:**
 
-1. Implementar a sintaxe de [formato_mapa.md](formato_mapa.md). **Implementada e testada; revisão manual pendente.**
-2. Separar análise de conteúdo da abertura do arquivo, facilitando os testes. **Implementada e testada; revisão manual pendente.**
-3. Validar grade, bordas, valores numéricos e espaço para o círculo do jogador. **Implementada e testada; revisão manual pendente.**
-4. Produzir mensagens localizáveis de erro sem iniciar uma sessão inválida. **Implementada e testada; revisão manual pendente.**
-5. Substituir o mapa temporário pelos arquivos em `maps/`. **Implementada e testada; conferência visual pendente.**
-6. Permitir indicar o caminho do mapa ao executar a demonstração, sem editar código. **Implementada e testada; conferência visual pendente.**
+1. Implementar a sintaxe de [formato_mapa.md](formato_mapa.md). **Concluída: implementada, testada e aprovada pelo desenvolvedor.**
+2. Separar análise de conteúdo da abertura do arquivo, facilitando os testes. **Concluída: implementada, testada e aprovada pelo desenvolvedor.**
+3. Validar grade, bordas, valores numéricos e espaço para o círculo do jogador. **Concluída: implementada, testada e aprovada pelo desenvolvedor.**
+4. Produzir mensagens localizáveis de erro sem iniciar uma sessão inválida. **Concluída: implementada, testada e aprovada pelo desenvolvedor.**
+5. Substituir o mapa temporário pelos arquivos em `maps/`. **Concluída: implementada, testada e com conferência visual aprovada pelo desenvolvedor.**
+6. Permitir indicar o caminho do mapa ao executar a demonstração, sem editar código. **Concluída: implementada, testada e com conferência visual aprovada pelo desenvolvedor.**
 
-**Estado:** implementação e testes automatizados de M4-1 a M4-6 preparados; revisão e conferência manual pendentes. Commits locais antecipados autorizados nesta sessão, sem integração ou alteração do remoto. Ver [roteiro de conferência](conferencia_m4.md).
+**Estado:** M4 concluído, com aprovação do desenvolvedor e integração pelos PRs #15 e #16; tag `M4` em `8930134`. Evidências finais na seção 31 da [validação](validacao.md). O [roteiro de conferência](conferencia_m4.md) permanece para reprodução.
 
 **Entrega:** navegação em `room.map` e `corridor.map`.
 

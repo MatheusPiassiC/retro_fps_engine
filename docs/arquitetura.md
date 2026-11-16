@@ -2,7 +2,7 @@
 
 ## 1. Intenção e estado
 
-A engine oferecerá mecanismos reutilizáveis para jogos baseados em ambientes de grade, inspirados visualmente em Wolfenstein 3D. Em M0-3, `engine.run()` passou a abrir a janela, processar eventos de encerramento e liberar recursos; `__main__` chama esse executor. M0-4 e M0-5 acrescentaram configuração da janela, medição em segundos e desenho de cor sólida. M1-1 implementou `World`, descrito na seção 11; M1-2 acrescentou a sala temporária descrita na seção 12. M2 implementou câmera, projeção e desenho; M3, comandos e colisões; M4 implementou carregamento e seleção do mapa, com conferência manual ainda pendente. Os contratos abaixo continuam propostas onde não identificados como implementados.
+A engine oferecerá mecanismos reutilizáveis para jogos baseados em ambientes de grade, inspirados visualmente em Wolfenstein 3D. Em M0-3, `engine.run()` passou a abrir a janela, processar eventos de encerramento e liberar recursos; `__main__` chama esse executor. M0-4 e M0-5 acrescentaram configuração da janela, medição em segundos e desenho de cor sólida. M1-1 implementou `World`, descrito na seção 11; M1-2 acrescentou a sala temporária descrita na seção 12. M2 implementou câmera, projeção e desenho; M3, comandos e colisões; M4 implementou carregamento e seleção do mapa, com conferência manual aprovada pelo desenvolvedor. Os contratos abaixo continuam propostas onde não identificados como implementados.
 
 Reutilização significa que outro programa pode importar a engine, fornecer um mundo e controlar uma sessão sem copiar o renderizador ou editar suas regras internas. Não significa oferecer antecipadamente um editor, um sistema universal de plugins ou suporte a qualquer tipo de jogo.
 
