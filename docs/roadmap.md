@@ -6,7 +6,7 @@ Este planejamento organiza um projeto universitário de aprendizagem. Não press
 
 A referência conceitual é Wolfenstein 3D: mundo em grade, paredes verticais e exploração em primeira pessoa. A entrega mínima é uma engine reutilizável com uma demonstração de navegação. Objetivos, combate e reprodução completa do jogo de referência não são obrigatórios.
 
-Não há datas ou estimativas de horas neste planejamento. O avanço depende das evidências de conclusão. M0 está concluído no ambiente atual e os demais marcos estão pendentes; a preparação de documentos e arquivos não significa que seus comportamentos já foram implementados.
+Não há datas ou estimativas de horas neste planejamento. O avanço depende das evidências de conclusão. M0 está concluído no ambiente atual, M1 está em andamento e os demais marcos estão pendentes; a preparação de documentos e arquivos não significa que seus comportamentos já foram implementados.
 
 O ciclo de trabalho será: entender uma ideia, especificar uma pequena mudança, implementar, verificar, explicar o resultado e atualizar a documentação. Esse uso de especificações será leve e incremental.
 
@@ -30,16 +30,16 @@ Inimigos, armas, combate e editor visual ficam adiados. Desníveis, mapas origin
 
 ## 3. Visão dos marcos
 
-| Marco | Resultado demonstrável | Dependência | Prioridade |
-|---|---|---|---|
-| M0 | Ambiente validado e janela responsiva | Revisão deste planejamento | Obrigatória |
-| M1 | Interseções de raios conferidas em mapa pequeno | M0 | Obrigatória |
-| M2 | Sala em perspectiva com câmera fixa | M1 | Obrigatória |
-| M3 | Navegação com colisões no mapa em memória | M2 | Obrigatória |
-| M4 | Dois mapas externos carregados e exploráveis | M3 | Obrigatória |
-| M5 | Aplicação externa usando a engine | M4 | Obrigatória |
-| M6 | Entrega validada, documentada e explicável | M5 | Obrigatória |
-| M7 | Uma extensão escolhida e validada | M6 | Opcional |
+| Marco | Resultado demonstrável | Dependência | Prioridade | Estado |
+|---|---|---|---|---|
+| M0 | Ambiente validado e janela responsiva | Revisão deste planejamento | Obrigatória | Concluído (tag `M0`) |
+| M1 | Interseções de raios conferidas em mapa pequeno | M0 | Obrigatória | Em andamento |
+| M2 | Sala em perspectiva com câmera fixa | M1 | Obrigatória | Pendente |
+| M3 | Navegação com colisões no mapa em memória | M2 | Obrigatória | Pendente |
+| M4 | Dois mapas externos carregados e exploráveis | M3 | Obrigatória | Pendente |
+| M5 | Aplicação externa usando a engine | M4 | Obrigatória | Pendente |
+| M6 | Entrega validada, documentada e explicável | M5 | Obrigatória | Pendente |
+| M7 | Uma extensão escolhida e validada | M6 | Opcional | Pendente |
 
 Testes e documentação acompanham cada marco. M6 consolida essas verificações, sem adiá-las para o final.
 
@@ -55,7 +55,7 @@ Testes e documentação acompanham cada marco. M6 consolida essas verificações
 4. Medir o intervalo entre quadros em segundos e apresentar uma superfície de cor sólida. **Concluída (M0-4), com conferência visual confirmada pelo desenvolvedor:** ver [evidências](validacao.md#9-m0-4-e-m0-5--tempo-desenho-e-configuração).
 5. Definir uma configuração inicial pequena, evitando números espalhados pelo código. **Concluída (M0-5), na mesma entrega de M0-4:** configuração de janela em `WindowConfig`; conferência visual confirmada pelo desenvolvedor.
 
-**Estado:** M0 concluído no ambiente atual, com instalação relatada pelo desenvolvedor, versões registradas, verificações pontuais e estáticas e validação visual confirmada. Pytest ainda sem testes coletados; reprodução em ambiente limpo não verificada nesta etapa, conforme registro de M0-2. Integração da entrega por PR é uma etapa separada.
+**Estado:** M0 concluído e integrado, com tag `M0`, instalação relatada pelo desenvolvedor, versões registradas, verificações pontuais e estáticas e validação visual confirmada. Na conclusão de M0, pytest ainda não coletava testes; reprodução em ambiente limpo não verificada nesta etapa, conforme registro de M0-2.
 
 **Entrega:** janela executável e instruções conferidas.
 
@@ -69,7 +69,7 @@ Testes e documentação acompanham cada marco. M6 consolida essas verificações
 
 **Tarefas:**
 
-1. Implementar a representação do mundo e consulta de células.
+1. Implementar a representação do mundo e consulta de células. **Concluída (M1-1):** `World` imutável, dimensões, consultas e limites implementados; 20 casos automatizados aprovados, código aprovado e conferência manual confirmada pelo desenvolvedor. Ver [evidências](validacao.md#10-m1-1--representação-do-mundo-e-consulta-de-células).
 2. Usar temporariamente uma sala 5 × 5 em memória, com borda sólida e interior livre.
 3. Implementar um raio sem dependência gráfica, retornando célula, lado e parâmetro de impacto.
 4. Tratar componentes nulas da direção, direções negativas e saída dos limites.

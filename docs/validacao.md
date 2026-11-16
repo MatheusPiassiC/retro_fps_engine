@@ -2,7 +2,7 @@
 
 ## 1. Estado e princípio
 
-Este documento reúne verificações propostas e evidências do ambiente registradas em M0-2; ainda não há testes da engine implementados nem resultados de desempenho medidos. Cada teste deve dizer qual comportamento protege e por que o resultado esperado faz sentido.
+Este documento reúne verificações propostas e evidências de M0 e M1-1. A suíte contém testes comportamentais de mundo; ainda não há resultados de desempenho medidos. Cada teste deve dizer qual comportamento protege e por que o resultado esperado faz sentido.
 
 Não se espera que o desenvolvedor já conheça computação gráfica. Antes de aceitar um teste, a implementação deverá vir acompanhada de uma explicação acessível e de um exemplo que possa ser conferido com desenho e contas simples.
 
@@ -65,7 +65,7 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-A pasta `tests/` está reservada. Enquanto não houver testes, o pytest poderá terminar com o código de ausência de testes; isso não deve ser registrado como validação da engine. Os primeiros testes comportamentais serão criados junto com M1.
+A pasta `tests/` contém os primeiros testes comportamentais, introduzidos em M1-1. Os registros de M0 preservam o resultado histórico de ausência de testes; as evidências atuais estão na seção 10.
 
 ## 7. M0-2 — Versões do ambiente
 
@@ -138,3 +138,38 @@ Ainda não há desenho explícito de cor sólida ou mapa nesta etapa. Esses elem
 **Conclusão informada pelo desenvolvedor:** após a explicação do loop, da configuração, das anotações e da dataclass, o desenvolvedor confirmou ter realizado a validação visual da entrega conjunta. M0-4 e M0-5 concluídos com base nessa confirmação e nas verificações pontuais acima. Não foram fornecidas novas medições de desempenho.
 
 **Conclusão de M0:** pacote instalado no ambiente atual, versões registradas, janela com eventos de encerramento, intervalo em segundos, cor sólida e configuração inicial implementados. As verificações estáticas passaram; pytest executa, mas ainda não coleta testes (código 5). A instalação em ambiente limpo não foi repetida, conforme decisão registrada em M0-2. O encerramento do marco não representa validação dos algoritmos futuros da engine nem integração automática da branch.
+
+
+## 10. M1-1 — Representação do mundo e consulta de células
+
+- **Branch:** `feat/m1-1-add-world-cell-queries`, criada a partir de `origin/main` após buscar a conclusão de M0 e a tag `M0`.
+- **Implementação:** `World` em `retro_fps.world`, com grade imutável, dimensões e consultas. O [contrato implementado](arquitetura.md#11-mundo-implementado-em-m1-1) distingue acesso à célula de consulta de solidez fora dos limites.
+- **Ambiente automatizado:** Python 3.12.3 e pytest 9.2.0 da `.venv` existente.
+- **Validação automatizada:** `.venv/bin/python -m pytest` aprovou 20 casos em `tests/test_world.py`; `.venv/bin/python -m ruff check .`, `.venv/bin/python -m ruff format --check .` e `git diff --check` passaram. A primeira conferência de formatação pediu uma quebra de linha, aplicada antes da repetição bem-sucedida.
+
+### Exemplos e resultados esperados
+
+A grade retangular abaixo tem três colunas e duas linhas:
+
+```text
+010
+001
+```
+
+Assim, largura e altura devem ser 3 e 2. A célula `(1, 0)` é parede, enquanto `(0, 1)` é livre: resultados diferentes ajudam a detectar troca entre linha e coluna. A última célula `(2, 1)` também é parede.
+
+Os testes conferem ainda:
+
+- **Quatro limites:** `(-1, 0)`, `(0, -1)`, `(3, 0)` e `(0, 2)` ficam fora de uma grade 3 × 2. `contains` retorna falso, `is_solid` retorna verdadeiro e `cell_at` lança `IndexError`. Os negativos não podem acessar o lado oposto da grade.
+- **Cópia e imutabilidade:** após construir o mundo com `[[0, 1]]`, alterar a lista original e acrescentar uma linha não muda `((0, 1),)` no mundo. Alterar a tupla ou substituir o atributo é rejeitado.
+- **Grades inválidas:** nove casos cobrem ausência de células, linhas irregulares, valores fora de 0/1 e tipos inadequados. Todos devem causar `ValueError`.
+- **Índices inválidos:** quatro pares com números reais, booleano ou texto devem causar `TypeError` em todas as consultas, sem conversão implícita.
+- **Grade mínima em memória:** uma única célula livre é aceita; regras de mapas externos pertencem a M4.
+
+### Conferência manual e aprovação
+
+O procedimento sugerido foi criar `World([[0, 1, 0], [0, 0, 1]])` no interpretador e conferir dimensões `(3, 2)`, células `(1, 0) == 1` e `(0, 1) == 0`, ausência de `(-1, 0)`, solidez externa e `IndexError` no acesso direto externo.
+
+**Resultado informado pelo desenvolvedor:** aprovou o código, confirmou ter testado o procedimento sugerido e também executado os testes com pytest. Esse relato foi recebido separadamente da execução automatizada pela IA; a conferência manual não foi observada diretamente pela IA e não exigia janela.
+
+**Conclusão:** M1-1 concluída com implementação, testes automatizados e aprovação do desenvolvedor. M1 permanece em andamento. Sala padrão, raycasting, colisões, carregador e renderização não foram implementados nem validados nesta tarefa. Integração por PR permanece uma etapa separada.
