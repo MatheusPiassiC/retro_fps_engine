@@ -406,3 +406,16 @@ Os critérios do roadmap foram conferidos: face frontal plana alinhada, parede d
 - **Estado:** primeiro grupo M3-1/M3-2/M3-3 concluído; M3 permanece em andamento, sem colisões ou navegação segura.
 
 - **Conferência antes do commit:** com a edição local do desenvolvedor em `study_world.py` (célula `(1, 2)` transformada em parede), a suíte resultou em 289 aprovados e sete falhas que dependem da sala original. A edição foi preservada e excluída do commit. Em cópia temporária de código e testes, usando apenas a sala original obtida de HEAD, os 296 testes passaram. Ruff, formatação e diff passaram na árvore local.
+
+
+## 23. M3-2 — Extensão lateral e diagonal
+
+- **Branch:** `feat/m3-1-2-3-add-player-movement`; extensão solicitada após `79885ec`.
+- **Contas independentes:** olhando para leste, direita é sul: D por 0.1 s a 1 unidade/s leva `(2.5, 2.5)` a `(2.5, 2.6)`. Para W+D, Pitágoras exige componentes iguais de 0.1/sqrt(2), aproximadamente 0.0707107: a soma dos quadrados é 0.01 e a distância total é 0.1. Ao olhar para sul, D leva para oeste. O ângulo não muda sem comando de giro.
+- **Automação:** 43 casos adicionais (incluindo expansão das parametrizações) cobrem comandos laterais, domínio de valores, orientações, quatro diagonais, giro antes da diagonal, subdivisão temporal, tradução de A/D e cancelamentos. Integração confere W+D no desenho e parada ao soltar, com tempo controlado.
+- **Resultados:** 339 casos aprovados em cópia temporária com sala original obtida de HEAD. Na árvore local: 332 aprovados e as mesmas sete falhas de geometria causadas pela parede editada pelo desenvolvedor. A edição permanece intacta. Ruff, formatação e `git diff --check` passaram.
+- **Procedimento manual proposto:** executar `python -m retro_fps`; com toques curtos, verificar A/D sem giro, W+D e W+A, S+D e S+A, cancelamento A+D e parada ao soltar. Girar com uma seta e repetir A/D para conferir orientação relativa. Evitar paredes, especialmente a parede local na célula `(1, 2)`.
+- **Conferência do desenvolvedor:** confirmou “Muito bem, está validado” após receber o procedimento. Não relatou resultados individuais; a IA não observou diretamente a janela.
+- **Estado:** extensão concluída com implementação, automação e conferência manual confirmada. Sem colisões, limitação temporal ou subdivisão espacial.
+
+- **Verificação final após aprovação:** `study_world.py` já não apresenta diferença local; a suíte foi executada diretamente na árvore de trabalho e os 339 casos passaram. Ruff, formatação e `git diff --check` também passaram. O registro anterior das sete falhas descreve a execução com a sala então editada.

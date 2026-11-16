@@ -243,3 +243,15 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Estado:** grupo M3-1/M3-2/M3-3 concluído; documentação atualizada após aprovação. Sem push, PR, merge ou tag. Alteração local do desenvolvedor na sala de estudo preservada e excluída deste commit. Aprendizado com palavras próprias sobre o algoritmo não registrado.
 
 - **Verificação final:** sete falhas na árvore local com a parede de estudo editada pelo desenvolvedor; 296 aprovados em cópia temporária com sala original, sem alterar a edição local. Detalhes na seção 22 da validação.
+
+
+## 27. Registro — M3-2: extensão WASD
+
+- **Pedido:** implementar lateral e diagonal na mesma branch, com registros documentais.
+- **Contribuição:** explicação prévia da diagonal por Pitágoras; extensão do comando lógico com `strafe`, adaptação de A/D, combinação normalizada de frente/direita e testes.
+- **Decisão autorizada:** antecipar deslocamento lateral antes das colisões, preservando velocidade total nas diagonais e setas para giro. Sem mouse ou colisões.
+- **Verificação:** 339 aprovados em cópia temporária com sala original; 332 aprovados e sete falhas conhecidas na árvore com sala alterada pelo desenvolvedor. Ruff, formatação e diff aprovados. Edição local preservada.
+- **Aprovação:** o desenvolvedor confirmou “Muito bem, está validado”. Registros atualizados após essa confirmação, sem inventar resultados individuais ou explicações do desenvolvedor.
+- **Estado:** extensão concluída na mesma branch, com commit após validação; colisões seguem pendentes.
+
+- **Verificação final:** sala sem diferença local e 339 testes aprovados diretamente no repositório; Ruff, formatação e diff aprovados.

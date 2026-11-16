@@ -84,7 +84,7 @@ Mundo, origem e câmera devem ser fornecidos juntos. A configuração de renderi
 
 ### Movimento experimental — M3-1/M3-2/M3-3
 
-`python -m retro_fps` usa W/S para avançar/recuar e setas esquerda/direita para girar. Manter uma tecla pressionada mantém o comando; teclas opostas se cancelam. Velocidades padrão: 1 unidade/s e pi/2 rad/s. A/D e mouse ainda não têm função.
+`python -m retro_fps` usa W/S para avançar/recuar, A/D para deslocar lateralmente e setas esquerda/direita para girar. Manter uma tecla pressionada mantém o comando; teclas opostas se cancelam. Velocidades padrão: 1 unidade/s e pi/2 rad/s. O mouse ainda não tem função. A diagonal mantém a mesma velocidade total do movimento reto; A/D não alteram o ângulo. A extensão WASD está implementada e testada, com conferência manual confirmada pelo desenvolvedor.
 
 **Sem colisões:** faça toques curtos a partir do centro. Entrar em parede pode causar erro no DDA; não é navegação segura. Limitação temporal e subdivisão espacial serão implementadas em M3-6.
 
@@ -108,7 +108,7 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-A suíte contém 296 casos: 72 de estado, comandos e movimento em `tests/test_player.py`, oito de comparação de cenários em `tests/test_perspective_scenarios.py`, 32 de loop/configuração em `tests/test_engine.py`, cinco de desenho em `tests/test_renderer.py`, 29 de projeção em `tests/test_projection.py`, 46 de câmera em `tests/test_camera.py`, 81 de raios em `tests/test_raycasting.py`, 20 de mundo em `tests/test_world.py` e três da sala temporária em `tests/test_study_world.py`. Eles verificam dimensões, consultas, limites, imutabilidade, entradas inválidas, geometria da sala, cantos e saída dentro do orçamento de avanços. Esses resultados não validam os componentes ainda não implementados. As versões instaladas estão registradas em `requirements-dev.txt`; isso não comprova o funcionamento da engine.
+A suíte contém 339 casos: 109 de estado, comandos e movimento em `tests/test_player.py`, oito de comparação de cenários em `tests/test_perspective_scenarios.py`, 38 de loop/configuração em `tests/test_engine.py`, cinco de desenho em `tests/test_renderer.py`, 29 de projeção em `tests/test_projection.py`, 46 de câmera em `tests/test_camera.py`, 81 de raios em `tests/test_raycasting.py`, 20 de mundo em `tests/test_world.py` e três da sala temporária em `tests/test_study_world.py`. Eles verificam dimensões, consultas, limites, imutabilidade, entradas inválidas, geometria da sala, cantos e saída dentro do orçamento de avanços. Esses resultados não validam os componentes ainda não implementados. As versões instaladas estão registradas em `requirements-dev.txt`; isso não comprova o funcionamento da engine.
 
 ## Próximo passo
 

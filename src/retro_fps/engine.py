@@ -116,4 +116,5 @@ def read_movement_command() -> MovementCommand:
     return MovementCommand(
         forward=int(keys[pygame.K_w]) - int(keys[pygame.K_s]),
         turn=int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT]),
+        strafe=int(keys[pygame.K_d]) - int(keys[pygame.K_a]),
     )

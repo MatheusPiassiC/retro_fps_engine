@@ -98,13 +98,18 @@ def test_render_dimensions_are_positive_integers(name, value):
 @pytest.mark.parametrize(
     "pressed, expected",
     [
-        ((), (0, 0)),
-        ((pygame.K_w,), (1, 0)),
-        ((pygame.K_s,), (-1, 0)),
-        ((pygame.K_LEFT,), (0, -1)),
-        ((pygame.K_RIGHT,), (0, 1)),
-        ((pygame.K_w, pygame.K_LEFT), (1, -1)),
-        ((pygame.K_w, pygame.K_s, pygame.K_LEFT, pygame.K_RIGHT), (0, 0)),
+        ((), (0, 0, 0)),
+        ((pygame.K_w,), (1, 0, 0)),
+        ((pygame.K_s,), (-1, 0, 0)),
+        ((pygame.K_LEFT,), (0, -1, 0)),
+        ((pygame.K_RIGHT,), (0, 1, 0)),
+        ((pygame.K_w, pygame.K_LEFT), (1, -1, 0)),
+        ((pygame.K_a,), (0, 0, -1)),
+        ((pygame.K_d,), (0, 0, 1)),
+        ((pygame.K_w, pygame.K_d), (1, 0, 1)),
+        ((pygame.K_a, pygame.K_d), (0, 0, 0)),
+        ((pygame.K_w, pygame.K_s, pygame.K_d), (0, 0, 1)),
+        ((pygame.K_w, pygame.K_s, pygame.K_LEFT, pygame.K_RIGHT), (0, 0, 0)),
     ],
 )
 def test_keyboard_translates_to_logical_command(monkeypatch, pressed, expected):
@@ -113,7 +118,7 @@ def test_keyboard_translates_to_logical_command(monkeypatch, pressed, expected):
     keys = defaultdict(bool, {key: True for key in pressed})
     monkeypatch.setattr(pygame.key, "get_pressed", lambda: keys)
     command = engine.read_movement_command()
-    assert (command.forward, command.turn) == expected
+    assert (command.forward, command.turn, command.strafe) == expected
 
 
 @pytest.mark.parametrize("event_type", [pygame.QUIT, pygame.KEYDOWN])
@@ -201,3 +206,36 @@ def test_invalid_mobile_scene_is_rejected_before_display(monkeypatch, case):
     monkeypatch.setattr(pygame.display, "init", unexpected_init)
     with pytest.raises(ValueError):
         engine.run(**kwargs)
+
+
+def test_diagonal_keys_feed_camera_without_changing_angle(dummy_display, monkeypatch):
+    from collections import defaultdict
+    from math import sqrt
+
+    from retro_fps.player import PlayerState
+
+    class Clock:
+        def tick(self, frame_limit):
+            return 100
+
+    frames = []
+
+    def keys():
+        return defaultdict(bool, {pygame.K_w: not frames, pygame.K_d: not frames})
+
+    def render(surface, world, origin, camera):
+        frames.append((origin, camera.angle))
+
+    def flip():
+        if len(frames) == 2:
+            pygame.event.post(pygame.event.Event(pygame.QUIT))
+
+    monkeypatch.setattr(pygame.time, "Clock", Clock)
+    monkeypatch.setattr(pygame.key, "get_pressed", keys)
+    monkeypatch.setattr(engine, "render_scene", render)
+    monkeypatch.setattr(pygame.display, "flip", flip)
+    engine.run(world=World([[0]]), player=PlayerState((0, 0), 0))
+    assert len(frames) == 2
+    assert frames[0][0] == pytest.approx((0.1 / sqrt(2), 0.1 / sqrt(2)))
+    assert frames[0][1] == 0
+    assert frames[1] == frames[0]

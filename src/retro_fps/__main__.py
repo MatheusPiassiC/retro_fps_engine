@@ -6,7 +6,7 @@ from retro_fps.study_world import create_study_world
 
 
 def main() -> None:
-    """Apresente a sala com W/S e setas; ainda é possível entrar nas paredes."""
+    """Apresente a sala com WASD e setas; ainda é possível entrar nas paredes."""
     run(world=create_study_world(), player=PlayerState((2.5, 2.5), 0))
 
 

@@ -1,7 +1,7 @@
-"""Contratos do estado e dos comandos; nenhum movimento é executado ainda."""
+"""Contratos do estado, comandos e movimento sem janela."""
 
 from dataclasses import FrozenInstanceError
-from math import pi, tau
+from math import hypot, pi, sqrt, tau
 
 import pytest
 
@@ -54,20 +54,22 @@ def test_default_command_requests_no_movement():
 
 @pytest.mark.parametrize("forward", [-1, 0, 1])
 @pytest.mark.parametrize("turn", [-1, 0, 1])
-def test_independent_command_combinations(forward, turn):
-    command = MovementCommand(forward, turn)
+@pytest.mark.parametrize("strafe", [-1, 0, 1])
+def test_independent_command_combinations(forward, turn, strafe):
+    command = MovementCommand(forward, turn, strafe)
     assert command.forward == forward
     assert command.turn == turn
+    assert command.strafe == strafe
 
 
-@pytest.mark.parametrize("attribute", ["forward", "turn"])
+@pytest.mark.parametrize("attribute", ["forward", "turn", "strafe"])
 @pytest.mark.parametrize("value", [-2, 2])
 def test_out_of_range_command_is_rejected(attribute, value):
     with pytest.raises(ValueError):
         MovementCommand(**{attribute: value})
 
 
-@pytest.mark.parametrize("attribute", ["forward", "turn"])
+@pytest.mark.parametrize("attribute", ["forward", "turn", "strafe"])
 @pytest.mark.parametrize("value", [True, False, 1.0, "1", None])
 def test_noninteger_command_is_rejected(attribute, value):
     with pytest.raises(TypeError):
@@ -128,6 +130,8 @@ def test_no_command_or_zero_time_preserves_state(command, elapsed):
     [
         MovementCommand(1),
         MovementCommand(-1),
+        MovementCommand(strafe=1),
+        MovementCommand(1, strafe=-1),
         MovementCommand(turn=1),
         MovementCommand(turn=-1),
     ],
@@ -175,3 +179,50 @@ def test_movement_config_defaults_and_immutability():
     assert config.turn_speed == pi / 2
     with pytest.raises(FrozenInstanceError):
         config.move_speed = 2
+
+
+@pytest.mark.parametrize(
+    "angle, strafe, expected",
+    [
+        (0, 1, (2.5, 2.6)),
+        (0, -1, (2.5, 2.4)),
+        (pi / 2, 1, (2.4, 2.5)),
+        (pi, 1, (2.5, 2.4)),
+        (3 * pi / 2, 1, (2.6, 2.5)),
+    ],
+)
+def test_strafe_follows_orientation_without_turning(angle, strafe, expected):
+    result = update_player(
+        PlayerState((2.5, 2.5), angle),
+        MovementCommand(strafe=strafe),
+        MovementConfig(),
+        0.1,
+    )
+    assert result.position == pytest.approx(expected, abs=1e-12)
+    assert result.angle == angle
+
+
+@pytest.mark.parametrize("forward", [-1, 1])
+@pytest.mark.parametrize("strafe", [-1, 1])
+def test_diagonal_has_same_speed_as_straight_motion(forward, strafe):
+    # Pitágoras: duas componentes de 0.1/sqrt(2) têm comprimento total 0.1.
+    result = update_player(
+        PlayerState((0, 0), 0),
+        MovementCommand(forward=forward, strafe=strafe),
+        MovementConfig(),
+        0.1,
+    )
+    assert result.position == pytest.approx(
+        (forward * 0.1 / sqrt(2), strafe * 0.1 / sqrt(2)), abs=1e-12
+    )
+    assert hypot(*result.position) == pytest.approx(0.1, abs=1e-12)
+    assert result.angle == 0
+
+
+def test_diagonal_and_strafe_use_new_angle_after_turn():
+    # Giro até sul: frente=sul e direita=oeste, portanto diagonal sudoeste.
+    result = update_player(
+        PlayerState((0, 0), 0), MovementCommand(1, 1, 1), MovementConfig(), 1
+    )
+    assert result.position == pytest.approx((-1 / sqrt(2), 1 / sqrt(2)), abs=1e-12)
+    assert result.angle == pytest.approx(pi / 2)

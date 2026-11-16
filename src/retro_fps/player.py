@@ -1,7 +1,7 @@
 """Estado e intenções de movimento, sem dependência de teclado ou janela."""
 
 from dataclasses import dataclass
-from math import cos, isfinite, pi, sin, tau
+from math import cos, hypot, isfinite, pi, sin, tau
 
 
 @dataclass(frozen=True)
@@ -27,13 +27,14 @@ class PlayerState:
 
 @dataclass(frozen=True)
 class MovementCommand:
-    """Intenções discretas: positivo avança/gira à direita; zero não solicita."""
+    """Intenções discretas: avanço, giro e lateral; positivo aponta à direita."""
 
     forward: int = 0
     turn: int = 0
+    strafe: int = 0
 
     def __post_init__(self) -> None:
-        for value in (self.forward, self.turn):
+        for value in (self.forward, self.turn, self.strafe):
             if type(value) is not int:
                 raise TypeError("Os comandos devem ser inteiros, sem booleanos.")
             if value not in (-1, 0, 1):
@@ -67,6 +68,15 @@ def update_player(
     if not isfinite(delta_time) or delta_time < 0:
         raise ValueError("O intervalo deve ser finito e não negativo.")
     angle = state.angle + command.turn * config.turn_speed * delta_time
-    distance = command.forward * config.move_speed * delta_time
+    # Frente e direita são perpendiculares. Dividir pelo comprimento da
+    # intenção impede que a diagonal (comprimento sqrt(2)) seja mais rápida.
+    scale = (
+        config.move_speed
+        * delta_time
+        / max(1.0, hypot(command.forward, command.strafe))
+    )
+    front_x, front_y = cos(angle), sin(angle)
+    offset_x = scale * (command.forward * front_x - command.strafe * front_y)
+    offset_y = scale * (command.forward * front_y + command.strafe * front_x)
     x, y = state.position
-    return PlayerState((x + distance * cos(angle), y + distance * sin(angle)), angle)
+    return PlayerState((x + offset_x, y + offset_y), angle)

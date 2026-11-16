@@ -257,3 +257,10 @@ Avanço reto e giro isolado produzem resultados equivalentes ao subdividir o tem
 Após eventos de saída e antes do desenho, `read_movement_command()` traduz teclas mantidas pressionadas (W/S e setas) em comandos; opostos se cancelam. O loop atualiza seu estado local, usa sua posição como origem e cria a câmera a partir do ângulo e campo de visão. Não existe orientação persistente independente no modo móvel. O estado imutável fornecido pelo chamador não é alterado.
 
 O comando principal usa o modo móvel experimental. Não há colisões; entrar em parede pode ser rejeitado pelo DDA. Deslocamento lateral continua extensão opcional do roadmap.
+
+
+## 21. Extensão WASD implementada em M3-2 — conferência manual confirmada pelo desenvolvedor
+
+Por solicitação do desenvolvedor, o deslocamento lateral foi antecipado na mesma branch. `MovementCommand(forward=0, turn=0, strafe=0)` acrescenta `strafe` ao final, preservando os argumentos posicionais anteriores; o novo campo aceita os mesmos inteiros -1/0/1 e rejeita booleanos. Positivo solicita movimento à direita do olhar. A/D geram lateral negativo/positivo, com cancelamento entre opostos. Setas continuam girando.
+
+Após o giro, frente é `(cos(angle), sin(angle))` e direita é `(-sin(angle), cos(angle))`. A combinação das intenções frontal e lateral é dividida por `max(1, hypot(forward, strafe))`, antes de multiplicar por velocidade e tempo. Assim, a diagonal não aumenta a velocidade e o repouso não divide por zero. Campo de visão não influencia movimento. Não há colisões. Testes automatizados concluídos; conferência manual confirmada pelo desenvolvedor. A afirmação anterior de deslocamento lateral opcional descreve o escopo anterior a esta decisão.
