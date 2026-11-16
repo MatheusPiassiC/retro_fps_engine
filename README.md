@@ -6,7 +6,7 @@ A entrega mínima planejada é carregar um mapa externo e explorá-lo em primeir
 
 ## Estado atual
 
-M0 concluído no ambiente atual: a entrada do pacote abre uma janela de 640 × 480 pixels com fundo azul e intervalo entre quadros em segundos no título. Escape ou o botão de fechar encerram a aplicação. O desenvolvedor confirmou a conferência visual de M0-3 e da entrega conjunta M0-4 e M0-5. M1 concluído no ambiente atual: M1-1 implementou a representação do mundo e consultas de células; M1-2 acrescentou uma sala temporária 5 × 5 em memória. As duas tarefas têm testes comportamentais e aprovação do desenvolvedor. M1-3/M1-4 implementaram consultas de raios sem dependência gráfica, aprovadas pelo desenvolvedor. M1-5 consolidou cantos e limite de avanços, também com aprovação. M1-6 revisou os testes e as explicações, com validação final confirmada pelo desenvolvedor. Ainda não há renderização de mapas, movimento ou carregador. Os mapas são exemplos da sintaxe proposta.
+M0 concluído no ambiente atual: a entrada do pacote abre uma janela de 640 × 480 pixels com fundo azul e intervalo entre quadros em segundos no título. Escape ou o botão de fechar encerram a aplicação. O desenvolvedor confirmou a conferência visual de M0-3 e da entrega conjunta M0-4 e M0-5. M1 concluído no ambiente atual: M1-1 implementou a representação do mundo e consultas de células; M1-2 acrescentou uma sala temporária 5 × 5 em memória. As duas tarefas têm testes comportamentais e aprovação do desenvolvedor. M1-3/M1-4 implementaram consultas de raios sem dependência gráfica, aprovadas pelo desenvolvedor. M1-5 consolidou cantos e limite de avanços, também com aprovação. M1-6 revisou os testes e as explicações, com validação final confirmada pelo desenvolvedor. M2 está em andamento: M2-1 implementou a geometria da câmera sem dependência gráfica, com testes e aprovação do desenvolvedor. Ainda não há renderização de mapas, movimento ou carregador. Os mapas são exemplos da sintaxe proposta.
 
 ## Documentação
 
@@ -67,8 +67,8 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-A suíte contém 104 casos: 81 de raios em `tests/test_raycasting.py`, 20 de mundo em `tests/test_world.py` e três da sala temporária em `tests/test_study_world.py`. Eles verificam dimensões, consultas, limites, imutabilidade, entradas inválidas, geometria da sala, cantos e saída dentro do orçamento de avanços. Esses resultados não validam os componentes ainda não implementados. As versões instaladas estão registradas em `requirements-dev.txt`; isso não comprova o funcionamento da engine.
+A suíte contém 128 casos: 24 de câmera em `tests/test_camera.py`, 81 de raios em `tests/test_raycasting.py`, 20 de mundo em `tests/test_world.py` e três da sala temporária em `tests/test_study_world.py`. Eles verificam dimensões, consultas, limites, imutabilidade, entradas inválidas, geometria da sala, cantos e saída dentro do orçamento de avanços. Esses resultados não validam os componentes ainda não implementados. As versões instaladas estão registradas em `requirements-dev.txt`; isso não comprova o funcionamento da engine.
 
 ## Próximo passo
 
-Após integrar M1-6 por PR, iniciar M2-1: direção da câmera e plano perpendicular para a primeira imagem em perspectiva. O contrato implementado de `World` está na [arquitetura](docs/arquitetura.md#11-mundo-implementado-em-m1-1). A demonstração de exploração será desenvolvida em `examples/exploration/`.
+Continuar M2-2/M2-3 na branch conjunta: gerar direções não normalizadas pelos centros das colunas. O contrato implementado de `World` está na [arquitetura](docs/arquitetura.md#11-mundo-implementado-em-m1-1). A demonstração de exploração será desenvolvida em `examples/exploration/`.

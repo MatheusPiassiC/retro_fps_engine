@@ -6,7 +6,7 @@ Este planejamento organiza um projeto universitário de aprendizagem. Não press
 
 A referência conceitual é Wolfenstein 3D: mundo em grade, paredes verticais e exploração em primeira pessoa. A entrega mínima é uma engine reutilizável com uma demonstração de navegação. Objetivos, combate e reprodução completa do jogo de referência não são obrigatórios.
 
-Não há datas ou estimativas de horas neste planejamento. O avanço depende das evidências de conclusão. M0 e M1 estão concluídos no ambiente atual e os demais marcos estão pendentes; a preparação de documentos e arquivos não significa que seus comportamentos já foram implementados.
+Não há datas ou estimativas de horas neste planejamento. O avanço depende das evidências de conclusão. M0 e M1 estão concluídos no ambiente atual, M2 está em andamento e os demais marcos estão pendentes; a preparação de documentos e arquivos não significa que seus comportamentos já foram implementados.
 
 O ciclo de trabalho será: entender uma ideia, especificar uma pequena mudança, implementar, verificar, explicar o resultado e atualizar a documentação. Esse uso de especificações será leve e incremental.
 
@@ -34,7 +34,7 @@ Inimigos, armas, combate e editor visual ficam adiados. Desníveis, mapas origin
 |---|---|---|---|---|
 | M0 | Ambiente validado e janela responsiva | Revisão deste planejamento | Obrigatória | Concluído (tag `M0`) |
 | M1 | Interseções de raios conferidas em mapa pequeno | M0 | Obrigatória | Concluído |
-| M2 | Sala em perspectiva com câmera fixa | M1 | Obrigatória | Pendente |
+| M2 | Sala em perspectiva com câmera fixa | M1 | Obrigatória | Em andamento |
 | M3 | Navegação com colisões no mapa em memória | M2 | Obrigatória | Pendente |
 | M4 | Dois mapas externos carregados e exploráveis | M3 | Obrigatória | Pendente |
 | M5 | Aplicação externa usando a engine | M4 | Obrigatória | Pendente |
@@ -90,7 +90,7 @@ Testes e documentação acompanham cada marco. M6 consolida essas verificações
 
 **Tarefas:**
 
-1. Definir direção unitária da câmera e vetor perpendicular com comprimento derivado do campo de visão.
+1. Definir direção unitária da câmera e vetor perpendicular com comprimento derivado do campo de visão. **Concluída (M2-1):** `Camera` implementada, 24 novos testes aprovados e etapa aprovada pelo desenvolvedor após explicação. Ver [evidências](validacao.md#15-m2-1--geometria-da-câmera).
 2. Calcular um raio para o centro de cada coluna da resolução interna.
 3. Usar direções não normalizadas, coerentes com a profundidade perpendicular do DDA.
 4. Converter profundidade em altura projetada; limitar o desenho à tela e proteger distâncias próximas de zero.

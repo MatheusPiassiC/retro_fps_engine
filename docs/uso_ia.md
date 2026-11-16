@@ -163,3 +163,13 @@ Registrar contribuições relevantes e correções; não é necessário copiar i
 - **Validação do desenvolvedor:** confirmou “Está validado, pode prosseguir” após receber testes, explicação e procedimento de conferência.
 - **Estado:** M1-6 e M1 concluídos no ambiente atual, após revisão dos critérios de aceitação. Integração por PR e eventual tag permanecem separadas.
 - **Aprendizado com palavras próprias:** pendente; sugerido explicar por que dobrar a direção reduz t à metade sem mudar o ponto de impacto.
+
+
+## 19. Registro — M2-1: geometria da câmera
+
+- **Branch:** `feat/m2-1-2-3-add-camera-column-rays`; primeira etapa da entrega conjunta.
+- **Contribuição:** explicação de vetores, perpendicularidade e campo de visão; implementação de `Camera` imutável e 24 testes; explicação complementar de `@property`, propriedades derivadas e ligação futura com DDA e projeção.
+- **Decisões:** orientação por ângulo em radianos escolhida pelo desenvolvedor; campo de visão horizontal padrão de 60 graus; origem separada da câmera; nenhuma dependência nova.
+- **Verificação:** 128 casos totais aprovados, Ruff, formatação e diff aprovados; evidências na seção 15 da validação.
+- **Aprovação:** após a explicação, o desenvolvedor confirmou entendimento e autorizou os próximos passos. Não houve relato detalhado de resultados manuais; aprofundamento conceitual foi deixado para depois pelo desenvolvedor.
+- **Estado:** M2-1 concluída; M2-2/M2-3 seguem na mesma branch. Aprendizado com palavras próprias ainda não registrado.

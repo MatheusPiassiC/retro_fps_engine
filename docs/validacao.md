@@ -259,3 +259,14 @@ Seis novos casos ampliam as saídas em mapas abertos para uma grade 40 × 40. Na
 Os critérios do roadmap foram conferidos: raio para leste com impacto em `x=4` e parâmetro `1.5`, quatro direções cardinais, rejeição do raio nulo e término dos casos de canto segundo a política documentada. A sala em memória, consultas de mundo, saída da grade e orçamento de avanços também têm cobertura. Os resultados foram acompanhados de desenhos, contas independentes e explicação passo a passo.
 
 Com a validação final do desenvolvedor, M1 está concluído no ambiente atual. Integração de M1-6 por PR e eventual tag são etapas separadas. Renderização, movimento, colisões e carregamento de arquivos permanecem para os marcos seguintes.
+
+
+## 15. M2-1 — Geometria da câmera
+
+- **Branch:** `feat/m2-1-2-3-add-camera-column-rays`, criada após atualizar a main com M1-6 integrada e tag `M1`.
+- **Exemplos explicados antes do código:** para leste, direção `(1, 0)` e plano para sul; para sul, direção `(0, 1)` e plano para oeste. Em campo de visão de 90 graus, o comprimento do plano é 1; no padrão 60 graus, é `1/sqrt(3)`.
+- **Automação:** 24 novos casos verificam quatro direções cardinais, orientação do plano, direção unitária, perpendicularidade, comprimento do plano, normalização, valores inválidos e imutabilidade. Tolerâncias de `1e-12` para resultados trigonométricos. Negativo próximo de zero também verifica que o resto arredondado a `2*pi` é representado como zero.
+- **Resultados:** 128 casos totais aprovados com `.venv/bin/python -m pytest`; Ruff, formatação e `git diff --check` aprovados. Ambiente: Python 3.12.3, pytest 9.2.0.
+- **Conferência sugerida:** construir câmeras para leste e sul, comparar os vetores, normalizar -90 graus e verificar rejeição de campo de visão igual a pi. Não exige janela.
+- **Aprovação:** após receber resultados e procedimento, o desenvolvedor pediu explicação de `@property`, implementação e interação com o projeto. A explicação foi fornecida; respondeu “Entendido” e autorizou continuar. Não relatou saídas manuais detalhadas.
+- **Limites:** esta etapa não gera raios por coluna, não desenha nem move jogador. M2 permanece em andamento.
