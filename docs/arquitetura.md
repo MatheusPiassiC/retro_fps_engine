@@ -201,3 +201,12 @@ A câmera não guarda posição nem executa o percurso dos raios. A origem é fo
 Coluna e largura devem ser inteiros, sem booleanos (`TypeError`); largura deve ser positiva (`ValueError`); coluna deve estar entre zero e largura menos um (`IndexError`). A direção não é normalizada. Como a direção frontal é unitária e o plano é perpendicular, a componente frontal de cada raio é 1: o parâmetro retornado pelo DDA representa profundidade frontal. Não aplicar correção adicional por cosseno.
 
 A aplicação fornece a direção resultante a `cast_ray(world, origin, direction)`. Não há novo executor, resolução fixa ou alteração no loop. Projeção, desenho e recorte continuam pendentes.
+
+
+## 15. Projeção implementada em M2-4
+
+O módulo `retro_fps.projection` não importa Pygame. `projected_wall_height(depth, width, field_of_view)` usa escala `width / (2*tan(field_of_view/2))` e divide pela profundidade frontal, para parede de altura mundial 1. O campo de visão horizontal usa radianos. Profundidade zero é aceita: o divisor mínimo é `MIN_DEPTH=0.000001`. Não há correção adicional por cosseno.
+
+`wall_span(projected_height, height)` centraliza a parede para uma câmera a meia altura e retorna `[top, bottom)`, com topo por piso e base por teto matemático. Paredes maiores que a imagem são recortadas antes da conversão para inteiros. Altura projetada zero produz intervalo vazio, inclusive para altura de imagem ímpar.
+
+Dimensões exigem inteiros positivos, sem booleanos (`TypeError` para tipos e `ValueError` para valores). Profundidade e altura projetada devem ser finitas e não negativas; campo de visão finito entre 0 e pi. Esses valores inválidos causam `ValueError`. Não há desenho nesta etapa.

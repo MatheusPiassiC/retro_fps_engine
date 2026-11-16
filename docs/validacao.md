@@ -282,3 +282,13 @@ Com a validação final do desenvolvedor, M1 está concluído no ambiente atual.
 - **Conferência sugerida:** gerar as três direções no interpretador, lançá-las com `cast_ray` na sala e comparar direções, células, lado e parâmetro com a tabela apresentada ao desenvolvedor. Não exige janela.
 - **Validação do desenvolvedor:** após receber os resultados e o procedimento, confirmou “Considere validado, pode prosseguir”. A confirmação é registrada separadamente da execução automatizada pela IA; não foram relatadas saídas manuais detalhadas.
 - **Conclusão:** M2-2/M2-3 concluídas; M2 continua em andamento, com projeção, desenho e conferência visual pendentes. Integração por PR é uma etapa separada.
+
+
+## 17. M2-4 — Projeção e recorte
+
+- **Branch:** `feat/m2-4-5-render-static-perspective`; primeira etapa.
+- **Exemplos prévios:** largura 320, FOV 90 graus, escala 160; profundidades 2 e 4 produzem alturas 80 e 40, com intervalos `(60, 140)` e `(80, 120)` numa imagem de altura 200. Profundidade zero usa o mínimo de 0.000001 e resulta em recorte de tela inteira.
+- **Automação:** 29 casos novos conferem alturas conhecidas, relação inversa com profundidade, proteção próxima de zero, arredondamento, recorte, altura zero e entradas inválidas. Os 179 casos totais passaram com `.venv/bin/python -m pytest`; Ruff, formatação e `git diff --check` passaram. Python 3.12.3, pytest 9.2.0.
+- **Conferência sugerida:** executar no interpretador as contas de profundidades 2, 4 e zero e comparar alturas e intervalos acima. Não há janela nesta etapa.
+- **Aprovação:** o desenvolvedor respondeu “EU aprovo, pode seguir” após receber os resultados e procedimento. Não foram relatadas saídas manuais detalhadas; aprovação e automação são evidências separadas.
+- **Estado:** M2-4 concluída; desenho e validação visual permanecem em M2-5. M2 continua em andamento.
