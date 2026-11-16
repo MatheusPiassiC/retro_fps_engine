@@ -114,9 +114,9 @@ Testes e documentação acompanham cada marco. M6 consolida essas verificações
 1. Separar comando lógico de movimento das teclas que o produzem. **Concluída (M3-1):** estado imutável e comandos independentes do teclado aprovados pelo desenvolvedor; ver seção 20 da [validação](validacao.md).
 2. Implementar avanço, recuo e giro; configurar controles iniciais W/S e setas esquerda/direita. Extensão autorizada: A/D para deslocamento lateral e diagonais com velocidade total preservada; implementada e testada, com conferência manual confirmada pelo desenvolvedor. **Concluída (M3-2):** cálculo e integração de W/S e setas aprovados, com conferência visual confirmada; ver seção 22 da [validação](validacao.md).
 3. Usar velocidades por segundo e ângulos internos em radianos. **Concluída (M3-3):** configuração e atualização independente da janela aprovadas; ver seção 21 da [validação](validacao.md).
-4. Representar o jogador por um círculo de raio inicial 0.2 unidade.
-5. Verificar colisão círculo-retângulo e resolver deslocamento por eixos para permitir deslizar.
-6. Limitar o intervalo aceito a 0.1 segundo por atualização e subdividir o deslocamento em passos de até 0.1 unidade, conforme a proposta arquitetural.
+4. Representar o jogador por um círculo de raio inicial 0.2 unidade. **Concluída (M3-4):** raio configurável e consulta de ocupação aprovados; resolução e integração seguem nas próximas entregas.
+5. Verificar colisão círculo-retângulo e resolver deslocamento por eixos para permitir deslizar. **Concluída (M3-5):** resolução x antes de y implementada e aprovada; integração com conferência visual confirmada em M3-6.
+6. Limitar o intervalo aceito a 0.1 segundo por atualização e subdividir o deslocamento em passos de até 0.1 unidade, conforme a proposta arquitetural. **Concluída (M3-6):** integração com colisões, descarte do excesso e passos de até min(0.1, raio), com automação e conferência visual confirmadas; ver seção 26 da [validação](validacao.md).
 7. Verificar cantos, aproximações oblíquas e movimentos grandes; manter as funções testáveis sem janela.
 
 **Entrega:** cenário em memória explorável com paredes sólidas.

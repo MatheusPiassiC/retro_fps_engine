@@ -1,7 +1,10 @@
 """Estado e intenções de movimento, sem dependência de teclado ou janela."""
 
 from dataclasses import dataclass
-from math import cos, hypot, isfinite, pi, sin, tau
+from math import ceil, cos, hypot, isfinite, pi, sin, tau
+
+from retro_fps.collision import can_occupy, resolve_movement
+from retro_fps.world import World
 
 
 @dataclass(frozen=True)
@@ -47,11 +50,14 @@ class MovementConfig:
 
     move_speed: float = 1.0
     turn_speed: float = pi / 2
+    radius: float = 0.2
 
     def __post_init__(self) -> None:
         for speed in (self.move_speed, self.turn_speed):
             if not isfinite(speed) or speed <= 0:
                 raise ValueError("As velocidades devem ser finitas e positivas.")
+        if not isfinite(self.radius) or self.radius <= 0:
+            raise ValueError("O raio deve ser finito e positivo.")
 
 
 def update_player(
@@ -80,3 +86,31 @@ def update_player(
     offset_y = scale * (command.forward * front_y + command.strafe * front_x)
     x, y = state.position
     return PlayerState((x + offset_x, y + offset_y), angle)
+
+
+def update_player_in_world(
+    world: World,
+    state: PlayerState,
+    command: MovementCommand,
+    config: MovementConfig,
+    delta_time: float,
+) -> PlayerState:
+    """Atualize com colisões, até 0.1 s e passos de até min(0.1, raio).
+
+    O excesso de tempo é descartado, incluindo para o giro. O giro é
+    aplicado uma vez antes de subdividir o deslocamento reto solicitado.
+    A resolução por eixos pode alterar a direção efetivamente percorrida.
+    """
+    if not isfinite(delta_time) or delta_time < 0:
+        raise ValueError("O intervalo deve ser finito e não negativo.")
+    if not can_occupy(world, state.position, config.radius):
+        raise ValueError("A posição inicial deve acomodar o círculo sem contato.")
+    target = update_player(state, command, config, min(delta_time, 0.1))
+    dx = target.position[0] - state.position[0]
+    dy = target.position[1] - state.position[1]
+    steps = max(1, ceil(hypot(dx, dy) / min(0.1, config.radius)))
+    displacement = dx / steps, dy / steps
+    position = state.position
+    for _ in range(steps):
+        position = resolve_movement(world, position, displacement, config.radius)
+    return PlayerState(position, target.angle)
